@@ -1,0 +1,32 @@
+"""Helpers shared by the pipeline stages."""
+
+import sys
+from pathlib import Path
+
+import pandas as pd
+
+sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
+from config import settings as s  # noqa: E402
+
+
+def read_hmda(path, **kw):
+    # Read everything as text: tract and county codes have leading zeros, and
+    # numeric fields can contain "Exempt" or "NA".
+    return pd.read_csv(path, dtype=str, keep_default_na=False, **kw)
+
+
+def md_table(df):
+    return df.to_markdown(index=False) if len(df) else "_none_"
+
+
+def write_data_quality(phase, title, sections):
+    """Replace one phase's section of DATA_QUALITY.md, keeping the other sections."""
+    path = s.ROOT / "DATA_QUALITY.md"
+    start, end = f"<!-- {phase}:start -->", f"<!-- {phase}:end -->"
+    body = f"{start}\n## {title}\n\n" + "\n\n".join(sections) + f"\n{end}"
+    text = path.read_text(encoding="utf-8") if path.exists() else "# Data quality log\n\n"
+    if start in text:
+        text = text[:text.index(start)] + body + text[text.index(end) + len(end):]
+    else:
+        text = text.rstrip() + "\n\n" + body + "\n"
+    path.write_text(text, encoding="utf-8")

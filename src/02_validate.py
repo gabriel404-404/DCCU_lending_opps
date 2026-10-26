@@ -16,17 +16,12 @@ import pandas as pd
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 from config import settings as s  # noqa: E402
+from src.common import md_table, read_hmda, write_data_quality  # noqa: E402
 
 OUT = s.PROCESSED / "phase1_checks"
 HMDA = s.RAW / "hmda"
 ACTIONS = {1: "originated", 2: "approved_not_accepted", 3: "denied", 4: "withdrawn",
            5: "incomplete", 6: "purchased", 7: "preapproval_denied", 8: "preapproval_approved_not_accepted"}
-
-
-def read_hmda(path, **kw):
-    # Read everything as text: tract and county codes have leading zeros, and
-    # numeric fields can contain "Exempt" or "NA".
-    return pd.read_csv(path, dtype=str, keep_default_na=False, **kw)
 
 
 def scan_county_files(counties):
@@ -174,22 +169,6 @@ def check_ncua():
     return zips[-1].name, charter, mine, lat_cols
 
 
-def write_data_quality(sections):
-    """Replace the Phase 1 section of DATA_QUALITY.md, keeping any other sections."""
-    path = s.ROOT / "DATA_QUALITY.md"
-    start, end = "<!-- phase1:start -->", "<!-- phase1:end -->"
-    body = f"{start}\n## Phase 1: download and validate\n\n" + "\n\n".join(sections) + f"\n{end}"
-    text = path.read_text(encoding="utf-8") if path.exists() else "# Data quality log\n\n"
-    if start in text:
-        text = text[:text.index(start)] + body + text[text.index(end) + len(end):]
-    else:
-        text = text.rstrip() + "\n\n" + body + "\n"
-    path.write_text(text, encoding="utf-8")
-
-
-def md_table(df):
-    return df.to_markdown(index=False) if len(df) else "_none_"
-
 
 def main():
     OUT.mkdir(parents=True, exist_ok=True)
@@ -279,7 +258,7 @@ def main():
         "- The FOM list is DCCU's current 20 counties, applied to every year. DCCU added counties "
         "over time, so early-year FOM share may be understated for recently added counties.",
     ]
-    write_data_quality(sections)
+    write_data_quality("phase1", "Phase 1: download and validate", sections)
     print(by_year.to_string(index=False))
     print(dccu.to_string(index=False))
     print(f"Cells off: {len(off)}; tract sets {sizes}; branches {len(branches)}; lat/long {latlong_cols}")

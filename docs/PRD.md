@@ -71,7 +71,9 @@ Pricing/rate comparison, underserved-area analysis, fair-lending analysis, forec
 ### Market definition (apply to the whole market, not just DCCU)
 - Conventional loans only (DCCU offers no FHA/VA/USDA).
 - First lien, 1–4 units, site-built, principal residence.
-- Purchase and refinance, reported combined and split.
+- Purchase and refinance, reported combined and split. Refinance includes cash-out refinance (`loan_purpose` 31 and 32).
+- Closed-end loans only: exclude HELOCs (`open-end_line_of_credit = 1`), including first-lien HELOCs. Also exclude reverse mortgages and business-purpose loans.
+- Rows where a lender reports these flags as exempt (`1111`) are kept and counted in `DATA_QUALITY.md`.
 - Originations only (`action_taken = 1`) for share. Exclude purchased loans (`action_taken = 6`) everywhere.
 
 ### Metrics

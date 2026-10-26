@@ -221,3 +221,6 @@ __marimo__/
 
 # Project data (raw downloads are large and re-downloadable)
 data/raw/
+
+# Large processed data files (rebuilt by src/run_all.py); small summary CSVs stay in git
+data/processed/*.parquet

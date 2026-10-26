@@ -15,11 +15,25 @@ python -m venv .venv
 
 ## Run the pipeline
 ```bash
-.venv/Scripts/python src/01_download.py && .venv/Scripts/python src/02_validate.py
+.venv/Scripts/python src/run_all.py
 ```
 
-- `01_download.py` fetches all raw data into `data/raw/` (about 2 GB, git-ignored). Files already on disk are never downloaded again; the first run takes roughly an hour.
+This runs every stage in order and stops at the first failure:
+
+- `01_download.py` fetches all raw data into `data/raw/` (about 820 MB, git-ignored). Files already on disk are never downloaded again; the first run takes roughly an hour.
 - `02_validate.py` runs the Phase 1 checks, writes details to `data/processed/phase1_checks/`, and updates `DATA_QUALITY.md`.
+- `03_market.py` applies the PRD's market definition to every lender and writes `data/processed/market_{year}.parquet` (git-ignored), `lenders.csv`, and the checks in `phase2_checks/`.
+
+Each stage can also be run on its own, e.g. `.venv/Scripts/python src/03_market.py`.
+
+## Processed data
+| File | Contents |
+|---|---|
+| `hmda_ga_{year}.parquet` | every Georgia HMDA row with a county, all columns as text |
+| `market_{year}.parquet` | rows in the market definition, all outcomes, plus `county_fips`, `fom_flag`, `purpose_group`, `has_tract` |
+| `lenders.csv` | LEI → latest lender name |
+
+Parquet files are git-ignored and rebuilt by `run_all.py`.
 
 ## Data sources
 | Source | Used for |

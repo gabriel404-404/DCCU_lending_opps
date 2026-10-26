@@ -97,6 +97,13 @@ def download_hmda(county_fips):
         # Statewide counts catch rows with no county code, which no county file contains.
         fetch(f"{s.HMDA_API}/aggregations", hmda / f"agg_{y}_state.json",
               params={"years": y, "states": s.STATE_ABBR, "actions_taken": "1,2,3,4,5,6,7,8"})
+        # DCCU's GA originations under one market filter at a time (Phase 2 reconciliation).
+        fetch(f"{s.HMDA_API}/aggregations", hmda / "dccu_checks" / f"{y}_none.json",
+              params={"years": y, "states": s.STATE_ABBR, "leis": s.DCCU_LEI, "actions_taken": "1"})
+        for param, (_, values) in s.API_CHECK_FILTERS.items():
+            fetch(f"{s.HMDA_API}/aggregations", hmda / "dccu_checks" / f"{y}_{param}.json",
+                  params={"years": y, "states": s.STATE_ABBR, "leis": s.DCCU_LEI,
+                          "actions_taken": "1", param: ",".join(values)})
 
     # One small request per year x county, so an interrupted run resumes where it stopped.
     jobs = []

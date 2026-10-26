@@ -78,3 +78,65 @@ Charter: 66357. Branch records: 36. **No lat/long columns: branches need geocodi
 ### Known limitations
 - The FOM list is DCCU's current 20 counties, applied to every year. DCCU added counties over time, so early-year FOM share may be understated for recently added counties.
 <!-- phase1:end -->
+
+<!-- phase2:start -->
+## Phase 2: market definition
+
+### Filter waterfall (2025; all years in `phase2_checks/filter_waterfall.csv`)
+Filters run in order, so each row's count is after every filter above it. Rows with no county code (Phase 1, check 1) never enter, so the start is slightly below the statewide total.
+
+| step                             |   rows_all |   originations_all |   rows_dccu |   originations_dccu |   originations_removed |
+|:---------------------------------|-----------:|-------------------:|------------:|--------------------:|-----------------------:|
+| start: all GA rows with a county |     511121 |             241969 |        5508 |                2867 |                      0 |
+| exclude_purchased                |     447297 |             241969 |        5508 |                2867 |                      0 |
+| conventional                     |     305450 |             166984 |        5508 |                2867 |                  74985 |
+| first_lien                       |     204657 |             117839 |        2507 |                1437 |                  49145 |
+| units_1_to_4                     |     203451 |             116888 |        2507 |                1437 |                    951 |
+| site_built                       |     183778 |             112444 |        2507 |                1437 |                   4444 |
+| principal_residence              |     146107 |              89940 |        2366 |                1379 |                  22504 |
+| purchase_or_refi                 |     128938 |              82934 |        1991 |                1219 |                   7006 |
+| closed_end                       |     124968 |              80858 |        1868 |                1154 |                   2076 |
+| not_reverse                      |     124790 |              80758 |        1868 |                1154 |                    100 |
+| not_business                     |     124660 |              80682 |        1868 |                1154 |                     76 |
+
+### Exempt flags kept
+Rows kept although the lender reported the field as exempt (`1111`), all years. Exempt lenders are small and rarely make these products.
+
+| filter       | field                          |   rows_kept_with_exempt |
+|:-------------|:-------------------------------|------------------------:|
+| closed_end   | open-end_line_of_credit        |                   12023 |
+| not_business | business_or_commercial_purpose |                   12008 |
+| not_reverse  | reverse_mortgage               |                   12024 |
+
+### DCCU reconciliation with the HMDA API
+DCCU's GA originations with one market filter at a time, our data vs. the API's own count (the API allows at most two filters, so the full definition can't be checked in one query). Occupancy can't be checked: the API ignores that filter.
+
+Mismatches: **0** of 24.
+
+| filter               | api_applied_filter   |   dccu_api |   dccu_ours | match   |
+|:---------------------|:---------------------|-----------:|------------:|:--------|
+| none                 | True                 |       2867 |        2867 | True    |
+| loan_types           | True                 |       2867 |        2867 | True    |
+| lien_statuses        | True                 |       1437 |        1437 | True    |
+| total_units          | True                 |       2867 |        2867 | True    |
+| construction_methods | True                 |       2867 |        2867 | True    |
+| loan_purposes        | True                 |       1667 |        1667 | True    |
+
+### Market size (originations, after all filters)
+|   year | scope     |   market_originations |   market_purchase |   market_refinance |   market_no_tract |   lenders |   dccu_originations |   dccu_purchase |   dccu_refinance |   dccu_no_tract |
+|-------:|:----------|----------------------:|------------------:|-------------------:|------------------:|----------:|--------------------:|----------------:|-----------------:|----------------:|
+|   2022 | statewide |                138169 |             85616 |              52553 |                61 |       875 |                1305 |             512 |              793 |               0 |
+|   2022 | fom       |                 95442 |             59373 |              36069 |                54 |       736 |                1199 |             442 |              757 |               0 |
+|   2023 | statewide |                 76604 |             63173 |              13431 |                32 |       828 |                 537 |             461 |               76 |               0 |
+|   2023 | fom       |                 51884 |             43987 |               7897 |                23 |       667 |                 487 |             414 |               73 |               0 |
+|   2024 | statewide |                 78334 |             61581 |              16753 |                20 |       781 |                 930 |             757 |              173 |               0 |
+|   2024 | fom       |                 53033 |             42938 |              10095 |                11 |       633 |                 851 |             686 |              165 |               0 |
+|   2025 | statewide |                 80682 |             58062 |              22620 |                46 |       807 |                1154 |             873 |              281 |               0 |
+|   2025 | fom       |                 53783 |             39785 |              13998 |                19 |       654 |                1052 |             797 |              255 |               0 |
+
+### Rows without a census tract
+`market_no_tract` originations stay in the market data (`has_tract = 0`) and count toward county and statewide totals, but can't be placed on the map or in tract metrics.
+
+### Lenders
+`data/processed/lenders.csv`: 1,845 LEIs with their latest reported name.
+<!-- phase2:end -->
