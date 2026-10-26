@@ -1,7 +1,7 @@
 # CLAUDE.md
 
 ## Project
-Mortgage Growth Map for Delta Community Credit Union (DCCU): an outside-in analysis of public HMDA data showing where DCCU wins and loses mortgage share across the Atlanta metro, and whether growth should come from deeper share inside its field of membership, expansion into a new county, or both.
+Mortgage Growth Map for Delta Community Credit Union (DCCU): an outside-in analysis of public HMDA data showing where DCCU wins and loses mortgage share across Georgia (primary focus: its 20 field-of-membership counties), and whether growth should come from deeper share inside its field of membership, expansion into a new county, or both.
 
 This is a personal project. It was not requested by DCCU and uses only public data.
 

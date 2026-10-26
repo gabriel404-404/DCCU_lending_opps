@@ -9,6 +9,7 @@
 - **User:** DCCU CLO.
 - **Decision:** Where should DCCU focus mortgage growth next year, and against which competitors?
 - **Strategic choice the outputs must inform:** build depth inside the current 20-county field of membership, expand the field of membership into another county, or both. Expansion is a real lever: DCCU applies to the Georgia Department of Banking and Finance for each new county and has expanded several times (11 → 14 → 16 → 20 counties).
+- **Scope:** the data covers all of Georgia. **Primary focus: growth within the 20 FOM counties.** Secondary: opportunities anywhere else in Georgia.
 - **Workflow stage:** annual/quarterly planning. A strategic tool, not an operational one; HMDA is annual and lagged.
 
 ### Key domain fact
@@ -32,12 +33,12 @@ Membership is defined by the **person** (lives or works in an eligible county, D
 ## 4. Requirements (v1)
 | # | Requirement | Story |
 |---|---|---|
-| R1 | Tract map of DCCU share, full Atlanta metro | 1 |
+| R1 | Tract map of DCCU share: FOM counties (primary) plus a statewide view | 1 |
 | R2 | Opportunity table: top 25 tracts by opportunity score, top 3 competitors each (CSV) | 2, 3 |
 | R3 | Tag every tract as inside or outside DCCU's field-of-membership (FOM) counties. Compare DCCU share inside vs. outside to estimate how much the membership boundary suppresses share | 2, 6 |
-| R3a | Depth vs. expansion comparison: total opportunity inside the FOM vs. a county scorecard for each non-FOM metro county (market volume, DCCU share, households, distance to nearest branch, adjacency to FOM) | 6 |
+| R3a | Depth vs. expansion comparison: total opportunity inside the FOM vs. a county scorecard for every non-FOM Georgia county (market volume, DCCU share, households, distance to nearest branch, adjacency to FOM) | 6 |
 | R4 | Share by distance band from nearest DCCU branch | 4 |
-| R5 | Year-over-year share trend, metro and per tract, 2022 onward | 5 |
+| R5 | Year-over-year share trend, FOM-wide, statewide and per tract, 2022 onward | 5 |
 | R6 | Household density per tract (households per square mile) on the map and in the table | 1, 2 |
 | R7 | `FINDINGS.md` (≤ 1 page, closing with the depth vs. expansion recommendation) and `DATA_QUALITY.md` | all |
 
@@ -49,8 +50,9 @@ Pricing/rate comparison, underserved-area analysis, fair-lending analysis, forec
 - **Pricing:** HMDA includes interest rate, rate spread, total loan costs, discount points and lender credits for originated loans, so a partial comparison of DCCU vs. competitors is possible. Limits: annual and lagged; no credit score in public data, so comparisons can only control for loan-to-value, debt-to-income, loan amount and product; it shows what borrowers paid, not current rate sheets.
 
 ## 6. Open questions
-- Exact current list of DCCU field-of-membership counties (confirm from DCCU's membership eligibility page or latest expansion release; the list has changed several times).
-- Latest published HMDA year (confirm from the API before pulling).
+- ~~Exact current list of DCCU field-of-membership counties~~ Resolved 2026-10-26: 20 counties from DCCU's eligibility page, stored in `config/fom_counties.csv`. The current list is applied to all years (DCCU expanded over time; logged as a limitation).
+- ~~Latest published HMDA year~~ Resolved 2026-10-26: 2025, so v1 covers 2022–2025.
+- Opportunity benchmark under a statewide market: `metro_share` (now statewide share) is diluted by counties where DCCU barely lends. Decide in Phase 3 whether to benchmark `opportunity_score` to DCCU's FOM-wide share instead.
 
 ---
 
@@ -59,7 +61,7 @@ Pricing/rate comparison, underserved-area analysis, fair-lending analysis, forec
 ### Data sources
 - **HMDA loan-level data:** CFPB Data Browser API (`https://ffiec.cfpb.gov/v2/data-browser-api/view/csv`).
   - **Years:** every published year from 2022 onward. 2022+ uses 2020 census tract boundaries, so tracts are comparable across years. Do not pull 2018–2021 (2010 tracts).
-  - **Geography:** fix one list of Atlanta metro county FIPS codes and filter by county, not by MSA code. MSA delineations can change between years, and a fixed county list keeps the market constant. Document which delineation the list comes from. The market is the **union** of metro counties and FOM counties: if any FOM county falls outside the metro list, include it anyway.
+  - **Geography:** the market is all 159 Georgia counties (state FIPS 13), kept as a fixed county list in `config/ga_counties.csv`. Each county is tagged `fom_flag` and `atlanta_msa_flag`. The Atlanta MSA tag comes from OMB's 2023 delineation (CBSA 12060) and is used for display only; it does not define the market.
   - Use `/view/filers` to map LEIs to lender names. Confirm DCCU's LEI there; do not hard-code a guess.
 - **Households:** Census ACS 5-year, table B11001 (total households, `B11001_001E`), tract level. Use the latest 5-year release on 2020 tracts. Census API key optional at this volume.
 - **Tract geometry and land area:** Census TIGER/Line or cartographic boundary files, Georgia, 2020 tracts. Use `ALAND` for density and internal points for distance.
