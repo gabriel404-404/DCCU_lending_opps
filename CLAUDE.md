@@ -14,6 +14,7 @@ This is a personal project. It was not requested by DCCU and uses only public da
 - I'm strong on analysis and business framing. Challenge my analytical choices when you see a problem, and flag engineering trade-offs in plain terms so I can make the call.
 
 ## How we work
+- **Start of each session:** read [docs/SESSION_NOTES.md](docs/SESSION_NOTES.md) for where we left off. At the end of a session, add a new entry at the top.
 - **Plan before code.** Before each phase, write out the plan (inputs, outputs, files, checks) and wait for my approval.
 - **Check in after each phase.** Summarize what was built, the key numbers, and any data-quality issues, then stop.
 - Phases (PRD Appendix A):
