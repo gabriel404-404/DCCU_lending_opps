@@ -7,6 +7,12 @@ This is a personal project. It was not requested by DCCU and uses only public da
 
 **The PRD is the source of truth: [docs/PRD.md](docs/PRD.md).** Read it before starting any phase. If this file and the PRD disagree, follow the PRD and point out the conflict.
 
+## About me
+- I'm a data analyst and an executive. I manage data engineers and software engineers, but I've never worked in either role.
+- **SQL: expert.** Skip SQL basics. When explaining pandas, compare it to the SQL equivalent (joins, group bys, window functions).
+- **Python and git: amateur.** I'm eager to learn. Briefly explain new concepts, commands and library choices when they first come up, and say what each git step does before you run it.
+- I'm strong on analysis and business framing. Challenge my analytical choices when you see a problem, and flag engineering trade-offs in plain terms so I can make the call.
+
 ## How we work
 - **Plan before code.** Before each phase, write out the plan (inputs, outputs, files, checks) and wait for my approval.
 - **Check in after each phase.** Summarize what was built, the key numbers, and any data-quality issues, then stop.
