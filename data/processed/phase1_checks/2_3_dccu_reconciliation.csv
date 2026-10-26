@@ -1,0 +1,5 @@
+year,in_filers_list,filers_name,filers_count,records_downloaded,records_in_ga,records_in_fom,ga_records_no_county,originations,originations_in_fom,reconciles
+2022,True,DELTA COMMUNITY CREDIT UNION,6971,7697,6971,6581,0,4210,3653,True
+2023,True,DELTA COMMUNITY CREDIT UNION,5799,6399,5799,5484,0,3473,3006,True
+2024,True,DELTA COMMUNITY CREDIT UNION,5947,6668,5947,5579,0,3626,3053,True
+2025,True,DELTA COMMUNITY CREDIT UNION,5508,6201,5508,5143,0,3188,2655,True
