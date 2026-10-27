@@ -16,7 +16,7 @@ import pandas as pd
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 from config import settings as s  # noqa: E402
-from src.common import SESSION, fetch  # noqa: E402
+from src.common import SESSION, dccu_branches, fetch  # noqa: E402
 
 
 def download_reference_files():
@@ -136,11 +136,48 @@ def download_ncua():
     raise RuntimeError("No NCUA call report zip found for the last 6 quarters")
 
 
+def download_context_files():
+    """Phase 4 sources: county population, county adjacency, scoring-year branch list."""
+    print("Population estimates, county adjacency, scoring-year NCUA call report")
+    fetch(s.PEP_COUNTY_URL, s.RAW / "census" / s.PEP_COUNTY_URL.rsplit("/", 1)[1])
+    fetch(s.ADJACENCY_URL, s.RAW / "census" / s.ADJACENCY_URL.rsplit("/", 1)[1])
+    y, m = s.NCUA_SCORING_CYCLE
+    fetch(s.NCUA_URL_TEMPLATE.format(yyyy=y, mm=f"{m:02d}"),
+          s.RAW / "ncua" / f"call-report-data-{y}-{m:02d}.zip")
+
+
+def geocode_branches():
+    """Census Geocoder batch lookup of DCCU's Georgia sites, one cached file per NCUA snapshot."""
+    print("Geocoding DCCU branches (Census Geocoder)")
+    for zip_path in sorted((s.RAW / "ncua").glob("call-report-data-*.zip")):
+        cycle = zip_path.stem.replace("call-report-data-", "")
+        dest = s.RAW / "geocode" / f"branches_{cycle}.csv"
+        if dest.exists():
+            print(f"  cached: {dest.name}")
+            continue
+        _, b = dccu_branches(zip_path)
+        b = b[b["PhysicalAddressStateCode"] == s.STATE_ABBR]
+        # Batch format: id, street, city, state, ZIP (no header).
+        rows = b[["SiteId", "PhysicalAddressLine1", "PhysicalAddressCity",
+                  "PhysicalAddressStateCode"]].assign(zip=b["PhysicalAddressPostalCode"].str[:5])
+        r = SESSION.post(s.GEOCODER_BATCH_URL, timeout=300,
+                         files={"addressFile": ("branches.csv", rows.to_csv(index=False, header=False))},
+                         data={"benchmark": "Public_AR_Current"})
+        r.raise_for_status()
+        dest.parent.mkdir(parents=True, exist_ok=True)
+        tmp = dest.with_name(dest.name + ".part")
+        tmp.write_text(r.text, encoding="utf-8")
+        tmp.replace(dest)
+        print(f"  geocoded {len(rows)} sites for {cycle}")
+
+
 def main():
     download_reference_files()
     county_fips = build_county_config()
     download_hmda(county_fips)
-    download_ncua()
+    download_ncua()  # first, so it still picks the latest quarter on a fresh run
+    download_context_files()
+    geocode_branches()
     print("Done.")
 
 

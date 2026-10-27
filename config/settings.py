@@ -75,3 +75,25 @@ API_CHECK_FILTERS = {
 
 # NCUA quarterly call report zip; the download script picks the latest quarter that exists.
 NCUA_URL_TEMPLATE = "https://ncua.gov/files/publications/analysis/call-report-data-{yyyy}-{mm}.zip"
+# Branches open at the end of the scoring year explain that year's lending (share by distance).
+# The latest call report is the current footprint (expansion scorecard).
+NCUA_SCORING_CYCLE = (SCORING_YEAR, 12)
+
+# Phase 4 sources (PRD Appendix A). Vintage 2025 population estimates and the 2025 adjacency
+# file confirmed as the latest releases on 2026-10-27.
+PEP_YEAR = 2025
+PEP_COUNTY_URL = (
+    "https://www2.census.gov/programs-surveys/popest/datasets/2020-2025/counties/totals/"
+    "co-est2025-alldata.csv"
+)
+ADJACENCY_URL = "https://www2.census.gov/geo/docs/reference/county_adjacency/county_adjacency2025.txt"
+GEOCODER_BATCH_URL = "https://geocoding.geo.census.gov/geocoder/locations/addressbatch"
+POP_GROWTH_BASE_YEAR = 2020  # pop_growth: July 2020 -> July PEP_YEAR
+POP_RECENT_BASE_YEAR = 2023  # recent momentum, same window as purchase_market_change
+# Two tiers: `growing` = above Georgia's growth; named clusters need this multiple of it
+# (at 1x, the Atlanta exurban ring chains into one 28-county cluster). Decided 2026-10-27.
+CLUSTER_GROWTH_MULTIPLE = 1.5
+
+# Distance bands in miles. FOM tables use the PRD's bands; statewide tables split 10+.
+DISTANCE_BANDS = [0, 2, 5, 10, float("inf")]
+DISTANCE_BANDS_DETAIL = [0, 2, 5, 10, 20, float("inf")]

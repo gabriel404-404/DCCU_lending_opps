@@ -62,6 +62,7 @@ Pricing/rate comparison, underserved-area analysis, fair-lending analysis, forec
 - ~~Expansion groupings~~ Resolved 2026-10-27: market groups use the hybrid OMB rule, urban/rural uses OMB's three tiers, growth uses Census population estimates with HMDA purchase volume as a cross-check (definitions in Appendix A).
 - ~~Minimum volume for tract scoring~~ Resolved 2026-10-27: no tract is dropped; tracts under 20 scoring-year market originations get a `low_volume` flag (the top 25 all have 83+).
 - Builder-lender list (`config/builder_lenders.csv`): 7 lenders included, 6 data-signature candidates excluded until confirmed. Pending user review.
+- ~~Growth-cluster threshold~~ Resolved 2026-10-27: two tiers. At Georgia's rate the Atlanta exurban ring chains into one 28-county cluster, too broad to act on, so named clusters use 1.5× Georgia's rate (5 clusters); `growing` stays at Georgia's rate on the scorecard.
 
 ---
 
@@ -76,7 +77,7 @@ Pricing/rate comparison, underserved-area analysis, fair-lending analysis, forec
 - **Builder-owned lenders:** hand-maintained `config/builder_lenders.csv`, with the basis for each row; reviewed by the user.
 - **Households:** Census ACS 5-year, table B11001 (total households, `B11001_001E`), tract level. Use the latest 5-year release on 2020 tracts. Census API key optional at this volume.
 - **Tract geometry and land area:** Census TIGER/Line or cartographic boundary files, Georgia, 2020 tracts. Use `ALAND` for density and internal points for distance.
-- **Branch locations:** NCUA quarterly call report data (branch information file). Geocode addresses if lat/long is missing.
+- **Branch locations:** NCUA quarterly call report data (branch information file), two snapshots: December of the scoring year (branches open during that year's lending; used for R4) and the latest quarter (current footprint; used for the expansion scorecard). NCUA has no lat/long, so addresses are geocoded with the Census Geocoder batch API; addresses it can't match are placed by hand in `config/branch_coordinates_manual.csv`, with the method. Distance uses the 28 public Georgia branches: behind-security sites, corporate offices without member services and out-of-state sites are excluded (`config/branch_exclusions.csv`).
 - **Field-of-membership counties:** DCCU website; store as a small config file.
 - **County population:** Census Population Estimates Program, county totals from the 2020 base to the latest vintage. Confirm the latest vintage when downloading.
 - **County adjacency:** Census county adjacency file, latest release.
@@ -99,13 +100,17 @@ Pricing/rate comparison, underserved-area analysis, fair-lending analysis, forec
 - `household_density` = households ÷ land area (sq mi). Raw household counts are not density, since tracts are drawn to similar population sizes.
 - `penetration` = market originations per 1,000 owner-occupied units (HMDA tract field).
 - Minimum volume: score only tracts with enough scoring-year market originations. Set the threshold in Phase 3 from 2025 volumes and document it.
-- Branch distance: miles from tract internal point to nearest DCCU branch (haversine). Bands: 0–2, 2–5, 5–10, 10+.
+- Branch distance: miles from tract internal point to nearest DCCU branch (haversine). Bands: 0–2, 2–5, 5–10, 10+; statewide tables split 10+ into 10–20 and 20+. Share by band is pooled (sum of DCCU loans ÷ sum of market loans).
+- `vs_county_average` (R4) = DCCU loans in a band ÷ loans expected if each tract matched its own county's share. Separates proximity from county-level differences.
+- County branch distance = household-weighted average of its tracts' distance to the nearest current branch.
 - `fom_flag` = tract's county is in DCCU's FOM config list.
 - `market_group` = the county's OMB 2023 combined statistical area (CSA) if it has one, else its CBSA. Exception: the Atlanta CSA is split back into its CBSAs, so Athens, Gainesville, Rome, LaGrange etc. stand alone, and the Atlanta MSA counties outside the FOM form one group. Counties in no CBSA have no market group; they rank in the rural tier.
 - `urban_rural_tier` = metro, micro or rural: the county's OMB 2023 CBSA type, or rural if it is in no CBSA.
 - `pop_growth` = county population change, 2020 to the latest estimate year (%).
 - `purchase_market_change` = change in county purchase originations, 2023 → 2025. A cross-check on population growth; it mostly tracks interest rates.
-- `growth_cluster` = neighboring counties (county adjacency file) that are all above a growth threshold. Set the threshold in Phase 4 and document it.
+- `growing` = county `pop_growth` above Georgia's over the same years (5.31%, 2020–2025). `pop_growth_recent` = 2023 → latest, shown alongside.
+- `fast_growing` = `pop_growth` above 1.5× Georgia's (7.97%, 2020–2025).
+- `growth_cluster` = 2+ neighboring non-FOM counties (county adjacency file) that are all `fast_growing`. Two tiers: `growing` flags counties on the scorecard; only `fast_growing` counties form named clusters.
 - **Depth opportunity** = sum of `opportunity_score` across FOM tracts, scoring year.
 - **Expansion gain (per non-FOM county)** = county market originations × max(0, `expansion_target_share` − DCCU's current share in that county), scoring year. `expansion_target_share` = 2.0%, `fom_share` rounded: a named planning assumption in config. Read it as "loans added per year if DCCU entered this county and reached its FOM share there." Label it an upper bound: new counties take years to reach footprint share.
 - **Trend** = DCCU share per year, 2022–2025, FOM-wide, statewide and per county; purchase, refinance and combined; shown with each year's market refinance/purchase mix. No per-tract trend: DCCU averages under one loan per FOM tract a year.

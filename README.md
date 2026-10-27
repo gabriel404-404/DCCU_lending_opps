@@ -24,6 +24,7 @@ This runs every stage in order and stops at the first failure:
 - `02_validate.py` runs the Phase 1 checks, writes details to `data/processed/phase1_checks/`, and updates `DATA_QUALITY.md`.
 - `03_market.py` applies the PRD's market definition to every lender and writes `data/processed/market_{year}.parquet` (git-ignored), `lenders.csv`, and the checks in `phase2_checks/`.
 - `04_metrics.py` computes share, trend, depth opportunity and expansion gain, writes `outputs/opportunity_top25.csv`, the metric files below, and the checks in `phase3_checks/`.
+- `05_context.py` adds households, density, penetration, distance to the nearest DCCU branch, county population growth, adjacency and growth clusters, and completes the expansion scorecard; checks in `phase4_checks/`.
 
 Each stage can also be run on its own, e.g. `.venv/Scripts/python src/03_market.py`.
 
@@ -40,6 +41,12 @@ Each stage can also be run on its own, e.g. `.venv/Scripts/python src/03_market.
 | `lender_trend_fom.csv` | FOM share by year for the top 10 FOM lenders and DCCU |
 | `expansion_counties.csv` | non-FOM counties: scoring-year market, DCCU share, gain at the expansion target share |
 | `expansion_groups.csv` | expansion gain by market group and by urban/rural tier |
+| `branches.csv` | DCCU sites in the scoring-year and latest NCUA snapshots: coordinates, in-scope flag, exclusion reason |
+| `tract_context.csv` | every tract: households, land area, household density, penetration, nearest branch and miles, distance band |
+| `share_by_distance.csv` | R4: DCCU share by distance band (FOM, statewide, per FOM county, county-adjusted) |
+| `county_context.csv` | every county: households, density, population and growth, FOM neighbors, household-weighted branch distance, growth cluster |
+| `expansion_scorecard.csv` | R3a: the 139 non-FOM counties with expansion gain plus the county context |
+| `growth_clusters.csv` | R3b: groups of neighboring growing non-FOM counties |
 
 Parquet files are git-ignored and rebuilt by `run_all.py`; the CSVs are small and kept in git.
 
@@ -55,7 +62,11 @@ Parquet files are git-ignored and rebuilt by `run_all.py`; the CSVs are small an
 | Census county list (2020) and OMB 2023 delineation | `config/ga_counties.csv` (FOM and Atlanta MSA flags, metro/micro/rural tier, market group) |
 | Census TIGER/Line 2024, Georgia tracts (2020 boundaries) | tract shapes, land area, internal points |
 | Census ACS 2020–2024 5-year, table B11001 | households per tract |
-| NCUA quarterly call report | DCCU branch locations |
+| NCUA quarterly call report (latest, and December of the scoring year) | DCCU branch addresses |
+| Census Geocoder (batch) | branch coordinates; two hand-interpolated in `config/branch_coordinates_manual.csv` |
+| Census Population Estimates, Vintage 2025 (county totals) | county population growth |
+| Census county adjacency file, 2025 | adjacency to the FOM, growth clusters |
+| Hand-maintained | `config/branch_exclusions.csv` (sites left out of branch distance, with reasons) |
 | DCCU eligibility page | `config/fom_counties.csv` |
 | GLEIF LEI registry | names for the few market LEIs missing from the HMDA filers lists |
 | Hand-maintained, with the basis per row | `config/builder_lenders.csv` (builder-owned lenders, for the contestable market) |

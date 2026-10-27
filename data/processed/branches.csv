@@ -1,0 +1,73 @@
+snapshot,cycle,site_id,site_name,address,city,state,ncua_county,in_scope,exclusion_reason,ncua_no_member_services,lat,lon,coord_source,match,match_type
+scoring_year,2025-12,21196,Virginia Avenue,1025 Virginia Ave,Atlanta,GA,Fulton,True,,False,33.658968405321,-84.423446750246,census_geocoder,Match,Exact
+scoring_year,2025-12,21597,Atlanta (Hartsfield-Jackson Int'l Airport),6000 N Terminal Pkwy,Atlanta,GA,Clayton,False,behind airport security (Concourse A),False,33.642321193002,-84.442539621323,census_geocoder,Match,Exact
+scoring_year,2025-12,21610,Buford (Kroger),3300 Hamilton Mill Rd,Buford,GA,Gwinnett,True,,False,34.094296578772,-83.935451165385,census_geocoder,Match,Exact
+scoring_year,2025-12,21627,Canton (Kroger),6766 Hickory Flat Hwy,Canton,GA,Cherokee,True,,False,34.17004987482,-84.414138276195,census_geocoder,Match,Exact
+scoring_year,2025-12,21636,Duluth (Sugarloaf),1980 Satellite Blvd,Duluth,GA,Gwinnett,True,,False,33.989839455887,-84.087468908634,census_geocoder,Match,Exact
+scoring_year,2025-12,21641,Fayetteville (Summit Point),140 Highway 92 S,Fayetteville,GA,Fayette,True,,False,33.429283121355,-84.454973029727,census_geocoder,Match,Non_Exact
+scoring_year,2025-12,21647,Marietta (Dallas Highway),2627 Dallas Hwy SW,Marietta,GA,Cobb,True,,False,33.946543916599,-84.629357916457,census_geocoder,Match,Non_Exact
+scoring_year,2025-12,21653,Marietta (Johnson Ferry Road),1205 Johnson Ferry Rd,Marietta,GA,Cobb,True,,False,33.978626778963,-84.419246336937,census_geocoder,Match,Exact
+scoring_year,2025-12,21752,Newnan (Highway 34 East),1825 Highway 34 E,Newnan,GA,Coweta,True,,False,33.402243999727,-84.719825246094,census_geocoder,Match,Non_Exact
+scoring_year,2025-12,22882,Peachtree City (Braelinn Village),472 Crosstown Dr,Peachtree City,GA,Fayette,True,,False,33.374283832694,-84.565007714078,census_geocoder,Match,Non_Exact
+scoring_year,2025-12,22909,Peachtree City (Wisdom Road),315 Highway 74 N,Peachtree City,GA,Fayette,True,,False,33.41346,-84.60286,manual (config),No_Match,
+scoring_year,2025-12,22927,Sandy Springs (Hammond Drive),1100 Hammond Dr Ste 100,Sandy Springs,GA,Fulton,True,,False,33.919022373561,-84.350660019261,census_geocoder,Match,Non_Exact
+scoring_year,2025-12,22934,Snellville,1708 Scenic Hwy S Ste H,Snellville,GA,Gwinnett,True,,False,33.881266211289,-84.011350499848,census_geocoder,Match,Non_Exact
+scoring_year,2025-12,22943,Stockbridge (Eagles Landing),285 Center Pointe Pkwy,Stockbridge,GA,Henry,True,,False,33.513504672886,-84.215010267478,census_geocoder,Match,Non_Exact
+scoring_year,2025-12,22954,Stockbridge (Mt. Zion Parkway),5006 Mount Zion Pkwy,Stockbridge,GA,Henry,True,,False,33.548819567875,-84.290422162314,census_geocoder,Match,Exact
+scoring_year,2025-12,22968,Vinings (Cumberland Boulevard),3250 Riverwood Pkwy SE,Atlanta,GA,Cobb,True,,False,33.877251216915,-84.460614455502,census_geocoder,Match,Non_Exact
+scoring_year,2025-12,22977,"Florence, Ky (Cincinnati Metro)",4885 Houston Rd,Florence,KY,Boone,False,out of state,False,,,,,
+scoring_year,2025-12,22992,"Southlake, TX (Dallas Metro)",100 N Kimball Ave Ste 103,Southlake,TX,Tarrant,False,out of state,False,,,,,
+scoring_year,2025-12,23001,Atlanta (Technical Operations Center),1775 M H Jackson Service Rd,Atlanta,GA,Clayton,False,behind Delta security,False,,,,No_Match,
+scoring_year,2025-12,23010,Atlanta (World Headquaters),1030 Delta Blvd,Atlanta,GA,Fulton,False,behind Delta security,False,33.658050568464,-84.423025658003,census_geocoder,Match,Exact
+scoring_year,2025-12,27079,Salt Lake City (Salt Lake City Int'l Airport),3920 W Terminal Dr,Salt Lake City,UT,Salt Lake,False,out of state,False,,,,,
+scoring_year,2025-12,50828,Gainesville,891 Dawsonville Hwy Ste 140,Gainesville,GA,Hall,True,,False,34.297509574014,-83.856013473729,census_geocoder,Match,Exact
+scoring_year,2025-12,51154,Decatur,160 Clairemont Ave,Decatur,GA,DeKalb,True,,False,33.776999989359,-84.296571929608,census_geocoder,Match,Exact
+scoring_year,2025-12,52464,Johns Creek,6700 McGinnis Ferry Rd,Johns Creek,GA,Fulton,True,,False,34.07753,-84.18273,manual (config),No_Match,
+scoring_year,2025-12,52465,Buckhead-Midtown,1745 Peachtree St NE Ste B,Atlanta,GA,Fulton,True,,False,33.798787843812,-84.387638709927,census_geocoder,Match,Non_Exact
+scoring_year,2025-12,52471,Alpharetta,11575 Haynes Bridge Rd,Alpharetta,GA,Fulton,True,,False,34.063187058247,-84.291259804968,census_geocoder,Match,Exact
+scoring_year,2025-12,52473,Office Location- Riverwood 100,3350 Riverwood Pkwy SE,Atlanta,GA,Cobb,False,corporate office without member services,True,33.87815960056,-84.459160493158,census_geocoder,Match,Non_Exact
+scoring_year,2025-12,52474,Office Location - Riverwood 200,3300 Riverwood Pkwy SE,Atlanta,GA,Cobb,False,corporate office without member services,True,33.877544057043,-84.460133317849,census_geocoder,Match,Non_Exact
+scoring_year,2025-12,52476,Newnan (Coweta Crossroads),90 Glenda Trce Ste A,Newnan,GA,Coweta,True,,False,33.410477967015,-84.68561795427,census_geocoder,Match,Non_Exact
+scoring_year,2025-12,52478,McDonough,210 Jonesboro Rd,McDonough,GA,Henry,True,,False,33.451159234188,-84.163088646989,census_geocoder,Match,Exact
+scoring_year,2025-12,52481,Cumming,445 Peachtree Pkwy,Cumming,GA,Forsyth,True,,False,34.152546971989,-84.173823321411,census_geocoder,Match,Exact
+scoring_year,2025-12,52483,Douglasville,2850 Chapel Hill Rd,Douglasville,GA,Douglas,True,,False,33.727673934578,-84.736948974071,census_geocoder,Match,Exact
+scoring_year,2025-12,52491,Chamblee/Brookhaven,5001 Peachtree Blvd Ste 520,Chamblee,GA,DeKalb,True,,False,33.885641810929,-84.315416924373,census_geocoder,Match,Non_Exact
+scoring_year,2025-12,52494,Woodstock Branch,285 Molly Ln,Woodstock,GA,Cherokee,True,,False,34.08358111723,-84.540789537756,census_geocoder,Match,Exact
+scoring_year,2025-12,52497,Locust Grove,3300 Highway 42 S,Locust Grove,GA,Henry,True,,False,33.35856909403,-84.118068025499,census_geocoder,Match,Non_Exact
+scoring_year,2025-12,52499,Conyers,1486 Old Salem Rd SE,Conyers,GA,Rockdale,True,,True,33.647999568563,-84.004362328825,census_geocoder,Match,Exact
+current,2026-06,21196,Virginia Avenue,1025 Virginia Ave,Atlanta,GA,Fulton,True,,False,33.658968405321,-84.423446750246,census_geocoder,Match,Exact
+current,2026-06,21597,Atlanta (Hartsfield-Jackson Int'l Airport),6000 N Terminal Pkwy,Atlanta,GA,Clayton,False,behind airport security (Concourse A),False,33.642321193002,-84.442539621323,census_geocoder,Match,Exact
+current,2026-06,21610,Buford (Kroger),3300 Hamilton Mill Rd,Buford,GA,Gwinnett,True,,False,34.094296578772,-83.935451165385,census_geocoder,Match,Exact
+current,2026-06,21627,Canton (Kroger),6766 Hickory Flat Hwy,Canton,GA,Cherokee,True,,False,34.17004987482,-84.414138276195,census_geocoder,Match,Exact
+current,2026-06,21636,Duluth (Sugarloaf),1980 Satellite Blvd,Duluth,GA,Gwinnett,True,,False,33.989839455887,-84.087468908634,census_geocoder,Match,Exact
+current,2026-06,21641,Fayetteville (Summit Point),140 Highway 92 S,Fayetteville,GA,Fayette,True,,False,33.429283121355,-84.454973029727,census_geocoder,Match,Non_Exact
+current,2026-06,21647,Marietta (Dallas Highway),2627 Dallas Hwy SW,Marietta,GA,Cobb,True,,False,33.946543916599,-84.629357916457,census_geocoder,Match,Non_Exact
+current,2026-06,21653,Marietta (Johnson Ferry Road),1205 Johnson Ferry Rd,Marietta,GA,Cobb,True,,False,33.978626778963,-84.419246336937,census_geocoder,Match,Exact
+current,2026-06,21752,Newnan (Highway 34 East),1825 Highway 34 E,Newnan,GA,Coweta,True,,False,33.402243999727,-84.719825246094,census_geocoder,Match,Non_Exact
+current,2026-06,22882,Peachtree City (Braelinn Village),472 Crosstown Dr,Peachtree City,GA,Fayette,True,,False,33.374283832694,-84.565007714078,census_geocoder,Match,Non_Exact
+current,2026-06,22909,Peachtree City (Wisdom Road),315 Highway 74 N,Peachtree City,GA,Fayette,True,,False,33.41346,-84.60286,manual (config),No_Match,
+current,2026-06,22927,Sandy Springs (Hammond Drive),1100 Hammond Dr Ste 100,Sandy Springs,GA,Fulton,True,,False,33.919022373561,-84.350660019261,census_geocoder,Match,Non_Exact
+current,2026-06,22934,Snellville,1708 Scenic Hwy S Ste H,Snellville,GA,Gwinnett,True,,False,33.881266211289,-84.011350499848,census_geocoder,Match,Non_Exact
+current,2026-06,22943,Stockbridge (Eagles Landing),285 Center Pointe Pkwy,Stockbridge,GA,Henry,True,,False,33.513504672886,-84.215010267478,census_geocoder,Match,Non_Exact
+current,2026-06,22954,Stockbridge (Mt. Zion Parkway),5006 Mount Zion Pkwy,Stockbridge,GA,Henry,True,,False,33.548819567875,-84.290422162314,census_geocoder,Match,Exact
+current,2026-06,22968,Vinings (Cumberland Boulevard),3250 Riverwood Pkwy SE,Atlanta,GA,Cobb,True,,False,33.877251216915,-84.460614455502,census_geocoder,Match,Non_Exact
+current,2026-06,22977,"Florence, Ky (Cincinnati Metro)",4885 Houston Rd,Florence,KY,Boone,False,out of state,False,,,,,
+current,2026-06,22992,"Southlake, TX (Dallas Metro)",100 N Kimball Ave Ste 103,Southlake,TX,Tarrant,False,out of state,False,,,,,
+current,2026-06,23001,Atlanta (Technical Operations Center),1775 M H Jackson Service Rd,Atlanta,GA,Clayton,False,behind Delta security,False,,,,No_Match,
+current,2026-06,23010,Atlanta (World Headquaters),1030 Delta Blvd,Atlanta,GA,Fulton,False,behind Delta security,False,33.658050568464,-84.423025658003,census_geocoder,Match,Exact
+current,2026-06,27079,Salt Lake City (Salt Lake City Int'l Airport),3920 W Terminal Dr,Salt Lake City,UT,Salt Lake,False,out of state,False,,,,,
+current,2026-06,50828,Gainesville,891 Dawsonville Hwy Ste 140,Gainesville,GA,Hall,True,,False,34.297509574014,-83.856013473729,census_geocoder,Match,Exact
+current,2026-06,51154,Decatur,160 Clairemont Ave,Decatur,GA,DeKalb,True,,False,33.776999989359,-84.296571929608,census_geocoder,Match,Exact
+current,2026-06,52464,Johns Creek,6700 McGinnis Ferry Rd,Johns Creek,GA,Fulton,True,,False,34.07753,-84.18273,manual (config),No_Match,
+current,2026-06,52465,Buckhead-Midtown,1745 Peachtree St NE Ste B,Atlanta,GA,Fulton,True,,False,33.798787843812,-84.387638709927,census_geocoder,Match,Non_Exact
+current,2026-06,52471,Alpharetta,11575 Haynes Bridge Rd,Alpharetta,GA,Fulton,True,,False,34.063187058247,-84.291259804968,census_geocoder,Match,Exact
+current,2026-06,52473,Office Location- Riverwood 100,3350 Riverwood Pkwy SE,Atlanta,GA,Cobb,False,corporate office without member services,True,33.87815960056,-84.459160493158,census_geocoder,Match,Non_Exact
+current,2026-06,52474,Office Location - Riverwood 200,3300 Riverwood Pkwy SE,Atlanta,GA,Cobb,False,corporate office without member services,True,33.877544057043,-84.460133317849,census_geocoder,Match,Non_Exact
+current,2026-06,52476,Newnan (Coweta Crossroads),90 Glenda Trce Ste A,Newnan,GA,Coweta,True,,False,33.410477967015,-84.68561795427,census_geocoder,Match,Non_Exact
+current,2026-06,52478,McDonough,210 Jonesboro Rd,McDonough,GA,Henry,True,,False,33.451159234188,-84.163088646989,census_geocoder,Match,Exact
+current,2026-06,52481,Cumming,445 Peachtree Pkwy,Cumming,GA,Forsyth,True,,False,34.152546971989,-84.173823321411,census_geocoder,Match,Exact
+current,2026-06,52483,Douglasville,2850 Chapel Hill Rd,Douglasville,GA,Douglas,True,,False,33.727673934578,-84.736948974071,census_geocoder,Match,Exact
+current,2026-06,52491,Chamblee/Brookhaven,5001 Peachtree Blvd Ste 520,Chamblee,GA,DeKalb,True,,False,33.885641810929,-84.315416924373,census_geocoder,Match,Non_Exact
+current,2026-06,52494,Woodstock Branch,285 Molly Ln,Woodstock,GA,Cherokee,True,,False,34.08358111723,-84.540789537756,census_geocoder,Match,Exact
+current,2026-06,52497,Locust Grove,3300 Highway 42 S,Locust Grove,GA,Henry,True,,False,33.35856909403,-84.118068025499,census_geocoder,Match,Non_Exact
+current,2026-06,52499,Conyers,1486 Old Salem Rd SE,Conyers,GA,Rockdale,True,,True,33.647999568563,-84.004362328825,census_geocoder,Match,Exact

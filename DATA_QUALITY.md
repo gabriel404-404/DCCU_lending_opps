@@ -286,3 +286,96 @@ LEIs with market originations that are missing from every cached HMDA `/view/fil
 | First Heritage Mortgage, LLC       | unknown                          |         0 | data signature only: 4% refi and 42% of GA purchases in 3 tracts                    |         135 |                     0.33 |
 | JET HOMELOANS, LP                  | unknown                          |         0 | data signature only: 0% refi and 27% of GA purchases in 3 tracts                    |          27 |                     0.07 |
 <!-- phase3:end -->
+
+<!-- phase4:start -->
+## Phase 4: households, density, branch distance and growth
+
+### 1. Branches and geocoding
+NCUA snapshots: scoring year `2025-12` (share by distance) and current `2026-06` (expansion scorecard). In-scope Georgia branches: **28** and **28**. Excluded sites (`config/branch_exclusions.csv`, plus out-of-state):
+
+|   site_id | site_name                                     | state   | exclusion_reason                         |
+|----------:|:----------------------------------------------|:--------|:-----------------------------------------|
+|     21597 | Atlanta (Hartsfield-Jackson Int'l Airport)    | GA      | behind airport security (Concourse A)    |
+|     22977 | Florence, Ky (Cincinnati Metro)               | KY      | out of state                             |
+|     22992 | Southlake, TX (Dallas Metro)                  | TX      | out of state                             |
+|     23001 | Atlanta (Technical Operations Center)         | GA      | behind Delta security                    |
+|     23010 | Atlanta (World Headquaters)                   | GA      | behind Delta security                    |
+|     27079 | Salt Lake City (Salt Lake City Int'l Airport) | UT      | out of state                             |
+|     52473 | Office Location- Riverwood 100                | GA      | corporate office without member services |
+|     52474 | Office Location - Riverwood 200               | GA      | corporate office without member services |
+
+The Census Geocoder matched every in-scope branch except those below, whose coordinates come from `config/branch_coordinates_manual.csv` (interpolated between two matched house numbers on the same street; error a few hundred meters).
+
+|   site_id | site_name                    | address                |     lat |      lon |
+|----------:|:-----------------------------|:-----------------------|--------:|---------:|
+|     22909 | Peachtree City (Wisdom Road) | 315 Highway 74 N       | 33.4135 | -84.6029 |
+|     52464 | Johns Creek                  | 6700 McGinnis Ferry Rd | 34.0775 | -84.1827 |
+
+Every geocoder-matched branch falls in the county NCUA lists. Hand-placed points outside NCUA's county (they sit on a county-line road; distances are unaffected): Johns Creek (NCUA Fulton, point in Forsyth). The farthest any branch's tract internal point is from its nearest branch is 1.73 mi. Branches flagged `ncua_no_member_services` but kept: Conyers.
+
+### 2. Branch changes between snapshots
+Opened: none. Closed: none.
+
+### 3-5. Tract coverage, penetration and distance
+No tract is dropped; gaps are flags or blanks.
+
+| check                                                    |   count |
+|:---------------------------------------------------------|--------:|
+| tracts                                                   |    2796 |
+| missing households (no ACS row)                          |       0 |
+| zero households                                          |      15 |
+| high MOE households (CV > 30%)                           |       7 |
+| zero land area (density blank)                           |       5 |
+| missing or zero owner-occupied units (penetration blank) |      41 |
+| missing distance                                         |       0 |
+
+FOM tracts by distance band (2025-12 branches); farthest FOM tract: 28.8 mi.
+
+| band   |   fom_tracts |
+|:-------|-------------:|
+| 0-2    |          191 |
+| 2-5    |          665 |
+| 5-10   |          497 |
+| 10+    |          104 |
+
+DCCU share by band, FOM tracts (pooled: sum of DCCU loans / sum of market loans):
+
+| band   |   tracts |   households |   market_all |   dccu_all |   share_all |   share_purchase |
+|:-------|---------:|-------------:|-------------:|-----------:|------------:|-----------------:|
+| 0-2    |      191 |       313272 |         6970 |        193 |      0.0277 |           0.0279 |
+| 2-5    |      665 |       990392 |        23434 |        481 |      0.0205 |           0.0209 |
+| 5-10   |      497 |       763665 |        17461 |        308 |      0.0176 |           0.0182 |
+| 10+    |      104 |       180829 |         5899 |         70 |      0.0119 |           0.0122 |
+
+County-adjusted (`vs_county_average` = DCCU loans / loans expected at the county's own share). Most of the raw gradient is between counties, not proximity:
+
+| band   |   tracts |   market_all |   dccu_all |   expected_dccu |   vs_county_average |
+|:-------|---------:|-------------:|-----------:|----------------:|--------------------:|
+| 0-2    |      191 |         6970 |        193 |          169.16 |                1.14 |
+| 2-5    |      665 |        23434 |        481 |          473.5  |                1.02 |
+| 5-10   |      497 |        17461 |        308 |          335.06 |                0.92 |
+| 10+    |      104 |         5899 |         70 |           74.28 |                0.94 |
+
+### 6. Population estimates (Vintage 2025)
+County totals sum to the state row in every year used. Georgia grew **5.31%** from July 2020 to July 2025; counties above that are `growing`, and counties above 1.5x that (7.97%) are `fast_growing` (the bar for named clusters).
+
+|   year |   state_row |   county_sum | match   |
+|-------:|------------:|-------------:|:--------|
+|   2020 |    10732595 |     10732595 | True    |
+|   2023 |    11063669 |     11063669 | True    |
+|   2025 |    11302748 |     11302748 | True    |
+
+### 7. County adjacency
+860 Georgia county pairs (both directions); 84 out-of-state neighbor pairs dropped. Asymmetric pairs: **0**. Counties with no Georgia neighbor: none.
+
+### 8. Expansion scorecard
+139 non-FOM counties, no blanks in households, household_density, pop_2025, pop_growth, branch_miles_hh_weighted; expansion gain total matches Phase 3 (448 loans). Growth clusters (2+ neighboring fast-growing non-FOM counties): **5**.
+
+| growth_cluster   |   counties | county_names                                                                                       | touches_fom   |   pop_growth |   expansion_gain |
+|:-----------------|-----------:|:---------------------------------------------------------------------------------------------------|:--------------|-------------:|-----------------:|
+| C1               |         12 | Banks, Franklin, Greene, Habersham, Hart, Jasper, Lamar, Madison, Monroe, Morgan, Oglethorpe, Pike | True          |        0.116 |            30.78 |
+| C3               |          3 | Bartow, Dawson, Pickens                                                                            | True          |        0.139 |            28.86 |
+| C2               |          3 | Bryan, Bulloch, Effingham                                                                          | False         |        0.122 |            25.6  |
+| C4               |          2 | Carroll, Haralson                                                                                  | True          |        0.098 |            13.12 |
+| C5               |          2 | Long, McIntosh                                                                                     | False         |        0.232 |             3.34 |
+<!-- phase4:end -->

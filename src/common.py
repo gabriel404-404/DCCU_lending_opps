@@ -2,6 +2,7 @@
 
 import sys
 import time
+import zipfile
 from pathlib import Path
 
 import pandas as pd
@@ -48,6 +49,23 @@ def read_hmda(path, **kw):
     # Read everything as text: tract and county codes have leading zeros, and
     # numeric fields can contain "Exempt" or "NA".
     return pd.read_csv(path, dtype=str, keep_default_na=False, **kw)
+
+
+def dccu_branches(zip_path):
+    """DCCU's charter number and branch rows from one NCUA call report zip."""
+    with zipfile.ZipFile(zip_path) as z:
+        names = z.namelist()
+        foicu_name = next(n for n in names if n.lower().endswith("foicu.txt"))
+        branch_name = next(n for n in names if "branch" in n.lower())
+        foicu = pd.read_csv(z.open(foicu_name), dtype=str, encoding="latin-1")
+        branches = pd.read_csv(z.open(branch_name), dtype=str, encoding="latin-1")
+    # NCUA lists DCCU as "DELTA COMMUNITY" (no "CREDIT UNION"), so match on that plus state.
+    cu = foicu[foicu["CU_NAME"].str.upper().str.strip().str.startswith("DELTA COMMUNITY")
+               & (foicu["STATE"] == s.STATE_ABBR)]
+    if len(cu) != 1:
+        raise ValueError(f"Expected one DCCU record in FOICU, found {len(cu)}")
+    charter = cu["CU_NUMBER"].iloc[0]
+    return charter, branches[branches["CU_NUMBER"] == charter]
 
 
 def md_table(df):
