@@ -1,0 +1,6 @@
+threshold,tracts,market_loans,dccu_loans,opportunity,pct_of_opportunity,tracts_share_over_10pct
+zero originations,24,0,0,0.0,0.0,0
+< 10,153,872,15,15.3,2.9,14
+< 15,252,2068,40,33.7,6.3,17
+< 20,386,4330,91,65.0,12.2,27
+< 30,651,10785,207,146.1,27.4,29

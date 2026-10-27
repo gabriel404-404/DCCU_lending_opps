@@ -1,0 +1,37 @@
+market_group,urban_rural_tier,counties,fom_counties,county_names
+(no metro/micro area),rural,53,0,"Appling, Bacon, Baker, Banks, Berrien, Bleckley, Calhoun, Candler, Charlton, Clay, Clinch, Cook, Dodge, Dooly, Early, Elbert, Emanuel, Fannin, Franklin, Gilmer, Glascock, Greene, Hancock, Hart, Irwin, Jeff Davis, Jefferson, Jenkins, Lamar, Macon, Miller, Mitchell, Pulaski, Putnam, Rabun, Randolph, Screven, Seminole, Taliaferro, Tattnall, Taylor, Telfair, Towns, Treutlen, Union, Warren, Washington, Webster, Wheeler, White, Wilcox, Wilkes, Wilkinson"
+"Atlanta-Sandy Springs-Roswell, GA",metro,29,18,"Barrow, Bartow, Butts, Carroll, Cherokee, Clayton, Cobb, Coweta, Dawson, DeKalb, Douglas, Fayette, Forsyth, Fulton, Gwinnett, Haralson, Heard, Henry, Jasper, Lumpkin, Meriwether, Morgan, Newton, Paulding, Pickens, Pike, Rockdale, Spalding, Walton"
+"Macon-Bibb County--Warner Robins, GA",metro,7,0,"Bibb, Crawford, Houston, Jones, Monroe, Peach, Twiggs"
+"Columbus-Auburn-Opelika, GA-AL",metro,6,0,"Chattahoochee, Harris, Marion, Muscogee, Stewart, Talbot"
+"Savannah-Hinesville-Statesboro, GA",metro,5,0,"Bryan, Chatham, Effingham, Liberty, Long"
+"Augusta-Richmond County, GA-SC",metro,5,0,"Burke, Columbia, Lincoln, McDuffie, Richmond"
+"Chattanooga-Cleveland-Dalton, TN-GA-AL",metro,5,0,"Catoosa, Dade, Murray, Walker, Whitfield"
+"Albany, GA",metro,4,0,"Dougherty, Lee, Terrell, Worth"
+"Valdosta, GA",metro,4,0,"Brooks, Echols, Lanier, Lowndes"
+"Athens-Clarke County, GA",metro,4,0,"Clarke, Madison, Oconee, Oglethorpe"
+"Savannah-Hinesville-Statesboro, GA",micro,3,0,"Bulloch, Evans, Wayne"
+"Brunswick-St. Simons, GA",metro,3,0,"Brantley, Glynn, McIntosh"
+"Americus, GA",micro,2,0,"Schley, Sumter"
+"Tifton, GA",micro,2,0,"Tift, Turner"
+"Vidalia, GA",micro,2,0,"Montgomery, Toombs"
+"Thomasville, GA",micro,2,0,"Grady, Thomas"
+"Waycross, GA",micro,2,0,"Pierce, Ware"
+"Dublin, GA",micro,2,0,"Johnson, Laurens"
+"Douglas, GA",micro,2,0,"Atkinson, Coffee"
+"Calhoun, GA",micro,1,0,Gordon
+"Jacksonville-Kingsland-Palatka, FL-GA",micro,1,0,Camden
+"Gainesville, GA",metro,1,1,Hall
+"Fitzgerald, GA",micro,1,0,Ben Hill
+"Eufaula, AL-GA",micro,1,0,Quitman
+"Cordele, GA",micro,1,0,Crisp
+"Cornelia, GA",micro,1,0,Habersham
+"Cedartown, GA",micro,1,0,Polk
+"Chattanooga-Cleveland-Dalton, TN-GA-AL",micro,1,0,Chattooga
+"Moultrie, GA",micro,1,0,Colquitt
+"Rome, GA",metro,1,0,Floyd
+"LaGrange, GA-AL",micro,1,0,Troup
+"Milledgeville, GA",micro,1,0,Baldwin
+"Jefferson, GA",micro,1,1,Jackson
+"Thomaston, GA",micro,1,0,Upson
+"Tallahassee-Bainbridge, FL-GA",micro,1,0,Decatur
+"Toccoa, GA",micro,1,0,Stephens

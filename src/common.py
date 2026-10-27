@@ -1,12 +1,47 @@
 """Helpers shared by the pipeline stages."""
 
 import sys
+import time
 from pathlib import Path
 
 import pandas as pd
+import requests
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 from config import settings as s  # noqa: E402
+
+SESSION = requests.Session()
+SESSION.headers["User-Agent"] = "DCCU_lending_opps research script"
+
+
+def fetch(url, dest, params=None, retries=4):
+    """Download url to dest unless dest exists. Returns True if a network call was made.
+
+    Writes to a .part file first and renames at the end, so an interrupted
+    download never looks like a finished (cached) one.
+    """
+    dest = Path(dest)
+    if dest.exists():
+        return False
+    dest.parent.mkdir(parents=True, exist_ok=True)
+    tmp = dest.with_name(dest.name + ".part")
+    for attempt in range(1, retries + 1):
+        try:
+            with SESSION.get(url, params=params, stream=True, timeout=300) as r:
+                r.raise_for_status()
+                with open(tmp, "wb") as f:
+                    for chunk in r.iter_content(chunk_size=1 << 20):
+                        f.write(chunk)
+            tmp.replace(dest)
+            return True
+        except requests.RequestException as e:
+            # A 4xx (e.g. 404 not found) won't fix itself on retry.
+            client_error = getattr(e.response, "status_code", 500) < 500
+            if attempt == retries or client_error:
+                raise
+            wait = 5 * attempt
+            print(f"  retry {attempt} for {dest.name} in {wait}s ({e})")
+            time.sleep(wait)
 
 
 def read_hmda(path, **kw):

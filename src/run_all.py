@@ -9,7 +9,7 @@ import sys
 from pathlib import Path
 
 SRC = Path(__file__).resolve().parent
-STAGES = ["01_download.py", "02_validate.py", "03_market.py"]
+STAGES = ["01_download.py", "02_validate.py", "03_market.py", "04_metrics.py"]
 
 for stage in STAGES:
     print(f"\n=== {stage} ===", flush=True)

@@ -8,47 +8,15 @@ Run from the repo root:  python src/01_download.py
 """
 
 import sys
-import time
 from concurrent.futures import ThreadPoolExecutor
 from datetime import date
 from pathlib import Path
 
 import pandas as pd
-import requests
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 from config import settings as s  # noqa: E402
-
-SESSION = requests.Session()
-SESSION.headers["User-Agent"] = "DCCU_lending_opps research script"
-
-
-def fetch(url, dest, params=None, retries=4):
-    """Download url to dest unless dest exists. Returns True if a network call was made.
-
-    Writes to a .part file first and renames at the end, so an interrupted
-    download never looks like a finished (cached) one.
-    """
-    dest = Path(dest)
-    if dest.exists():
-        return False
-    dest.parent.mkdir(parents=True, exist_ok=True)
-    tmp = dest.with_name(dest.name + ".part")
-    for attempt in range(1, retries + 1):
-        try:
-            with SESSION.get(url, params=params, stream=True, timeout=300) as r:
-                r.raise_for_status()
-                with open(tmp, "wb") as f:
-                    for chunk in r.iter_content(chunk_size=1 << 20):
-                        f.write(chunk)
-            tmp.replace(dest)
-            return True
-        except requests.RequestException as e:
-            if attempt == retries:
-                raise
-            wait = 5 * attempt
-            print(f"  retry {attempt} for {dest.name} in {wait}s ({e})")
-            time.sleep(wait)
+from src.common import SESSION, fetch  # noqa: E402
 
 
 def download_reference_files():
@@ -59,15 +27,33 @@ def download_reference_files():
     fetch(s.ACS_B11001_URL, s.RAW / "acs" / f"acsdt5y{s.ACS_YEAR}-b11001.dat")
 
 
+def county_tags(omb):
+    """CBSA, CSA, urban/rural tier and market group for each county in an OMB area (PRD Appendix A)."""
+    t = omb.rename(columns={
+        "CBSA Code": "cbsa_code", "CBSA Title": "cbsa_title", "CSA Code": "csa_code",
+        "CSA Title": "csa_title", "Metropolitan/Micropolitan Statistical Area": "cbsa_type"})
+    t["urban_rural_tier"] = t["cbsa_type"].map({"Metropolitan Statistical Area": "metro",
+                                                "Micropolitan Statistical Area": "micro"})
+    if t["urban_rural_tier"].isna().any():
+        raise ValueError(f"Unexpected CBSA types: {t['cbsa_type'].unique()}")
+    # Hybrid market groups: use the CSA where there is one, so Macon + Warner Robins rank as one
+    # market. Not the Atlanta CSA, though: it would swallow Athens, Gainesville, Rome and LaGrange.
+    atl_csa = t.loc[t["cbsa_code"] == s.ATLANTA_CBSA, "csa_code"].iloc[0]
+    use_csa = t["csa_code"].notna() & (t["csa_code"] != atl_csa)
+    t["market_group"] = t["csa_title"].where(use_csa, t["cbsa_title"])
+    return t[["county_fips", "urban_rural_tier", "market_group", "cbsa_title", "csa_title"]]
+
+
 def build_county_config():
-    """Write config/ga_counties.csv: all Georgia counties with FOM and Atlanta MSA flags."""
+    """Write config/ga_counties.csv: all Georgia counties with FOM, Atlanta MSA and metro-area tags."""
     counties = pd.read_csv(s.RAW / "census" / "st13_ga_cou2020.txt", sep="|", dtype=str)
     counties["county_fips"] = counties["STATEFP"] + counties["COUNTYFP"]
     counties["county_name"] = counties["COUNTYNAME"].str.replace(" County", "", regex=False)
 
     omb = pd.read_excel(s.RAW / "omb" / "list1_2023.xlsx", skiprows=2, dtype=str)
-    atl = omb[omb["CBSA Code"] == s.ATLANTA_CBSA]
-    atl_fips = set(atl["FIPS State Code"] + atl["FIPS County Code"])
+    omb = omb[omb["FIPS State Code"] == s.STATE_FIPS].copy()
+    omb["county_fips"] = omb["FIPS State Code"] + omb["FIPS County Code"]
+    atl_fips = set(omb.loc[omb["CBSA Code"] == s.ATLANTA_CBSA, "county_fips"])
 
     fom = pd.read_csv(s.CONFIG / "fom_counties.csv", dtype=str)
     # The FOM config was typed by hand, so check its FIPS codes against the Census list.
@@ -80,9 +66,13 @@ def build_county_config():
     out = counties[["county_fips", "county_name"]].copy()
     out["fom_flag"] = out["county_fips"].isin(fom["county_fips"]).astype(int)
     out["atlanta_msa_flag"] = out["county_fips"].isin(atl_fips).astype(int)
+    # Counties in no metro or micro area are rural and have no market group.
+    out = out.merge(county_tags(omb), on="county_fips", how="left")
+    out["urban_rural_tier"] = out["urban_rural_tier"].fillna("rural")
     out.to_csv(s.CONFIG / "ga_counties.csv", index=False)
+    tiers = out["urban_rural_tier"].value_counts().to_dict()
     print(f"  config/ga_counties.csv: {len(out)} counties, "
-          f"{out['fom_flag'].sum()} FOM, {out['atlanta_msa_flag'].sum()} in Atlanta MSA")
+          f"{out['fom_flag'].sum()} FOM, {out['atlanta_msa_flag'].sum()} in Atlanta MSA, tiers {tiers}")
     return out["county_fips"].tolist()
 
 

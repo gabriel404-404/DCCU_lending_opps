@@ -37,7 +37,7 @@ Membership is defined by the **person** (lives or works in an eligible county, D
 | # | Requirement | Story |
 |---|---|---|
 | R1 | Tract map of DCCU share in the scoring year: FOM counties (primary) plus a statewide view | 1 |
-| R2 | Opportunity table: top 25 FOM tracts by scoring-year opportunity score, top 3 competitors each (CSV), with a stability check | 2, 3 |
+| R2 | Opportunity table: top 25 FOM tracts by scoring-year opportunity score, top 3 competitors each (CSV), with a stability flag and a contestable (non-builder) score. Depth also rolled up by FOM county, with top 3 competitors per county | 2, 3 |
 | R3 | Tag every tract as inside or outside DCCU's field-of-membership (FOM) counties. Compare DCCU share inside vs. outside to estimate how much the membership boundary suppresses share | 2, 6 |
 | R3a | Depth vs. expansion comparison: total depth opportunity inside the FOM vs. a county scorecard for every non-FOM Georgia county (market volume, DCCU current share, expansion gain at the target share, market group, urban/rural tier, population growth, purchase-market change, households, distance to nearest branch, adjacency to FOM) | 6 |
 | R3b | Expansion rankings: non-FOM counties ranked by market group (e.g., Savannah, Macon–Warner Robins), by urban/rural tier, and as growth clusters of neighboring growing counties | 7 |
@@ -60,7 +60,8 @@ Pricing/rate comparison, underserved-area analysis, fair-lending analysis, forec
 - ~~Pool years for scoring?~~ Resolved 2026-10-27: no. Opportunity is scored on the latest year (2025), the closest thing to current state. 2022–2025 is used for trends.
 - ~~Trend level~~ Resolved 2026-10-27: per county, not per tract. DCCU makes under one loan per FOM tract a year (2025: 823 of 1,433 FOM tracts had none), so tract-level year-over-year share is noise.
 - ~~Expansion groupings~~ Resolved 2026-10-27: market groups use the hybrid OMB rule, urban/rural uses OMB's three tiers, growth uses Census population estimates with HMDA purchase volume as a cross-check (definitions in Appendix A).
-- Minimum volume for tract scoring: the old ≥ 20 pooled threshold no longer applies. Set it in Phase 3 from 2025 volumes.
+- ~~Minimum volume for tract scoring~~ Resolved 2026-10-27: no tract is dropped; tracts under 20 scoring-year market originations get a `low_volume` flag (the top 25 all have 83+).
+- Builder-lender list (`config/builder_lenders.csv`): 7 lenders included, 6 data-signature candidates excluded until confirmed. Pending user review.
 
 ---
 
@@ -71,6 +72,8 @@ Pricing/rate comparison, underserved-area analysis, fair-lending analysis, forec
   - **Years:** every published year from 2022 onward. 2022+ uses 2020 census tract boundaries, so tracts are comparable across years. Do not pull 2018–2021 (2010 tracts).
   - **Geography:** the market is all 159 Georgia counties (state FIPS 13), kept as a fixed county list in `config/ga_counties.csv`. Each county is tagged `fom_flag` and `atlanta_msa_flag`. The Atlanta MSA tag comes from OMB's 2023 delineation (CBSA 12060) and is used for display only; it does not define the market. The same OMB file supplies each county's CBSA, CSA, `urban_rural_tier` and `market_group` (see Metrics).
   - Use `/view/filers` to map LEIs to lender names. Confirm DCCU's LEI there; do not hard-code a guess.
+- **Lender names not in the filers lists:** GLEIF LEI registry API (`https://api.gleif.org/api/v1/lei-records`), one cached call per missing LEI.
+- **Builder-owned lenders:** hand-maintained `config/builder_lenders.csv`, with the basis for each row; reviewed by the user.
 - **Households:** Census ACS 5-year, table B11001 (total households, `B11001_001E`), tract level. Use the latest 5-year release on 2020 tracts. Census API key optional at this volume.
 - **Tract geometry and land area:** Census TIGER/Line or cartographic boundary files, Georgia, 2020 tracts. Use `ALAND` for density and internal points for distance.
 - **Branch locations:** NCUA quarterly call report data (branch information file). Geocode addresses if lat/long is missing.
@@ -91,7 +94,8 @@ Pricing/rate comparison, underserved-area analysis, fair-lending analysis, forec
 - `tract_share` = DCCU originations ÷ market originations in the tract, per year.
 - `fom_share` = DCCU originations ÷ market originations across all FOM counties in the scoring year (1.96% in 2025). Computed from the data each run, not hard-coded. It replaces `metro_share`, which a statewide market dilutes.
 - `opportunity_score` (FOM tracts) = tract market originations × max(0, `fom_share` − `tract_share`), scoring year. Read it as "loans gained if this tract matched DCCU's FOM average."
-- Stability check: rebuild the top 25 using tract share from the two latest years combined, and report the overlap with the single-year top 25. Heavy reshuffling means single-year scores are too noisy to rank on.
+- Stability check: rebuild the top 25 using tract share from the two latest years combined, and report the overlap with the single-year top 25. Heavy reshuffling means single-year scores are too noisy to rank on. `stable_top25` = in both lists. Result (2026-10-27): 12 of 25 overlap, but county rankings move at most 2 places, so findings lead with **depth by FOM county** and use tracts to say where within a county.
+- **Contestable market** = market originations minus those by builder-owned lenders (`config/builder_lenders.csv`, `include = 1`), which DCCU rarely wins. `opportunity_score_contestable` uses the contestable market in both the tract share and the `fom_share` benchmark. Reported next to `opportunity_score`, not instead of it.
 - `household_density` = households ÷ land area (sq mi). Raw household counts are not density, since tracts are drawn to similar population sizes.
 - `penetration` = market originations per 1,000 owner-occupied units (HMDA tract field).
 - Minimum volume: score only tracts with enough scoring-year market originations. Set the threshold in Phase 3 from 2025 volumes and document it.

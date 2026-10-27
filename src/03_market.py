@@ -19,10 +19,11 @@ import pandas as pd
 import pyarrow as pa
 import pyarrow.csv as pcsv
 import pyarrow.parquet as pq
+import requests
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 from config import settings as s  # noqa: E402
-from src.common import md_table, write_data_quality  # noqa: E402
+from src.common import fetch, md_table, write_data_quality  # noqa: E402
 
 HMDA = s.RAW / "hmda"
 OUT = s.PROCESSED / "phase2_checks"
@@ -99,7 +100,11 @@ def reconcile_dccu(year, ga):
     return rows
 
 
-def build_lenders():
+def build_lenders(market_leis):
+    """LEI -> latest name in the HMDA filers lists. market_leis: {lei: latest market year}.
+
+    Market LEIs missing from every filers list are named from GLEIF (cached per LEI).
+    """
     rows = []
     for y in s.YEARS:
         inst = json.loads((HMDA / f"filers_{y}.json").read_text())["institutions"]
@@ -107,6 +112,22 @@ def build_lenders():
     lenders = (pd.DataFrame(rows).sort_values("year")
                .groupby("lei", as_index=False).last()
                .rename(columns={"year": "latest_year"}))
+    lenders["name_source"] = "hmda_filers"
+
+    gleif = []
+    for lei in sorted(set(market_leis) - set(lenders["lei"])):
+        path = s.RAW / "gleif" / f"{lei}.json"
+        try:
+            fetch(f"{s.GLEIF_API}/{lei}", path)
+        except requests.HTTPError as e:
+            if e.response.status_code != 404:
+                raise
+            path.write_text('{"data": null}')  # cache "not in GLEIF" too
+        data = json.loads(path.read_text())["data"]
+        name = data["attributes"]["entity"]["legalName"]["name"] if data else None
+        gleif.append({"lei": lei, "name": name, "latest_year": market_leis[lei],
+                      "name_source": "gleif" if data else "not_found"})
+    lenders = pd.concat([lenders, pd.DataFrame(gleif)], ignore_index=True)
     lenders.to_csv(s.PROCESSED / "lenders.csv", index=False)
     return lenders
 
@@ -117,6 +138,7 @@ def main():
     fom_fips = set(counties.loc[counties["fom_flag"] == "1", "county_fips"])
 
     waterfall, exempt, recon, sizes = [], [], [], []
+    market_leis = {}  # lei -> latest year with market rows
     for y in s.YEARS:
         print(f"{y}: combining county files...")
         ga = combine_year(y, counties["county_fips"].tolist())
@@ -126,6 +148,7 @@ def main():
         exempt += e
         market = add_columns(market, fom_fips)
         market.to_parquet(s.PROCESSED / f"market_{y}.parquet", index=False)
+        market_leis |= dict.fromkeys(market["lei"].unique(), y)
 
         orig = market[market["action_taken"] == "1"]
         for scope, sub in [("statewide", orig), ("fom", orig[orig["fom_flag"] == 1])]:
@@ -144,7 +167,7 @@ def main():
             })
         print(f"  market rows {len(market):,}, originations {len(orig):,}")
 
-    lenders = build_lenders()
+    lenders = build_lenders(market_leis)
     waterfall, exempt = pd.DataFrame(waterfall), pd.DataFrame(exempt)
     recon, sizes = pd.DataFrame(recon), pd.DataFrame(sizes)
     waterfall.to_csv(OUT / "filter_waterfall.csv", index=False)
@@ -175,7 +198,10 @@ def main():
         "data (`has_tract = 0`) and count toward county and statewide totals, but can't be "
         "placed on the map or in tract metrics.",
         f"### Lenders\n`data/processed/lenders.csv`: {len(lenders):,} LEIs with their latest "
-        "reported name.",
+        "reported name. Names come from the HMDA filers lists; market LEIs missing from every "
+        "list are named from GLEIF (the global LEI registry).\n\n"
+        + md_table(lenders["name_source"].value_counts().rename_axis("name_source")
+                   .reset_index(name="leis")),
     ]
     write_data_quality("phase2", "Phase 2: market definition", sections)
     print(sizes.to_string(index=False))

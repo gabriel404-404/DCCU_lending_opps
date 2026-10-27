@@ -1,0 +1,53 @@
+check,year,scope,measure,expected,ours,match
+county sum vs. Phase 2,2022,statewide,market_originations,138169,138169,True
+county sum vs. Phase 2,2022,statewide,market_purchase,85616,85616,True
+county sum vs. Phase 2,2022,statewide,market_refinance,52553,52553,True
+county sum vs. Phase 2,2022,statewide,dccu_originations,1305,1305,True
+county sum vs. Phase 2,2022,statewide,dccu_purchase,512,512,True
+county sum vs. Phase 2,2022,statewide,dccu_refinance,793,793,True
+county sum vs. Phase 2,2022,fom,market_originations,95442,95442,True
+county sum vs. Phase 2,2022,fom,market_purchase,59373,59373,True
+county sum vs. Phase 2,2022,fom,market_refinance,36069,36069,True
+county sum vs. Phase 2,2022,fom,dccu_originations,1199,1199,True
+county sum vs. Phase 2,2022,fom,dccu_purchase,442,442,True
+county sum vs. Phase 2,2022,fom,dccu_refinance,757,757,True
+county sum vs. Phase 2,2023,statewide,market_originations,76604,76604,True
+county sum vs. Phase 2,2023,statewide,market_purchase,63173,63173,True
+county sum vs. Phase 2,2023,statewide,market_refinance,13431,13431,True
+county sum vs. Phase 2,2023,statewide,dccu_originations,537,537,True
+county sum vs. Phase 2,2023,statewide,dccu_purchase,461,461,True
+county sum vs. Phase 2,2023,statewide,dccu_refinance,76,76,True
+county sum vs. Phase 2,2023,fom,market_originations,51884,51884,True
+county sum vs. Phase 2,2023,fom,market_purchase,43987,43987,True
+county sum vs. Phase 2,2023,fom,market_refinance,7897,7897,True
+county sum vs. Phase 2,2023,fom,dccu_originations,487,487,True
+county sum vs. Phase 2,2023,fom,dccu_purchase,414,414,True
+county sum vs. Phase 2,2023,fom,dccu_refinance,73,73,True
+county sum vs. Phase 2,2024,statewide,market_originations,78334,78334,True
+county sum vs. Phase 2,2024,statewide,market_purchase,61581,61581,True
+county sum vs. Phase 2,2024,statewide,market_refinance,16753,16753,True
+county sum vs. Phase 2,2024,statewide,dccu_originations,930,930,True
+county sum vs. Phase 2,2024,statewide,dccu_purchase,757,757,True
+county sum vs. Phase 2,2024,statewide,dccu_refinance,173,173,True
+county sum vs. Phase 2,2024,fom,market_originations,53033,53033,True
+county sum vs. Phase 2,2024,fom,market_purchase,42938,42938,True
+county sum vs. Phase 2,2024,fom,market_refinance,10095,10095,True
+county sum vs. Phase 2,2024,fom,dccu_originations,851,851,True
+county sum vs. Phase 2,2024,fom,dccu_purchase,686,686,True
+county sum vs. Phase 2,2024,fom,dccu_refinance,165,165,True
+county sum vs. Phase 2,2025,statewide,market_originations,80682,80682,True
+county sum vs. Phase 2,2025,statewide,market_purchase,58062,58062,True
+county sum vs. Phase 2,2025,statewide,market_refinance,22620,22620,True
+county sum vs. Phase 2,2025,statewide,dccu_originations,1154,1154,True
+county sum vs. Phase 2,2025,statewide,dccu_purchase,873,873,True
+county sum vs. Phase 2,2025,statewide,dccu_refinance,281,281,True
+county sum vs. Phase 2,2025,fom,market_originations,53783,53783,True
+county sum vs. Phase 2,2025,fom,market_purchase,39785,39785,True
+county sum vs. Phase 2,2025,fom,market_refinance,13998,13998,True
+county sum vs. Phase 2,2025,fom,dccu_originations,1052,1052,True
+county sum vs. Phase 2,2025,fom,dccu_purchase,797,797,True
+county sum vs. Phase 2,2025,fom,dccu_refinance,255,255,True
+tracts + no-tract + not-in-TIGER vs. all,2025,statewide,market,80682,80682,True
+tracts + no-tract + not-in-TIGER vs. all,2025,statewide,dccu,1154,1154,True
+tracts + no-tract + not-in-TIGER vs. all,2025,fom,market,53783,53783,True
+tracts + no-tract + not-in-TIGER vs. all,2025,fom,dccu,1052,1052,True

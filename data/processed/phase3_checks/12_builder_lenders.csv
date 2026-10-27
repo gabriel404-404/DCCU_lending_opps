@@ -1,0 +1,14 @@
+lender_name,builder,include,basis,fom_loans,fom_purchase_share
+"DHI MORTGAGE COMPANY, LTD.",D.R. Horton,1,builder-owned lender (DHI = D.R. Horton),397,0.009979
+PULTE MORTGAGE LLC,PulteGroup,1,builder name in lender name,375,0.009426
+"LENNAR MORTGAGE, LLC",Lennar,1,builder name in lender name,198,0.004977
+TOLL BROTHERS MORTGAGE COMPANY,Toll Brothers,1,builder name in lender name,308,0.007742
+"Taylor Morrison Home Funding, Inc.",Taylor Morrison,1,builder name in lender name,259,0.006485
+"NVR Mortgage Finance, Inc.",NVR (Ryan Homes),1,builder name in lender name,85,0.002136
+INSPIRE HOME LOANS INC.,Century Communities (to confirm),1,believed builder-owned; data signature: 0% refi and 54% of GA purchases in 3 tracts,169,0.004248
+"PRC MORTGAGE, LLC",unknown,0,data signature only: 2% refi and 80% of GA purchases in 3 tracts,47,0.001156
+"VICTORY MORTGAGE, L.L.C.",unknown,0,data signature only: 1% refi and 60% of GA purchases in 3 tracts,92,0.002287
+TRAILBLAZER MORTGAGE L.L.C.,unknown,0,data signature only: 0% refi and 49% of GA purchases in 3 tracts,134,0.003368
+"Landmark 24 Mortgage, LLC",unknown,0,data signature only: 0% refi and 45% of GA purchases in 3 tracts,0,0.0
+"First Heritage Mortgage, LLC",unknown,0,data signature only: 4% refi and 42% of GA purchases in 3 tracts,135,0.003268
+"JET HOMELOANS, LP",unknown,0,data signature only: 0% refi and 27% of GA purchases in 3 tracts,27,0.000679

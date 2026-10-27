@@ -11,6 +11,16 @@ OUTPUTS = ROOT / "outputs"
 # HMDA years on 2020 census tracts. 2025 confirmed as latest published year on 2026-10-26.
 YEARS = [2022, 2023, 2024, 2025]
 
+# Phase 3 scoring (PRD Appendix A, "Metrics"). Depth and expansion use the latest year only;
+# the other years feed the trend.
+SCORING_YEAR = YEARS[-1]
+# Planning assumption: the share DCCU would reach in a new county (2025 FOM share of 1.96%, rounded).
+EXPANSION_TARGET_SHARE = 0.02
+# Tracts with fewer scoring-year market originations are flagged low-volume, not dropped.
+LOW_VOLUME_THRESHOLD = 20
+# Purchase-market change is measured from this year to SCORING_YEAR (2022 is skewed by rates).
+PURCHASE_CHANGE_BASE_YEAR = 2023
+
 # Confirmed in the HMDA /view/filers API (2024, 2025). Validation re-checks every year.
 DCCU_LEI = "549300Y4BSP3BSFW7J29"
 DCCU_NAME = "DELTA COMMUNITY CREDIT UNION"
@@ -20,6 +30,8 @@ STATE_ABBR = "GA"
 ATLANTA_CBSA = "12060"  # Atlanta-Sandy Springs-Roswell, GA (OMB Bulletin 23-01, July 2023)
 
 HMDA_API = "https://ffiec.cfpb.gov/v2/data-browser-api/view"
+# Global LEI registry: names for market LEIs missing from the HMDA filers lists.
+GLEIF_API = "https://api.gleif.org/api/v1/lei-records"
 GA_COUNTIES_URL = "https://www2.census.gov/geo/docs/reference/codes2020/cou/st13_ga_cou2020.txt"
 OMB_DELINEATION_URL = (
     "https://www2.census.gov/programs-surveys/metro-micro/geographies/"

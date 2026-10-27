@@ -1,0 +1,36 @@
+grouping,group,gain_rank,counties,county_names,market_all,dccu_all,expansion_gain,market_purchase,market_purchase_2023,current_share,purchase_market_change
+market_group,"Savannah-Hinesville-Statesboro, GA",1,8,"Bryan, Bulloch, Chatham, Effingham, Evans, Liberty, Long, Wayne",3830,4,72.6,2819,3036,0.001044,-0.071476
+market_group,(no metro/micro area),2,53,"Appling, Bacon, Baker, Banks, Berrien, Bleckley, Calhoun, Candler, Charlton, Clay, Clinch, Cook, Dodge, Dooly, Early, Elbert, Emanuel, Fannin, Franklin, Gilmer, Glascock, Greene, Hancock, Hart, Irwin, Jeff Davis, Jefferson, Jenkins, Lamar, Macon, Miller, Mitchell, Pulaski, Putnam, Rabun, Randolph, Screven, Seminole, Taliaferro, Tattnall, Taylor, Telfair, Towns, Treutlen, Union, Warren, Washington, Webster, Wheeler, White, Wilcox, Wilkes, Wilkinson",3607,23,54.86,2134,2278,0.006376,-0.063213
+market_group,"Atlanta-Sandy Springs-Roswell, GA (outside FOM)",3,11,"Bartow, Carroll, Dawson, Haralson, Heard, Jasper, Lumpkin, Meriwether, Morgan, Pickens, Pike",4207,41,49.48,2903,2912,0.009746,-0.003091
+market_group,"Macon-Bibb County--Warner Robins, GA",4,7,"Bibb, Crawford, Houston, Jones, Monroe, Peach, Twiggs",2243,4,40.86,1611,1746,0.001783,-0.07732
+market_group,"Augusta-Richmond County, GA-SC",5,5,"Burke, Columbia, Lincoln, McDuffie, Richmond",2138,3,39.76,1627,1821,0.001403,-0.106535
+market_group,"Chattanooga-Cleveland-Dalton, TN-GA-AL",6,6,"Catoosa, Chattooga, Dade, Murray, Walker, Whitfield",2002,4,36.04,1315,1348,0.001998,-0.024481
+market_group,"Athens-Clarke County, GA",7,4,"Clarke, Madison, Oconee, Oglethorpe",1511,4,26.22,1077,1122,0.002647,-0.040107
+market_group,"Columbus-Auburn-Opelika, GA-AL",8,6,"Chattahoochee, Harris, Marion, Muscogee, Stewart, Talbot",989,1,18.78,705,692,0.001011,0.018786
+market_group,"Valdosta, GA",9,4,"Brooks, Echols, Lanier, Lowndes",713,0,14.26,471,461,0.0,0.021692
+market_group,"Brunswick-St. Simons, GA",10,3,"Brantley, Glynn, McIntosh",838,3,13.76,578,604,0.00358,-0.043046
+market_group,"Albany, GA",11,4,"Dougherty, Lee, Terrell, Worth",497,0,9.94,286,332,0.0,-0.138554
+market_group,"Rome, GA",12,1,Floyd,602,3,9.04,433,476,0.004983,-0.090336
+market_group,"Cornelia, GA",13,1,Habersham,362,0,7.24,263,232,0.0,0.133621
+market_group,"Thomasville, GA",14,2,"Grady, Thomas",347,0,6.94,230,210,0.0,0.095238
+market_group,"Calhoun, GA",15,1,Gordon,411,2,6.22,250,277,0.004866,-0.097473
+market_group,"Jacksonville-Kingsland-Palatka, FL-GA",16,1,Camden,364,2,5.28,267,276,0.005495,-0.032609
+market_group,"Waycross, GA",17,2,"Pierce, Ware",235,0,4.7,127,115,0.0,0.104348
+market_group,"Cedartown, GA",18,1,Polk,221,0,4.42,116,155,0.0,-0.251613
+market_group,"Dublin, GA",19,2,"Johnson, Laurens",190,0,3.8,109,107,0.0,0.018692
+market_group,"Tifton, GA",20,2,"Tift, Turner",180,0,3.6,106,98,0.0,0.081633
+market_group,"Toccoa, GA",21,1,Stephens,151,0,3.02,103,108,0.0,-0.046296
+market_group,"Moultrie, GA",22,1,Colquitt,150,0,3.0,92,75,0.0,0.226667
+market_group,"Americus, GA",23,2,"Schley, Sumter",117,0,2.34,75,67,0.0,0.119403
+market_group,"Thomaston, GA",24,1,Upson,142,1,1.84,69,67,0.007042,0.029851
+market_group,"Milledgeville, GA",25,1,Baldwin,140,1,1.8,84,113,0.007143,-0.256637
+market_group,"LaGrange, GA-AL",26,1,Troup,388,6,1.76,268,280,0.015464,-0.042857
+market_group,"Tallahassee-Bainbridge, FL-GA",27,1,Decatur,79,0,1.58,34,37,0.0,-0.081081
+market_group,"Vidalia, GA",28,2,"Montgomery, Toombs",76,0,1.52,42,44,0.0,-0.045455
+market_group,"Douglas, GA",29,2,"Atkinson, Coffee",70,0,1.4,27,41,0.0,-0.341463
+market_group,"Cordele, GA",30,1,Crisp,53,0,1.06,37,38,0.0,-0.026316
+market_group,"Fitzgerald, GA",31,1,Ben Hill,38,0,0.76,15,15,0.0,0.0
+market_group,"Eufaula, AL-GA",32,1,Quitman,8,0,0.16,4,3,0.0,0.333333
+tier,metro,1,55,"Bartow, Bibb, Brantley, Brooks, Bryan, Burke, Carroll, Catoosa, Chatham, Chattahoochee, Clarke, Columbia, Crawford, Dade, Dawson, Dougherty, Echols, Effingham, Floyd, Glynn, Haralson, Harris, Heard, Houston, Jasper, Jones, Lanier, Lee, Liberty, Lincoln, Long, Lowndes, Lumpkin, Madison, Marion, McDuffie, McIntosh, Meriwether, Monroe, Morgan, Murray, Muscogee, Oconee, Oglethorpe, Peach, Pickens, Pike, Richmond, Stewart, Talbot, Terrell, Twiggs, Walker, Whitfield, Worth",18955,67,318.44,13448,14153,0.003535,-0.049813
+tier,micro,2,31,"Atkinson, Baldwin, Ben Hill, Bulloch, Camden, Chattooga, Coffee, Colquitt, Crisp, Decatur, Evans, Gordon, Grady, Habersham, Johnson, Laurens, Montgomery, Pierce, Polk, Quitman, Schley, Stephens, Sumter, Thomas, Tift, Toombs, Troup, Turner, Upson, Ware, Wayne",4337,12,74.74,2695,2755,0.002767,-0.021779
+tier,rural,3,53,"Appling, Bacon, Baker, Banks, Berrien, Bleckley, Calhoun, Candler, Charlton, Clay, Clinch, Cook, Dodge, Dooly, Early, Elbert, Emanuel, Fannin, Franklin, Gilmer, Glascock, Greene, Hancock, Hart, Irwin, Jeff Davis, Jefferson, Jenkins, Lamar, Macon, Miller, Mitchell, Pulaski, Putnam, Rabun, Randolph, Screven, Seminole, Taliaferro, Tattnall, Taylor, Telfair, Towns, Treutlen, Union, Warren, Washington, Webster, Wheeler, White, Wilcox, Wilkes, Wilkinson",3607,23,54.86,2134,2278,0.006376,-0.063213

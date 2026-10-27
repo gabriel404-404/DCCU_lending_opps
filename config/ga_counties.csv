@@ -1,160 +1,160 @@
-county_fips,county_name,fom_flag,atlanta_msa_flag
-13001,Appling,0,0
-13003,Atkinson,0,0
-13005,Bacon,0,0
-13007,Baker,0,0
-13009,Baldwin,0,0
-13011,Banks,0,0
-13013,Barrow,1,1
-13015,Bartow,0,1
-13017,Ben Hill,0,0
-13019,Berrien,0,0
-13021,Bibb,0,0
-13023,Bleckley,0,0
-13025,Brantley,0,0
-13027,Brooks,0,0
-13029,Bryan,0,0
-13031,Bulloch,0,0
-13033,Burke,0,0
-13035,Butts,1,1
-13037,Calhoun,0,0
-13039,Camden,0,0
-13043,Candler,0,0
-13045,Carroll,0,1
-13047,Catoosa,0,0
-13049,Charlton,0,0
-13051,Chatham,0,0
-13053,Chattahoochee,0,0
-13055,Chattooga,0,0
-13057,Cherokee,1,1
-13059,Clarke,0,0
-13061,Clay,0,0
-13063,Clayton,1,1
-13065,Clinch,0,0
-13067,Cobb,1,1
-13069,Coffee,0,0
-13071,Colquitt,0,0
-13073,Columbia,0,0
-13075,Cook,0,0
-13077,Coweta,1,1
-13079,Crawford,0,0
-13081,Crisp,0,0
-13083,Dade,0,0
-13085,Dawson,0,1
-13087,Decatur,0,0
-13089,DeKalb,1,1
-13091,Dodge,0,0
-13093,Dooly,0,0
-13095,Dougherty,0,0
-13097,Douglas,1,1
-13099,Early,0,0
-13101,Echols,0,0
-13103,Effingham,0,0
-13105,Elbert,0,0
-13107,Emanuel,0,0
-13109,Evans,0,0
-13111,Fannin,0,0
-13113,Fayette,1,1
-13115,Floyd,0,0
-13117,Forsyth,1,1
-13119,Franklin,0,0
-13121,Fulton,1,1
-13123,Gilmer,0,0
-13125,Glascock,0,0
-13127,Glynn,0,0
-13129,Gordon,0,0
-13131,Grady,0,0
-13133,Greene,0,0
-13135,Gwinnett,1,1
-13137,Habersham,0,0
-13139,Hall,1,0
-13141,Hancock,0,0
-13143,Haralson,0,1
-13145,Harris,0,0
-13147,Hart,0,0
-13149,Heard,0,1
-13151,Henry,1,1
-13153,Houston,0,0
-13155,Irwin,0,0
-13157,Jackson,1,0
-13159,Jasper,0,1
-13161,Jeff Davis,0,0
-13163,Jefferson,0,0
-13165,Jenkins,0,0
-13167,Johnson,0,0
-13169,Jones,0,0
-13171,Lamar,0,0
-13173,Lanier,0,0
-13175,Laurens,0,0
-13177,Lee,0,0
-13179,Liberty,0,0
-13181,Lincoln,0,0
-13183,Long,0,0
-13185,Lowndes,0,0
-13187,Lumpkin,0,1
-13189,McDuffie,0,0
-13191,McIntosh,0,0
-13193,Macon,0,0
-13195,Madison,0,0
-13197,Marion,0,0
-13199,Meriwether,0,1
-13201,Miller,0,0
-13205,Mitchell,0,0
-13207,Monroe,0,0
-13209,Montgomery,0,0
-13211,Morgan,0,1
-13213,Murray,0,0
-13215,Muscogee,0,0
-13217,Newton,1,1
-13219,Oconee,0,0
-13221,Oglethorpe,0,0
-13223,Paulding,1,1
-13225,Peach,0,0
-13227,Pickens,0,1
-13229,Pierce,0,0
-13231,Pike,0,1
-13233,Polk,0,0
-13235,Pulaski,0,0
-13237,Putnam,0,0
-13239,Quitman,0,0
-13241,Rabun,0,0
-13243,Randolph,0,0
-13245,Richmond,0,0
-13247,Rockdale,1,1
-13249,Schley,0,0
-13251,Screven,0,0
-13253,Seminole,0,0
-13255,Spalding,1,1
-13257,Stephens,0,0
-13259,Stewart,0,0
-13261,Sumter,0,0
-13263,Talbot,0,0
-13265,Taliaferro,0,0
-13267,Tattnall,0,0
-13269,Taylor,0,0
-13271,Telfair,0,0
-13273,Terrell,0,0
-13275,Thomas,0,0
-13277,Tift,0,0
-13279,Toombs,0,0
-13281,Towns,0,0
-13283,Treutlen,0,0
-13285,Troup,0,0
-13287,Turner,0,0
-13289,Twiggs,0,0
-13291,Union,0,0
-13293,Upson,0,0
-13295,Walker,0,0
-13297,Walton,1,1
-13299,Ware,0,0
-13301,Warren,0,0
-13303,Washington,0,0
-13305,Wayne,0,0
-13307,Webster,0,0
-13309,Wheeler,0,0
-13311,White,0,0
-13313,Whitfield,0,0
-13315,Wilcox,0,0
-13317,Wilkes,0,0
-13319,Wilkinson,0,0
-13321,Worth,0,0
+county_fips,county_name,fom_flag,atlanta_msa_flag,urban_rural_tier,market_group,cbsa_title,csa_title
+13001,Appling,0,0,rural,,,
+13003,Atkinson,0,0,micro,"Douglas, GA","Douglas, GA",
+13005,Bacon,0,0,rural,,,
+13007,Baker,0,0,rural,,,
+13009,Baldwin,0,0,micro,"Milledgeville, GA","Milledgeville, GA",
+13011,Banks,0,0,rural,,,
+13013,Barrow,1,1,metro,"Atlanta-Sandy Springs-Roswell, GA","Atlanta-Sandy Springs-Roswell, GA","Atlanta--Athens-Clarke County--Sandy Springs, GA-AL"
+13015,Bartow,0,1,metro,"Atlanta-Sandy Springs-Roswell, GA","Atlanta-Sandy Springs-Roswell, GA","Atlanta--Athens-Clarke County--Sandy Springs, GA-AL"
+13017,Ben Hill,0,0,micro,"Fitzgerald, GA","Fitzgerald, GA",
+13019,Berrien,0,0,rural,,,
+13021,Bibb,0,0,metro,"Macon-Bibb County--Warner Robins, GA","Macon-Bibb County, GA","Macon-Bibb County--Warner Robins, GA"
+13023,Bleckley,0,0,rural,,,
+13025,Brantley,0,0,metro,"Brunswick-St. Simons, GA","Brunswick-St. Simons, GA",
+13027,Brooks,0,0,metro,"Valdosta, GA","Valdosta, GA",
+13029,Bryan,0,0,metro,"Savannah-Hinesville-Statesboro, GA","Savannah, GA","Savannah-Hinesville-Statesboro, GA"
+13031,Bulloch,0,0,micro,"Savannah-Hinesville-Statesboro, GA","Statesboro, GA","Savannah-Hinesville-Statesboro, GA"
+13033,Burke,0,0,metro,"Augusta-Richmond County, GA-SC","Augusta-Richmond County, GA-SC",
+13035,Butts,1,1,metro,"Atlanta-Sandy Springs-Roswell, GA","Atlanta-Sandy Springs-Roswell, GA","Atlanta--Athens-Clarke County--Sandy Springs, GA-AL"
+13037,Calhoun,0,0,rural,,,
+13039,Camden,0,0,micro,"Jacksonville-Kingsland-Palatka, FL-GA","Kingsland, GA","Jacksonville-Kingsland-Palatka, FL-GA"
+13043,Candler,0,0,rural,,,
+13045,Carroll,0,1,metro,"Atlanta-Sandy Springs-Roswell, GA","Atlanta-Sandy Springs-Roswell, GA","Atlanta--Athens-Clarke County--Sandy Springs, GA-AL"
+13047,Catoosa,0,0,metro,"Chattanooga-Cleveland-Dalton, TN-GA-AL","Chattanooga, TN-GA","Chattanooga-Cleveland-Dalton, TN-GA-AL"
+13049,Charlton,0,0,rural,,,
+13051,Chatham,0,0,metro,"Savannah-Hinesville-Statesboro, GA","Savannah, GA","Savannah-Hinesville-Statesboro, GA"
+13053,Chattahoochee,0,0,metro,"Columbus-Auburn-Opelika, GA-AL","Columbus, GA-AL","Columbus-Auburn-Opelika, GA-AL"
+13055,Chattooga,0,0,micro,"Chattanooga-Cleveland-Dalton, TN-GA-AL","Summerville, GA","Chattanooga-Cleveland-Dalton, TN-GA-AL"
+13057,Cherokee,1,1,metro,"Atlanta-Sandy Springs-Roswell, GA","Atlanta-Sandy Springs-Roswell, GA","Atlanta--Athens-Clarke County--Sandy Springs, GA-AL"
+13059,Clarke,0,0,metro,"Athens-Clarke County, GA","Athens-Clarke County, GA","Atlanta--Athens-Clarke County--Sandy Springs, GA-AL"
+13061,Clay,0,0,rural,,,
+13063,Clayton,1,1,metro,"Atlanta-Sandy Springs-Roswell, GA","Atlanta-Sandy Springs-Roswell, GA","Atlanta--Athens-Clarke County--Sandy Springs, GA-AL"
+13065,Clinch,0,0,rural,,,
+13067,Cobb,1,1,metro,"Atlanta-Sandy Springs-Roswell, GA","Atlanta-Sandy Springs-Roswell, GA","Atlanta--Athens-Clarke County--Sandy Springs, GA-AL"
+13069,Coffee,0,0,micro,"Douglas, GA","Douglas, GA",
+13071,Colquitt,0,0,micro,"Moultrie, GA","Moultrie, GA",
+13073,Columbia,0,0,metro,"Augusta-Richmond County, GA-SC","Augusta-Richmond County, GA-SC",
+13075,Cook,0,0,rural,,,
+13077,Coweta,1,1,metro,"Atlanta-Sandy Springs-Roswell, GA","Atlanta-Sandy Springs-Roswell, GA","Atlanta--Athens-Clarke County--Sandy Springs, GA-AL"
+13079,Crawford,0,0,metro,"Macon-Bibb County--Warner Robins, GA","Macon-Bibb County, GA","Macon-Bibb County--Warner Robins, GA"
+13081,Crisp,0,0,micro,"Cordele, GA","Cordele, GA",
+13083,Dade,0,0,metro,"Chattanooga-Cleveland-Dalton, TN-GA-AL","Chattanooga, TN-GA","Chattanooga-Cleveland-Dalton, TN-GA-AL"
+13085,Dawson,0,1,metro,"Atlanta-Sandy Springs-Roswell, GA","Atlanta-Sandy Springs-Roswell, GA","Atlanta--Athens-Clarke County--Sandy Springs, GA-AL"
+13087,Decatur,0,0,micro,"Tallahassee-Bainbridge, FL-GA","Bainbridge, GA","Tallahassee-Bainbridge, FL-GA"
+13089,DeKalb,1,1,metro,"Atlanta-Sandy Springs-Roswell, GA","Atlanta-Sandy Springs-Roswell, GA","Atlanta--Athens-Clarke County--Sandy Springs, GA-AL"
+13091,Dodge,0,0,rural,,,
+13093,Dooly,0,0,rural,,,
+13095,Dougherty,0,0,metro,"Albany, GA","Albany, GA",
+13097,Douglas,1,1,metro,"Atlanta-Sandy Springs-Roswell, GA","Atlanta-Sandy Springs-Roswell, GA","Atlanta--Athens-Clarke County--Sandy Springs, GA-AL"
+13099,Early,0,0,rural,,,
+13101,Echols,0,0,metro,"Valdosta, GA","Valdosta, GA",
+13103,Effingham,0,0,metro,"Savannah-Hinesville-Statesboro, GA","Savannah, GA","Savannah-Hinesville-Statesboro, GA"
+13105,Elbert,0,0,rural,,,
+13107,Emanuel,0,0,rural,,,
+13109,Evans,0,0,micro,"Savannah-Hinesville-Statesboro, GA","Statesboro, GA","Savannah-Hinesville-Statesboro, GA"
+13111,Fannin,0,0,rural,,,
+13113,Fayette,1,1,metro,"Atlanta-Sandy Springs-Roswell, GA","Atlanta-Sandy Springs-Roswell, GA","Atlanta--Athens-Clarke County--Sandy Springs, GA-AL"
+13115,Floyd,0,0,metro,"Rome, GA","Rome, GA","Atlanta--Athens-Clarke County--Sandy Springs, GA-AL"
+13117,Forsyth,1,1,metro,"Atlanta-Sandy Springs-Roswell, GA","Atlanta-Sandy Springs-Roswell, GA","Atlanta--Athens-Clarke County--Sandy Springs, GA-AL"
+13119,Franklin,0,0,rural,,,
+13121,Fulton,1,1,metro,"Atlanta-Sandy Springs-Roswell, GA","Atlanta-Sandy Springs-Roswell, GA","Atlanta--Athens-Clarke County--Sandy Springs, GA-AL"
+13123,Gilmer,0,0,rural,,,
+13125,Glascock,0,0,rural,,,
+13127,Glynn,0,0,metro,"Brunswick-St. Simons, GA","Brunswick-St. Simons, GA",
+13129,Gordon,0,0,micro,"Calhoun, GA","Calhoun, GA","Atlanta--Athens-Clarke County--Sandy Springs, GA-AL"
+13131,Grady,0,0,micro,"Thomasville, GA","Thomasville, GA",
+13133,Greene,0,0,rural,,,
+13135,Gwinnett,1,1,metro,"Atlanta-Sandy Springs-Roswell, GA","Atlanta-Sandy Springs-Roswell, GA","Atlanta--Athens-Clarke County--Sandy Springs, GA-AL"
+13137,Habersham,0,0,micro,"Cornelia, GA","Cornelia, GA","Atlanta--Athens-Clarke County--Sandy Springs, GA-AL"
+13139,Hall,1,0,metro,"Gainesville, GA","Gainesville, GA","Atlanta--Athens-Clarke County--Sandy Springs, GA-AL"
+13141,Hancock,0,0,rural,,,
+13143,Haralson,0,1,metro,"Atlanta-Sandy Springs-Roswell, GA","Atlanta-Sandy Springs-Roswell, GA","Atlanta--Athens-Clarke County--Sandy Springs, GA-AL"
+13145,Harris,0,0,metro,"Columbus-Auburn-Opelika, GA-AL","Columbus, GA-AL","Columbus-Auburn-Opelika, GA-AL"
+13147,Hart,0,0,rural,,,
+13149,Heard,0,1,metro,"Atlanta-Sandy Springs-Roswell, GA","Atlanta-Sandy Springs-Roswell, GA","Atlanta--Athens-Clarke County--Sandy Springs, GA-AL"
+13151,Henry,1,1,metro,"Atlanta-Sandy Springs-Roswell, GA","Atlanta-Sandy Springs-Roswell, GA","Atlanta--Athens-Clarke County--Sandy Springs, GA-AL"
+13153,Houston,0,0,metro,"Macon-Bibb County--Warner Robins, GA","Warner Robins, GA","Macon-Bibb County--Warner Robins, GA"
+13155,Irwin,0,0,rural,,,
+13157,Jackson,1,0,micro,"Jefferson, GA","Jefferson, GA","Atlanta--Athens-Clarke County--Sandy Springs, GA-AL"
+13159,Jasper,0,1,metro,"Atlanta-Sandy Springs-Roswell, GA","Atlanta-Sandy Springs-Roswell, GA","Atlanta--Athens-Clarke County--Sandy Springs, GA-AL"
+13161,Jeff Davis,0,0,rural,,,
+13163,Jefferson,0,0,rural,,,
+13165,Jenkins,0,0,rural,,,
+13167,Johnson,0,0,micro,"Dublin, GA","Dublin, GA",
+13169,Jones,0,0,metro,"Macon-Bibb County--Warner Robins, GA","Macon-Bibb County, GA","Macon-Bibb County--Warner Robins, GA"
+13171,Lamar,0,0,rural,,,
+13173,Lanier,0,0,metro,"Valdosta, GA","Valdosta, GA",
+13175,Laurens,0,0,micro,"Dublin, GA","Dublin, GA",
+13177,Lee,0,0,metro,"Albany, GA","Albany, GA",
+13179,Liberty,0,0,metro,"Savannah-Hinesville-Statesboro, GA","Hinesville, GA","Savannah-Hinesville-Statesboro, GA"
+13181,Lincoln,0,0,metro,"Augusta-Richmond County, GA-SC","Augusta-Richmond County, GA-SC",
+13183,Long,0,0,metro,"Savannah-Hinesville-Statesboro, GA","Hinesville, GA","Savannah-Hinesville-Statesboro, GA"
+13185,Lowndes,0,0,metro,"Valdosta, GA","Valdosta, GA",
+13187,Lumpkin,0,1,metro,"Atlanta-Sandy Springs-Roswell, GA","Atlanta-Sandy Springs-Roswell, GA","Atlanta--Athens-Clarke County--Sandy Springs, GA-AL"
+13189,McDuffie,0,0,metro,"Augusta-Richmond County, GA-SC","Augusta-Richmond County, GA-SC",
+13191,McIntosh,0,0,metro,"Brunswick-St. Simons, GA","Brunswick-St. Simons, GA",
+13193,Macon,0,0,rural,,,
+13195,Madison,0,0,metro,"Athens-Clarke County, GA","Athens-Clarke County, GA","Atlanta--Athens-Clarke County--Sandy Springs, GA-AL"
+13197,Marion,0,0,metro,"Columbus-Auburn-Opelika, GA-AL","Columbus, GA-AL","Columbus-Auburn-Opelika, GA-AL"
+13199,Meriwether,0,1,metro,"Atlanta-Sandy Springs-Roswell, GA","Atlanta-Sandy Springs-Roswell, GA","Atlanta--Athens-Clarke County--Sandy Springs, GA-AL"
+13201,Miller,0,0,rural,,,
+13205,Mitchell,0,0,rural,,,
+13207,Monroe,0,0,metro,"Macon-Bibb County--Warner Robins, GA","Macon-Bibb County, GA","Macon-Bibb County--Warner Robins, GA"
+13209,Montgomery,0,0,micro,"Vidalia, GA","Vidalia, GA",
+13211,Morgan,0,1,metro,"Atlanta-Sandy Springs-Roswell, GA","Atlanta-Sandy Springs-Roswell, GA","Atlanta--Athens-Clarke County--Sandy Springs, GA-AL"
+13213,Murray,0,0,metro,"Chattanooga-Cleveland-Dalton, TN-GA-AL","Dalton, GA","Chattanooga-Cleveland-Dalton, TN-GA-AL"
+13215,Muscogee,0,0,metro,"Columbus-Auburn-Opelika, GA-AL","Columbus, GA-AL","Columbus-Auburn-Opelika, GA-AL"
+13217,Newton,1,1,metro,"Atlanta-Sandy Springs-Roswell, GA","Atlanta-Sandy Springs-Roswell, GA","Atlanta--Athens-Clarke County--Sandy Springs, GA-AL"
+13219,Oconee,0,0,metro,"Athens-Clarke County, GA","Athens-Clarke County, GA","Atlanta--Athens-Clarke County--Sandy Springs, GA-AL"
+13221,Oglethorpe,0,0,metro,"Athens-Clarke County, GA","Athens-Clarke County, GA","Atlanta--Athens-Clarke County--Sandy Springs, GA-AL"
+13223,Paulding,1,1,metro,"Atlanta-Sandy Springs-Roswell, GA","Atlanta-Sandy Springs-Roswell, GA","Atlanta--Athens-Clarke County--Sandy Springs, GA-AL"
+13225,Peach,0,0,metro,"Macon-Bibb County--Warner Robins, GA","Warner Robins, GA","Macon-Bibb County--Warner Robins, GA"
+13227,Pickens,0,1,metro,"Atlanta-Sandy Springs-Roswell, GA","Atlanta-Sandy Springs-Roswell, GA","Atlanta--Athens-Clarke County--Sandy Springs, GA-AL"
+13229,Pierce,0,0,micro,"Waycross, GA","Waycross, GA",
+13231,Pike,0,1,metro,"Atlanta-Sandy Springs-Roswell, GA","Atlanta-Sandy Springs-Roswell, GA","Atlanta--Athens-Clarke County--Sandy Springs, GA-AL"
+13233,Polk,0,0,micro,"Cedartown, GA","Cedartown, GA","Atlanta--Athens-Clarke County--Sandy Springs, GA-AL"
+13235,Pulaski,0,0,rural,,,
+13237,Putnam,0,0,rural,,,
+13239,Quitman,0,0,micro,"Eufaula, AL-GA","Eufaula, AL-GA",
+13241,Rabun,0,0,rural,,,
+13243,Randolph,0,0,rural,,,
+13245,Richmond,0,0,metro,"Augusta-Richmond County, GA-SC","Augusta-Richmond County, GA-SC",
+13247,Rockdale,1,1,metro,"Atlanta-Sandy Springs-Roswell, GA","Atlanta-Sandy Springs-Roswell, GA","Atlanta--Athens-Clarke County--Sandy Springs, GA-AL"
+13249,Schley,0,0,micro,"Americus, GA","Americus, GA",
+13251,Screven,0,0,rural,,,
+13253,Seminole,0,0,rural,,,
+13255,Spalding,1,1,metro,"Atlanta-Sandy Springs-Roswell, GA","Atlanta-Sandy Springs-Roswell, GA","Atlanta--Athens-Clarke County--Sandy Springs, GA-AL"
+13257,Stephens,0,0,micro,"Toccoa, GA","Toccoa, GA",
+13259,Stewart,0,0,metro,"Columbus-Auburn-Opelika, GA-AL","Columbus, GA-AL","Columbus-Auburn-Opelika, GA-AL"
+13261,Sumter,0,0,micro,"Americus, GA","Americus, GA",
+13263,Talbot,0,0,metro,"Columbus-Auburn-Opelika, GA-AL","Columbus, GA-AL","Columbus-Auburn-Opelika, GA-AL"
+13265,Taliaferro,0,0,rural,,,
+13267,Tattnall,0,0,rural,,,
+13269,Taylor,0,0,rural,,,
+13271,Telfair,0,0,rural,,,
+13273,Terrell,0,0,metro,"Albany, GA","Albany, GA",
+13275,Thomas,0,0,micro,"Thomasville, GA","Thomasville, GA",
+13277,Tift,0,0,micro,"Tifton, GA","Tifton, GA",
+13279,Toombs,0,0,micro,"Vidalia, GA","Vidalia, GA",
+13281,Towns,0,0,rural,,,
+13283,Treutlen,0,0,rural,,,
+13285,Troup,0,0,micro,"LaGrange, GA-AL","LaGrange, GA-AL","Atlanta--Athens-Clarke County--Sandy Springs, GA-AL"
+13287,Turner,0,0,micro,"Tifton, GA","Tifton, GA",
+13289,Twiggs,0,0,metro,"Macon-Bibb County--Warner Robins, GA","Macon-Bibb County, GA","Macon-Bibb County--Warner Robins, GA"
+13291,Union,0,0,rural,,,
+13293,Upson,0,0,micro,"Thomaston, GA","Thomaston, GA","Atlanta--Athens-Clarke County--Sandy Springs, GA-AL"
+13295,Walker,0,0,metro,"Chattanooga-Cleveland-Dalton, TN-GA-AL","Chattanooga, TN-GA","Chattanooga-Cleveland-Dalton, TN-GA-AL"
+13297,Walton,1,1,metro,"Atlanta-Sandy Springs-Roswell, GA","Atlanta-Sandy Springs-Roswell, GA","Atlanta--Athens-Clarke County--Sandy Springs, GA-AL"
+13299,Ware,0,0,micro,"Waycross, GA","Waycross, GA",
+13301,Warren,0,0,rural,,,
+13303,Washington,0,0,rural,,,
+13305,Wayne,0,0,micro,"Savannah-Hinesville-Statesboro, GA","Jesup, GA","Savannah-Hinesville-Statesboro, GA"
+13307,Webster,0,0,rural,,,
+13309,Wheeler,0,0,rural,,,
+13311,White,0,0,rural,,,
+13313,Whitfield,0,0,metro,"Chattanooga-Cleveland-Dalton, TN-GA-AL","Dalton, GA","Chattanooga-Cleveland-Dalton, TN-GA-AL"
+13315,Wilcox,0,0,rural,,,
+13317,Wilkes,0,0,rural,,,
+13319,Wilkinson,0,0,rural,,,
+13321,Worth,0,0,metro,"Albany, GA","Albany, GA",
