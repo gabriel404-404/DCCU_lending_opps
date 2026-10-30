@@ -1,9 +1,11 @@
 # CLAUDE.md
 
 ## Project
-Mortgage Growth Map for Delta Community Credit Union (DCCU): an outside-in analysis of public HMDA data showing where DCCU wins and loses mortgage share across Georgia (primary focus: its 20 field-of-membership counties), and whether growth should come from deeper share inside its field of membership, expansion into a new county, or both.
+Mortgage Growth Map: an outside-in analysis of public HMDA data showing where a lender wins and loses mortgage share, and whether its growth should come from deeper share inside its current footprint, expansion into new markets, or both. It is meant to become a product for any lender.
 
-This is a personal project. It was not requested by DCCU and uses only public data.
+**Delta Community Credit Union (DCCU) is the illustrative example** used to build and validate v1: Georgia, with primary focus on DCCU's 20 field-of-membership (FOM) counties. DCCU did not request this; it uses only public data.
+
+Keep lender-specific facts (LEI, footprint, branches, product mix) in config, and write new code, labels and outputs lender-neutral. The PRD's Future phases describe the productize phase that generalizes the rest.
 
 **The PRD is the source of truth: [docs/PRD.md](docs/PRD.md).** Read it before starting any phase. If this file and the PRD disagree, follow the PRD and point out the conflict.
 

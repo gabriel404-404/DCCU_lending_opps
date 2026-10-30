@@ -379,3 +379,69 @@ County totals sum to the state row in every year used. Georgia grew **5.31%** fr
 | C4               |          2 | Carroll, Haralson                                                                                  | True          |        0.098 |            13.12 |
 | C5               |          2 | Long, McIntosh                                                                                     | False         |        0.232 |             3.34 |
 <!-- phase4:end -->
+
+<!-- phase5_benchmarks:start -->
+## Phase 5: benchmark ladder and market structure
+
+### 1. Benchmark ladder (2025)
+Rules in `config/settings.py`: counties need 100+ market originations to qualify (20 of 20 do; excluded: none); the top quarter is the top 5 by share. The base rung reproduces Phase 3's depth opportunity exactly, and the county breakdown sums to each rung's total.
+
+| rung    | rule                              |   share_pct | reference                               |   depth |   depth_outside_top_quarter |   depth_vs_current_loans |
+|:--------|:----------------------------------|------------:|:----------------------------------------|--------:|----------------------------:|-------------------------:|
+| base    | footprint average                 |        1.96 | all footprint counties                  |  532.92 |                      519.02 |                     0.51 |
+| stretch | weakest county in the top quarter |        4.04 | Spalding                                | 1374.31 |                     1335.69 |                     1.31 |
+| ceiling | top quarter, pooled               |        6.17 | Fayette, Coweta, Butts, Henry, Spalding | 2381.88 |                     2301.81 |                     2.26 |
+
+### 2. Channel field (`submission_of_application`)
+Shares of broker-submitted loans use codes 1 and 2 only; exempt and other codes are left out.
+
+|   code |   originations | meaning                              |
+|-------:|---------------:|:-------------------------------------|
+|      1 |          37967 | submitted directly to the lender     |
+|      2 |          15041 | not submitted directly (e.g. broker) |
+|   1111 |            775 | exempt                               |
+
+Subject lender's codes: {'1': 1052}.
+
+### 3. Like-for-like comparison
+Smallest cell: **543** market originations. Originations without a tract have no tract-competition band and are left out of that dimension (19 loans).
+<!-- phase5_benchmarks:end -->
+
+<!-- phase5_outputs:start -->
+## Phase 5: map, table and findings
+
+### 1. Maps
+Footprint maps draw **1,457** footprint tracts (share map) and **1,457** (opportunity map); 410 low-volume tracts are left unshaded, matching the `low_volume` flag. Interactive map layers: share 2,796 tracts, opportunity 1,457, density 1,457, counties 159; file size 7.2 MB (geometry simplified to about 40 m inside the footprint and 120 m elsewhere).
+
+### 2. Top 25 table
+25 rows; rows with a blank density, branch distance or top competitor: **0**.
+
+### 3. Key numbers tie to their sources
+| tie                                          |       ours |     source | match   |
+|:---------------------------------------------|-----------:|-----------:|:--------|
+| footprint market loans = Phase 2 market size | 53783      | 53783      | True    |
+| footprint lender loans = Phase 2 market size |  1052      |  1052      | True    |
+| base rung = footprint share                  |     0.0196 |     0.0196 | True    |
+| base depth = sum of opportunity scores       |   532.918  |   532.918  | True    |
+| ceiling depth = sum over counties            |  2381.88   |  2381.88   | True    |
+| expansion total = scorecard sum              |   448.04   |   448.04   | True    |
+| depth table base = Phase 3 depth             |   533      |   532.918  | True    |
+
+### 4. FINDINGS.md
+533 words (limit about 550, one page). Numbers not found in `outputs/key_numbers.csv`: **none**.
+
+### 5. Definition of done (v1)
+| requirement   | what                                       | files                                                                                           | present   |
+|:--------------|:-------------------------------------------|:------------------------------------------------------------------------------------------------|:----------|
+| R1            | tract map of share (footprint + statewide) | map_footprint_share.png, map_statewide.png, mortgage_map.html                                   | True      |
+| R2            | top 25 tracts with top 3 competitors       | opportunity_top25.csv, map_footprint_opportunity.png                                            | True      |
+| R3            | inside vs. outside footprint               | data/processed/trend_summary.csv                                                                | True      |
+| R3a           | depth vs. expansion scorecard              | depth_by_county.csv, expansion_scorecard.csv, chart_depth_vs_expansion.png                      | True      |
+| R3b           | expansion rankings and clusters            | growth_clusters.csv, data/processed/expansion_groups.csv, map_statewide.png                     | True      |
+| R4            | share by distance band                     | data/processed/share_by_distance.csv, chart_share_by_distance.png                               | True      |
+| R5            | share trend 2022 onward                    | data/processed/trend_summary.csv, data/processed/county_year_metrics.csv, chart_share_trend.png | True      |
+| R6            | household density on map and table         | mortgage_map.html, opportunity_top25.csv                                                        | True      |
+| R7            | FINDINGS.md and DATA_QUALITY.md            | FINDINGS.md, DATA_QUALITY.md                                                                    | True      |
+
+Subject-lender totals vs. the HMDA API: **0** mismatches (tolerance: exact match). The full pipeline rebuilds with `python src/run_all.py`.
+<!-- phase5_outputs:end -->

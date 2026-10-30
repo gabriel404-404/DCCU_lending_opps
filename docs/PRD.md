@@ -4,9 +4,10 @@
 - **Business driver:** Mortgage lending is a share fight with thin margins. Growth for a credit union comes from winning share in specific places, not from a rising market.
 - **Background:** Delta Community Credit Union (DCCU) is Georgia's largest credit union, with roughly 1,100 mortgage originations per year, conventional and jumbo only (no FHA/VA/USDA). Vendor analytics (e.g., Finastra's Mortgagebot Data Insights) benchmark a lender's own applicants against peers. That is an inward view.
 - **Customer need:** The Chief Lending Officer (CLO) sets annual priorities: where to spend marketing dollars, where to place loan officers, which competitors to target. DCCU's own pipeline can't answer these questions, because the borrowers it loses never appear in its systems. The CLO needs an outside-in view of the market.
+- **Product vision (added 2026-10-30):** this is meant to become a product sold to many lenders; **DCCU is the sample customer**. v1 is built and validated on DCCU. New work keeps lender-specific facts (LEI, footprint, branches, product mix) in config, and a productize phase after v1 generalizes the rest (see Future phases).
 
 ## 2. User and decision
-- **User:** DCCU CLO.
+- **User:** the CLO of the subject lender. v1: DCCU's CLO.
 - **Decision:** Where should DCCU focus mortgage growth next year, and against which competitors?
 - **Strategic choice the outputs must inform:** build depth inside the current 20-county field of membership, expand the field of membership into another county, or both. Expansion is a real lever: DCCU applies to the Georgia Department of Banking and Finance for each new county and has expanded several times (11 → 14 → 16 → 20 counties).
 - **Scope:** the data covers all of Georgia, split into two analyses:
@@ -41,6 +42,7 @@ Membership is defined by the **person** (lives or works in an eligible county, D
 | R3 | Tag every tract as inside or outside DCCU's field-of-membership (FOM) counties. Compare DCCU share inside vs. outside to estimate how much the membership boundary suppresses share | 2, 6 |
 | R3a | Depth vs. expansion comparison: total depth opportunity inside the FOM vs. a county scorecard for every non-FOM Georgia county (market volume, DCCU current share, expansion gain at the target share, market group, urban/rural tier, population growth, purchase-market change, households, distance to nearest branch, adjacency to FOM) | 6 |
 | R3b | Expansion rankings: non-FOM counties ranked by market group (e.g., Savannah, Macon–Warner Robins), by urban/rural tier, and as growth clusters of neighboring growing counties | 7 |
+| R3c | Benchmark ladder: depth at the footprint average (base), the weakest top-quarter county (stretch) and the top quarter pooled (ceiling), with evidence on whether lower-share counties face more competition (market structure, broker-submitted share, like-for-like comparison) | 6 |
 | R4 | Share by distance band from nearest DCCU branch | 4 |
 | R5 | Share trend 2022–2025, FOM-wide, statewide and per county: purchase, refinance and combined share, shown with each year's refinance/purchase mix. Label 2022 as the tail of the refi boom | 5 |
 | R6 | Household density per tract (households per square mile) on the map and in the table | 1, 2 |
@@ -50,6 +52,13 @@ Membership is defined by the **person** (lives or works in an eligible county, D
 Pricing/rate comparison, underserved-area analysis, fair-lending analysis, forecasting, interactive dashboards, Finastra/Mortgagebot data. For expansion: real estate, site selection, and the regulatory filing and compliance work.
 
 ### Future phases (ideas, not commitments)
+- **Productize (planned next after v1):** make the pipeline work for any lender, with DCCU as one configuration.
+  - Subject-lender config: LEI, name, footprint, branch source, product filters; rename `dccu_*` columns to lender-neutral names.
+  - Footprint types: credit-union field of membership, bank CRA assessment area, or a custom county list; "expansion" means an FOM filing for a credit union and new markets or branches for others.
+  - Branch data by charter type: NCUA (credit unions), FDIC Summary of Deposits (banks); nonbank branch locations to be sourced.
+  - Market definition per lender: product filters (e.g., add FHA/VA for lenders that offer them); states beyond Georgia.
+  - Hand-maintained lists (builder-owned lenders, branch exclusions) maintained per market rather than per customer.
+  - Benchmark-ladder rules that work for small footprints (a top quartile of 3 counties is degenerate).
 - **Underserved-area index:** tracts with little lending relative to potential demand. Candidate inputs: penetration (originations per 1,000 owner-occupied units), applications per 1,000 households, denial rates and reasons, lender count per tract, share of high-cost/nonbank lending, and Census renter households with incomes high enough to buy. Build on income and lending data, not neighborhood racial composition, and route through compliance review before it informs decisions (fair-lending/redlining risk).
 - **Pricing:** HMDA includes interest rate, rate spread, total loan costs, discount points and lender credits for originated loans, so a partial comparison of DCCU vs. competitors is possible. Limits: annual and lagged; no credit score in public data, so comparisons can only control for loan-to-value, debt-to-income, loan amount and product; it shows what borrowers paid, not current rate sheets.
 
@@ -114,7 +123,12 @@ Pricing/rate comparison, underserved-area analysis, fair-lending analysis, forec
 - **Depth opportunity** = sum of `opportunity_score` across FOM tracts, scoring year.
 - **Expansion gain (per non-FOM county)** = county market originations × max(0, `expansion_target_share` − DCCU's current share in that county), scoring year. `expansion_target_share` = 2.0%, `fom_share` rounded: a named planning assumption in config. Read it as "loans added per year if DCCU entered this county and reached its FOM share there." Label it an upper bound: new counties take years to reach footprint share.
 - **Trend** = DCCU share per year, 2022–2025, FOM-wide, statewide and per county; purchase, refinance and combined; shown with each year's market refinance/purchase mix. No per-tract trend: DCCU averages under one loan per FOM tract a year.
-- Compare depth and expansion in loans per year, side by side, in `FINDINGS.md`.
+- **Benchmark ladder** (added 2026-10-30; rules in `config/settings.py`). Footprint counties with at least 100 market originations qualify; the top quarter by share is the reference group.
+  - Base = footprint average (`fom_share`). Stretch = share of the weakest top-quarter county. Ceiling = pooled share of the top-quarter counties.
+  - Depth at each rung uses the same form as `opportunity_score`: tract market originations × max(0, rung − tract share), summed over footprint tracts. The base rung reproduces the depth opportunity exactly.
+  - Label the ceiling as a ceiling: it reflects history and the membership base, which investment can't simply buy.
+- **Market-structure evidence** (top quarter vs. the rest of the footprint): county HHI (loan-weighted), median lenders per 100 loans in a tract, top 10 lenders' share, builder-lender share, loan size and income, and **broker-submitted share** from HMDA's `submission_of_application` (code 2 = not submitted directly to the lender; exempt codes left out). Like-for-like: subject-lender share within loan-size quintiles and tract-competition terciles.
+- Compare depth and expansion in loans per year, side by side, in `FINDINGS.md`. Every number in `FINDINGS.md` comes from `outputs/key_numbers.csv`, and the pipeline flags any that don't.
 
 ### Data quality checks (log results; never drop silently)
 - Missing or `NA` census tract.
@@ -125,8 +139,8 @@ Pricing/rate comparison, underserved-area analysis, fair-lending analysis, forec
 - DCCU totals per year vs. published HMDA totals; investigate big misses.
 
 ### Tech and working agreements
-- Python: pandas, geopandas, requests; matplotlib or folium for maps.
+- Python: pandas, geopandas, requests; matplotlib (static maps and charts) and folium (one interactive HTML map). New code is lender-neutral: the subject lender and footprint come from config.
 - Layout: `config/` (county lists), `data/raw/` (git-ignored), `data/processed/`, `src/` (one script per stage), `outputs/`.
-- Phases, with a check-in after each: (1) download and validate, (2) market definition, (3) share, trend and opportunity metrics, including expansion gain by market group and tier, (4) households, density, branch distance, population growth, adjacency and growth clusters, (5) map, table and findings.
+- Phases, with a check-in after each: (1) download and validate, (2) market definition, (3) share, trend and opportunity metrics, including expansion gain by market group and tier, (4) households, density, branch distance, population growth, adjacency and growth clusters, (5) map, table and findings, including the benchmark ladder and market-structure evidence.
 - Cache downloads; never re-hit an API if the raw file exists.
 - Before coding each phase, state the plan and wait for approval.

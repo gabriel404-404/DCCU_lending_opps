@@ -25,6 +25,20 @@ PURCHASE_CHANGE_BASE_YEAR = 2023
 DCCU_LEI = "549300Y4BSP3BSFW7J29"
 DCCU_NAME = "DELTA COMMUNITY CREDIT UNION"
 
+# Subject lender, for lender-neutral code (Phase 5 onward). DCCU is the illustrative example;
+# stages 01-05 still use DCCU_* names until the productize phase (PRD, Future phases).
+LENDER_LEI = DCCU_LEI
+LENDER_NAME = "Delta Community Credit Union"
+LENDER_LABEL = "DCCU"
+FOOTPRINT_LABEL = "FOM"
+FOOTPRINT_NAME = "field of membership"
+
+# Benchmark ladder (PRD Appendix A): base = footprint average; stretch = the weakest county in
+# the top quarter of footprint counties by share; ceiling = the top quarter's pooled share.
+# A county needs LADDER_MIN_MARKET market originations to qualify, so a tiny county can't set the bar.
+LADDER_TOP_FRACTION = 0.25
+LADDER_MIN_MARKET = 100
+
 STATE_FIPS = "13"  # Georgia
 STATE_ABBR = "GA"
 ATLANTA_CBSA = "12060"  # Atlanta-Sandy Springs-Roswell, GA (OMB Bulletin 23-01, July 2023)

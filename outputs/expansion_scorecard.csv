@@ -1,0 +1,140 @@
+expansion_rank,county_fips,county_name,market_group,urban_rural_tier,market_all,market_purchase,market_refinance,lender_all,expansion_gain,market_purchase_2023,households,household_density,land_sq_mi,pop_2025,growing,fast_growing,adjacent_to_footprint,footprint_neighbors,branch_miles_hh_weighted,growth_cluster,current_share_pct,pop_growth_pct,pop_growth_recent_pct,purchase_market_change_pct
+1,13051,Chatham,"Savannah-Hinesville-Statesboro, GA",metro,2155,1663,492,3,40.1,1762,120383,278.2,432.7,311855,True,False,False,,195.8,,0.14,5.7,2.2,-5.6
+2,13073,Columbia,"Augusta-Richmond County, GA-SC",metro,1185,927,258,2,21.7,1033,55149,190.0,290.2,169189,True,False,False,,105.5,,0.17,7.9,2.5,-10.3
+3,13153,Houston,"Macon-Bibb County--Warner Robins, GA",metro,955,719,236,1,18.1,798,63851,169.7,376.2,178214,True,True,False,,60.9,,0.1,8.5,3.8,-9.9
+4,13021,Bibb,"Macon-Bibb County--Warner Robins, GA",metro,694,523,171,0,13.9,528,59921,240.3,249.4,157556,False,False,False,,43.8,,0.0,0.3,0.4,-0.9
+5,13015,Bartow,"Atlanta-Sandy Springs-Roswell, GA",metro,1084,790,294,8,13.7,780,40819,88.9,458.9,120800,True,True,True,"Cherokee, Cobb, Paulding",19.0,C3,0.74,10.5,5.0,1.3
+6,13245,Richmond,"Augusta-Richmond County, GA-SC",metro,698,542,156,1,13.0,618,76694,236.5,324.3,206559,False,False,False,,113.7,,0.14,-0.0,0.3,-12.3
+7,13215,Muscogee,"Columbus-Auburn-Opelika, GA-AL",metro,654,493,161,1,12.1,495,81415,376.1,216.5,202171,False,False,False,,63.5,,0.15,-2.3,0.0,-0.4
+8,13185,Lowndes,"Valdosta, GA",metro,600,416,184,0,12.0,420,46106,92.7,497.3,122867,False,False,False,,179.4,,0.0,3.7,1.7,-1.0
+9,13047,Catoosa,"Chattanooga-Cleveland-Dalton, TN-GA-AL",metro,580,396,184,0,11.6,415,26653,164.4,162.2,69628,False,False,False,,68.0,,0.0,2.3,0.8,-4.6
+10,13059,Clarke,"Athens-Clarke County, GA",metro,685,518,167,3,10.7,546,54454,456.4,119.3,129921,False,False,True,"Barrow, Jackson",33.4,,0.44,1.0,-0.5,-5.1
+11,13127,Glynn,"Brunswick-St. Simons, GA",metro,676,484,192,3,10.5,485,35543,84.7,419.6,87599,False,False,False,,214.4,,0.44,3.7,1.4,-0.2
+12,13029,Bryan,"Savannah-Hinesville-Statesboro, GA",metro,497,400,97,0,9.9,381,16603,37.9,437.6,52062,True,True,False,,188.6,C2,0.0,15.6,4.5,5.0
+13,13219,Oconee,"Athens-Clarke County, GA",metro,513,378,135,1,9.3,335,14994,81.3,184.3,44893,True,False,True,"Barrow, Walton",31.3,,0.19,6.9,1.8,12.8
+14,13313,Whitfield,"Chattanooga-Cleveland-Dalton, TN-GA-AL",metro,503,350,153,1,9.1,370,36834,126.8,290.4,106212,False,False,False,,53.6,,0.2,3.3,1.8,-5.4
+15,13115,Floyd,"Rome, GA",metro,602,433,169,3,9.0,476,36856,72.3,509.8,101378,False,False,False,,38.2,,0.5,2.8,1.2,-9.0
+16,13045,Carroll,"Atlanta-Sandy Springs-Roswell, GA",metro,830,601,229,8,8.6,600,44106,88.4,499.1,131036,True,True,True,"Coweta, Douglas, Fulton, Paulding",19.2,C4,0.96,9.8,3.4,0.2
+17,13103,Effingham,"Savannah-Hinesville-Statesboro, GA",metro,463,314,149,1,8.3,409,24287,50.7,478.8,74397,True,True,False,,179.7,C2,0.22,14.1,3.9,-23.2
+18,13085,Dawson,"Atlanta-Sandy Springs-Roswell, GA",metro,553,395,158,3,8.1,450,11573,54.9,210.8,35365,True,True,True,"Cherokee, Forsyth, Hall",15.8,C3,0.54,30.7,11.1,-12.2
+19,13295,Walker,"Chattanooga-Cleveland-Dalton, TN-GA-AL",metro,503,341,162,2,8.1,333,26355,59.1,446.3,70250,False,False,False,,67.5,,0.4,3.7,0.9,2.4
+20,13031,Bulloch,"Savannah-Hinesville-Statesboro, GA",micro,370,247,123,0,7.4,272,30856,45.6,676.0,86949,True,True,False,,151.9,C2,0.0,8.8,3.1,-9.2
+21,13137,Habersham,"Cornelia, GA",micro,362,263,99,0,7.2,232,16753,60.5,276.9,50416,True,True,True,Hall,26.7,C1,0.0,9.3,3.5,13.4
+22,13227,Pickens,"Atlanta-Sandy Springs-Roswell, GA",metro,406,256,150,1,7.1,289,13430,57.9,232.1,37167,True,True,True,Cherokee,20.9,C3,0.25,11.4,3.3,-11.4
+23,13129,Gordon,"Calhoun, GA",micro,411,250,161,2,6.2,277,21348,59.9,356.5,61701,True,False,True,Cherokee,35.7,,0.49,6.9,3.1,-9.7
+24,13145,Harris,"Columbus-Auburn-Opelika, GA-AL",metro,271,187,84,0,5.4,164,13027,28.1,463.8,37280,True,False,False,,49.9,,0.0,6.8,1.5,14.0
+25,13039,Camden,"Jacksonville-Kingsland-Palatka, FL-GA",micro,364,267,97,2,5.3,276,21693,34.4,630.3,60143,True,True,False,,227.8,,0.55,9.5,3.9,-3.3
+26,13275,Thomas,"Thomasville, GA",micro,262,182,80,0,5.2,165,18684,34.3,544.6,46368,False,False,False,,172.6,,0.0,1.3,1.3,10.3
+27,13123,Gilmer,,rural,310,197,113,1,5.2,191,13015,30.5,426.2,33894,True,False,False,,35.5,,0.32,7.9,3.2,3.1
+28,13187,Lumpkin,"Atlanta-Sandy Springs-Roswell, GA",metro,326,212,114,2,4.5,178,11669,41.2,282.9,36178,True,False,True,Hall,19.1,,0.61,7.5,2.8,19.1
+29,13111,Fannin,,rural,226,138,88,0,4.5,133,11890,30.7,387.1,26111,False,False,False,,48.4,,0.0,2.6,0.6,3.8
+30,13143,Haralson,"Atlanta-Sandy Springs-Roswell, GA",metro,226,151,75,0,4.5,136,11747,41.6,282.2,33066,True,True,True,Paulding,26.7,C4,0.0,10.0,3.2,11.0
+31,13233,Polk,"Cedartown, GA",micro,221,116,105,0,4.4,155,15901,51.2,310.3,45514,True,False,True,Paulding,30.5,,0.0,6.0,2.5,-25.2
+32,13177,Lee,"Albany, GA",metro,211,126,85,0,4.2,147,12287,34.5,355.8,34179,False,False,False,,115.3,,0.0,2.9,1.0,-14.3
+33,13133,Greene,,rural,250,172,78,1,4.0,242,8198,21.2,387.5,21367,True,True,False,,48.8,C1,0.4,12.3,3.1,-28.9
+34,13291,Union,,rural,297,190,107,2,3.9,165,11490,35.7,322.1,27859,True,True,False,,41.1,,0.67,12.3,2.7,15.2
+35,13195,Madison,"Athens-Clarke County, GA",metro,195,119,76,0,3.9,164,11242,39.8,282.3,32919,True,True,True,Jackson,37.9,C1,0.0,8.8,2.0,-27.4
+36,13095,Dougherty,"Albany, GA",metro,188,119,69,0,3.8,142,34280,104.3,328.6,82616,False,False,False,,123.6,,0.0,-3.0,-0.2,-16.2
+37,13147,Hart,,rural,178,120,58,0,3.6,132,11034,47.5,232.4,28639,True,True,False,,51.7,C1,0.0,10.7,4.0,-9.1
+38,13175,Laurens,"Dublin, GA",micro,163,99,64,0,3.3,101,18592,23.0,807.3,51041,False,False,False,,90.2,,0.0,3.0,2.1,-2.0
+39,13277,Tift,"Tifton, GA",micro,157,96,61,0,3.1,89,15640,59.9,260.9,42254,False,False,False,,136.1,,0.0,2.1,1.2,7.9
+40,13257,Stephens,"Toccoa, GA",micro,151,103,48,0,3.0,108,10524,58.8,178.9,27854,False,False,False,,37.1,,0.0,3.8,2.0,-4.6
+41,13071,Colquitt,"Moultrie, GA",micro,150,92,58,0,3.0,75,16803,30.7,547.1,47438,False,False,False,,152.0,,0.0,3.3,2.1,22.7
+42,13179,Liberty,"Savannah-Hinesville-Statesboro, GA",metro,146,94,52,0,2.9,109,23998,46.5,516.5,70313,True,False,False,,182.5,,0.0,7.6,3.2,-13.8
+43,13169,Jones,"Macon-Bibb County--Warner Robins, GA",metro,145,96,49,0,2.9,106,10786,27.4,393.9,29171,False,False,False,,42.6,,0.0,2.8,0.7,-9.4
+44,13083,Dade,"Chattanooga-Cleveland-Dalton, TN-GA-AL",metro,143,63,80,0,2.9,76,6083,34.9,174.1,16154,False,False,False,,77.1,,0.0,-0.5,-0.3,-17.1
+45,13119,Franklin,,rural,140,87,53,0,2.8,99,8994,34.4,261.3,25948,True,True,False,,38.3,C1,0.0,10.5,4.3,-12.1
+46,13213,Murray,"Chattanooga-Cleveland-Dalton, TN-GA-AL",metro,183,111,72,1,2.7,96,15246,44.3,344.5,41607,False,False,False,,46.6,,0.55,4.0,1.5,15.6
+47,13305,Wayne,"Savannah-Hinesville-Statesboro, GA",micro,126,61,65,0,2.5,55,11061,17.2,641.8,32481,True,False,False,,176.6,,0.0,7.7,3.5,10.9
+48,13229,Pierce,"Waycross, GA",micro,124,65,59,0,2.5,64,7605,22.3,340.5,20764,False,False,False,,178.5,,0.0,5.1,1.7,1.6
+49,13191,McIntosh,"Brunswick-St. Simons, GA",metro,123,78,45,0,2.5,84,5067,11.7,431.3,11989,True,True,False,,205.9,C5,0.0,9.2,3.6,-7.1
+50,13211,Morgan,"Atlanta-Sandy Springs-Roswell, GA",metro,219,142,77,2,2.4,127,8120,23.4,347.4,22095,True,True,True,"Newton, Walton",30.3,C1,0.91,9.4,2.7,11.8
+51,13207,Monroe,"Macon-Bibb County--Warner Robins, GA",metro,268,170,98,3,2.4,171,10554,26.6,396.1,32023,True,True,True,Butts,25.8,C1,1.12,14.1,4.7,-0.6
+52,13221,Oglethorpe,"Athens-Clarke County, GA",metro,118,62,56,0,2.4,77,5411,12.3,439.1,16415,True,True,False,,48.1,C1,0.0,10.4,4.3,-19.5
+53,13225,Peach,"Macon-Bibb County--Warner Robins, GA",metro,116,75,41,0,2.3,107,10598,70.5,150.3,29877,True,False,False,,56.5,,0.0,6.5,3.1,-29.9
+54,13299,Ware,"Waycross, GA",micro,111,62,49,0,2.2,51,12957,14.4,899.2,36906,False,False,False,,180.2,,0.0,1.8,1.4,21.6
+55,13011,Banks,,rural,159,112,47,1,2.2,104,6856,29.5,232.7,21273,True,True,True,"Hall, Jackson",21.3,C1,0.63,17.3,6.6,7.7
+56,13033,Burke,"Augusta-Richmond County, GA-SC",metro,99,67,32,0,2.0,66,9184,11.1,827.0,24408,False,False,False,,122.1,,0.0,-0.9,0.2,1.5
+57,13261,Sumter,"Americus, GA",micro,93,62,31,0,1.9,53,10986,22.8,482.9,28801,False,False,False,,90.4,,0.0,-2.4,-0.7,17.0
+58,13293,Upson,"Thomaston, GA",micro,142,69,73,1,1.8,67,10595,32.8,323.5,28500,False,False,False,,33.4,,0.7,2.7,0.9,3.0
+59,13009,Baldwin,"Milledgeville, GA",micro,140,84,56,1,1.8,113,16582,64.1,258.7,44029,False,False,False,,53.4,,0.71,0.6,1.4,-25.7
+60,13055,Chattooga,"Chattanooga-Cleveland-Dalton, TN-GA-AL",micro,90,54,36,0,1.8,58,9154,29.2,313.3,25300,False,False,False,,54.2,,0.0,1.5,0.5,-6.9
+61,13285,Troup,"LaGrange, GA-AL",micro,388,268,120,6,1.8,280,26904,65.0,414.0,72844,False,False,True,Coweta,30.7,,1.55,5.0,2.1,-4.3
+62,13131,Grady,"Thomasville, GA",micro,85,48,37,0,1.7,45,10108,22.2,454.5,26590,False,False,False,,171.3,,0.0,1.4,1.8,6.7
+63,13087,Decatur,"Tallahassee-Bainbridge, FL-GA",micro,79,34,45,0,1.6,37,10621,17.8,597.2,29432,False,False,False,,172.0,,0.0,-0.0,0.8,-8.1
+64,13181,Lincoln,"Augusta-Richmond County, GA-SC",metro,79,44,35,0,1.6,47,2997,14.2,210.4,8112,True,False,False,,87.1,,0.0,5.3,2.9,-6.4
+65,13241,Rabun,,rural,128,72,56,1,1.6,75,7615,20.6,370.1,17764,False,False,False,,48.4,,0.78,5.0,1.6,-4.0
+66,13105,Elbert,,rural,78,51,27,0,1.6,50,8376,23.9,351.1,20072,False,False,False,,58.7,,0.0,2.1,0.1,2.0
+67,13267,Tattnall,,rural,78,41,37,0,1.6,32,7630,15.9,480.8,24376,False,False,False,,151.6,,0.0,0.2,-0.1,28.1
+68,13281,Towns,,rural,127,78,49,1,1.5,87,5924,35.6,166.5,13285,True,False,False,,43.8,,0.79,5.8,2.1,-10.3
+69,13189,McDuffie,"Augusta-Richmond County, GA-SC",metro,77,47,30,0,1.5,57,8149,31.7,257.4,21640,False,False,False,,88.9,,0.0,0.1,-1.0,-17.5
+70,13023,Bleckley,,rural,62,35,27,0,1.2,25,4465,20.7,215.9,12866,False,False,False,,79.3,,0.0,2.8,3.2,40.0
+71,13027,Brooks,"Valdosta, GA",metro,62,32,30,0,1.2,24,6052,12.3,493.2,16101,False,False,False,,177.3,,0.0,-1.0,-0.8,33.3
+72,13069,Coffee,"Douglas, GA",micro,61,26,35,0,1.2,38,15349,25.9,592.2,44407,False,False,False,,147.5,,0.0,3.2,2.2,-31.6
+73,13091,Dodge,,rural,60,23,37,0,1.2,35,6881,13.9,496.0,19663,False,False,False,,97.0,,0.0,-1.4,-0.6,-34.3
+74,13163,Jefferson,,rural,57,27,30,0,1.1,27,5751,10.9,526.6,15011,False,False,False,,100.2,,0.0,-4.2,-1.7,0.0
+75,13321,Worth,"Albany, GA",metro,56,29,27,0,1.1,29,7739,13.6,570.7,20059,False,False,False,,126.6,,0.0,-3.2,-0.7,0.0
+76,13019,Berrien,,rural,53,26,27,0,1.1,27,7045,15.5,453.4,18932,False,False,False,,155.0,,0.0,4.3,1.6,-3.7
+77,13081,Crisp,"Cordele, GA",micro,53,37,16,0,1.1,38,7908,29.0,272.7,19237,False,False,False,,99.9,,0.0,-4.1,-2.0,-2.6
+78,13235,Pulaski,,rural,53,32,21,0,1.1,25,3575,14.3,249.3,10172,False,False,False,,83.9,,0.0,3.0,0.4,28.0
+79,13279,Toombs,"Vidalia, GA",micro,53,35,18,0,1.1,31,10409,28.6,364.0,27545,False,False,False,,130.6,,0.0,1.7,1.4,12.9
+80,13001,Appling,,rural,48,20,28,0,1.0,23,7178,14.1,508.3,19100,False,False,False,,151.4,,0.0,3.9,3.1,-13.0
+81,13251,Screven,,rural,48,23,25,0,1.0,20,4932,7.6,645.8,14408,False,False,False,,151.4,,0.0,2.4,1.3,15.0
+82,13075,Cook,,rural,47,25,22,0,0.9,32,6304,27.6,228.5,18232,True,False,False,,158.0,,0.0,5.8,2.7,-21.9
+83,13173,Lanier,"Valdosta, GA",metro,46,21,25,0,0.9,15,3483,17.7,196.5,10623,True,False,False,,170.8,,0.0,7.1,2.4,40.0
+84,13317,Wilkes,,rural,46,27,19,0,0.9,11,4133,8.8,469.5,9540,False,False,False,,73.0,,0.0,-0.1,-0.1,145.5
+85,13079,Crawford,"Macon-Bibb County--Warner Robins, GA",metro,44,20,24,0,0.9,26,4441,13.7,324.9,12206,False,False,False,,46.1,,0.0,0.9,-0.3,-23.1
+86,13183,Long,"Savannah-Hinesville-Statesboro, GA",metro,44,25,19,0,0.9,36,6162,15.4,400.4,21557,True,True,False,,177.5,C5,0.0,32.6,9.9,-30.6
+87,13253,Seminole,,rural,42,13,29,0,0.8,18,3767,15.9,237.6,9162,False,False,False,,168.4,,0.0,0.4,0.9,-27.8
+88,13273,Terrell,"Albany, GA",metro,42,12,30,0,0.8,14,3383,10.1,335.8,8656,False,False,False,,111.4,,0.0,-5.3,-1.0,-14.3
+89,13311,White,,rural,241,165,76,4,0.8,156,10729,44.6,240.8,29802,True,False,True,Hall,22.6,,1.66,6.0,2.8,5.8
+90,13025,Brantley,"Brunswick-St. Simons, GA",metro,39,16,23,0,0.8,35,6599,14.9,443.2,18936,False,False,False,,195.2,,0.0,4.9,3.0,-54.3
+91,13017,Ben Hill,"Fitzgerald, GA",micro,38,15,23,0,0.8,15,7082,28.3,250.1,17099,False,False,False,,124.0,,0.0,-0.4,-0.4,0.0
+92,13107,Emanuel,,rural,37,20,17,0,0.7,23,8312,12.2,680.6,23147,False,False,False,,117.9,,0.0,1.2,0.1,-13.0
+93,13303,Washington,,rural,36,24,12,0,0.7,32,7330,10.8,678.5,19453,False,False,False,,81.5,,0.0,-2.5,-1.9,-25.0
+94,13099,Early,,rural,34,4,30,0,0.7,16,4114,8.0,512.6,10455,False,False,False,,142.9,,0.0,-3.1,-1.2,-75.0
+95,13161,Jeff Davis,,rural,34,14,20,0,0.7,27,5484,16.6,330.9,15219,False,False,False,,137.0,,0.0,2.8,1.8,-48.1
+96,13237,Putnam,,rural,183,132,51,3,0.7,130,10435,30.3,344.7,23722,True,False,False,,43.9,,1.64,7.0,2.3,1.5
+97,13043,Candler,,rural,32,25,7,0,0.6,18,4152,17.1,243.1,11275,False,False,False,,135.1,,0.0,2.2,1.6,38.9
+98,13201,Miller,,rural,32,7,25,0,0.6,4,2573,9.1,282.4,5812,False,False,False,,152.9,,0.0,-3.1,0.5,75.0
+99,13205,Mitchell,,rural,31,8,23,0,0.6,17,7813,15.3,512.2,20467,False,False,False,,146.9,,0.0,-5.6,-1.4,-52.9
+100,13149,Heard,"Atlanta-Sandy Springs-Roswell, GA",metro,80,48,32,1,0.6,35,4309,14.6,296.0,12149,True,False,True,Coweta,23.8,,1.25,6.2,1.1,37.1
+101,13109,Evans,"Savannah-Hinesville-Statesboro, GA",micro,29,15,14,0,0.6,12,4077,22.3,182.9,11028,False,False,False,,154.0,,0.0,2.2,2.2,25.0
+102,13197,Marion,"Columbus-Auburn-Opelika, GA-AL",metro,28,10,18,0,0.6,9,2966,8.1,365.7,7676,False,False,False,,69.9,,0.0,2.0,2.5,11.1
+103,13167,Johnson,"Dublin, GA",micro,27,10,17,0,0.5,6,3217,10.6,303.0,9310,False,False,False,,94.2,,0.0,1.4,0.0,66.7
+104,13049,Charlton,,rural,26,11,15,0,0.5,14,4215,5.4,780.1,13121,False,False,False,,214.1,,0.0,4.7,1.1,-21.4
+105,13249,Schley,"Americus, GA",micro,24,13,11,0,0.5,14,1639,9.8,166.9,4593,False,False,False,,76.8,,0.0,1.2,1.3,-7.1
+106,13209,Montgomery,"Vidalia, GA",micro,23,7,16,0,0.5,13,3143,13.0,241.1,8635,False,False,False,,123.4,,0.0,0.8,-1.5,-46.2
+107,13263,Talbot,"Columbus-Auburn-Opelika, GA-AL",metro,23,11,12,0,0.5,16,2529,6.5,391.4,5709,False,False,False,,46.5,,0.0,-0.3,-0.0,-31.2
+108,13287,Turner,"Tifton, GA",micro,23,10,13,0,0.5,9,3295,11.5,285.4,8983,False,False,False,,116.5,,0.0,-0.1,0.7,11.1
+109,13269,Taylor,,rural,22,9,13,0,0.4,19,3179,8.4,376.7,7818,False,False,False,,57.3,,0.0,-0.0,0.4,-52.6
+110,13093,Dooly,,rural,21,10,11,0,0.4,13,4031,10.3,392.6,11156,False,False,False,,85.6,,0.0,-0.1,0.9,-23.1
+111,13155,Irwin,,rural,21,9,12,0,0.4,11,3589,10.1,354.4,9020,False,False,False,,131.4,,0.0,-6.5,-1.1,-18.2
+112,13193,Macon,,rural,21,10,11,0,0.4,13,4142,10.3,400.7,11756,False,False,False,,71.0,,0.0,-2.2,-0.7,-23.1
+113,13289,Twiggs,"Macon-Bibb County--Warner Robins, GA",metro,21,8,13,0,0.4,10,2888,8.0,359.3,7597,False,False,False,,60.5,,0.0,-5.1,-0.8,-20.0
+114,13005,Bacon,,rural,20,10,10,0,0.4,15,4204,14.8,284.1,11070,False,False,False,,157.1,,0.0,-0.4,-0.6,-33.3
+115,13065,Clinch,,rural,20,7,13,0,0.4,8,2428,3.0,815.0,6847,False,False,False,,181.5,,0.0,1.8,0.8,-12.5
+116,13141,Hancock,,rural,15,10,5,0,0.3,8,2922,6.2,471.1,8682,False,False,False,,63.3,,0.0,-0.3,-0.7,25.0
+117,13165,Jenkins,,rural,15,7,8,0,0.3,16,3216,9.3,347.4,8843,False,False,False,,130.9,,0.0,2.1,2.5,-56.2
+118,13301,Warren,,rural,15,5,10,0,0.3,5,2097,7.4,284.4,5269,False,False,False,,80.3,,0.0,1.2,2.9,0.0
+119,13037,Calhoun,,rural,14,5,9,0,0.3,3,1593,5.7,280.4,5413,False,False,False,,128.1,,0.0,-2.9,-1.5,66.7
+120,13061,Clay,,rural,12,3,9,0,0.2,7,1231,6.3,195.4,2815,False,False,False,,123.8,,0.0,-0.5,-1.4,-57.1
+121,13271,Telfair,,rural,12,4,8,0,0.2,12,3351,7.7,437.3,11195,False,False,False,,118.0,,0.0,-10.1,2.1,-66.7
+122,13243,Randolph,,rural,11,4,7,0,0.2,7,2688,6.3,428.2,6156,False,False,False,,113.0,,0.0,-3.3,-0.4,-42.9
+123,13259,Stewart,"Columbus-Auburn-Opelika, GA-AL",metro,10,3,7,0,0.2,5,1771,3.9,458.8,4631,False,False,False,,90.1,,0.0,-12.5,-0.9,-40.0
+124,13315,Wilcox,,rural,10,2,8,0,0.2,4,2614,6.9,377.8,8797,False,False,False,,104.9,,0.0,0.1,-0.1,-50.0
+125,13003,Atkinson,"Douglas, GA",micro,9,1,8,0,0.2,3,3222,9.4,342.7,8454,False,False,False,,160.4,,0.0,1.8,1.5,-66.7
+126,13125,Glascock,,rural,9,5,4,0,0.2,3,1036,7.2,143.7,3141,True,True,False,,85.7,,0.0,8.4,6.0,66.7
+127,13283,Treutlen,,rural,9,3,6,0,0.2,3,2261,11.3,199.4,6466,False,False,False,,111.0,,0.0,1.1,1.7,0.0
+128,13309,Wheeler,,rural,9,6,3,0,0.2,6,1615,5.5,295.5,7570,False,False,False,,116.9,,0.0,1.7,7.0,0.0
+129,13239,Quitman,"Eufaula, AL-GA",micro,8,4,4,0,0.2,3,1067,7.1,151.2,2254,False,False,False,,107.5,,0.0,1.3,-0.7,33.3
+130,13265,Taliaferro,,rural,8,5,3,0,0.2,3,588,3.0,194.6,1662,True,False,False,,65.3,,0.0,6.7,3.7,66.7
+131,13101,Echols,"Valdosta, GA",metro,5,2,3,0,0.1,2,1145,2.7,420.4,3685,False,False,False,,193.7,,0.0,-0.8,-0.7,0.0
+132,13307,Webster,,rural,5,3,2,0,0.1,5,843,4.0,209.7,2369,False,False,False,,91.8,,0.0,0.7,0.5,-40.0
+133,13053,Chattahoochee,"Columbus-Auburn-Opelika, GA-AL",metro,3,1,2,0,0.1,3,1866,7.5,248.7,8465,False,False,False,,75.4,,0.0,-10.6,-0.8,-66.7
+134,13007,Baker,,rural,1,0,1,0,0.0,1,1108,3.2,342.0,2725,False,False,False,,141.3,,0.0,-4.3,0.1,-100.0
+135,13159,Jasper,"Atlanta-Sandy Springs-Roswell, GA",metro,190,119,71,4,0.0,110,5965,16.2,368.4,17632,True,True,True,"Butts, Newton",23.0,C1,2.11,20.2,6.9,8.2
+136,13231,Pike,"Atlanta-Sandy Springs-Roswell, GA",metro,179,113,66,8,0.0,107,6721,31.1,216.1,20932,True,True,True,Spalding,21.2,C1,4.47,10.5,2.2,5.6
+137,13171,Lamar,,rural,137,85,52,8,0.0,116,7133,38.9,183.5,20941,True,True,True,"Butts, Spalding",19.7,C1,5.84,12.9,2.8,-26.7
+138,13199,Meriwether,"Atlanta-Sandy Springs-Roswell, GA",metro,114,76,38,4,0.0,100,8391,16.8,500.9,21516,False,False,True,"Coweta, Spalding",25.7,,3.51,4.4,3.0,-24.0
+139,13319,Wilkinson,,rural,27,13,14,1,0.0,10,3473,7.7,449.2,8650,False,False,False,,63.0,,3.7,-2.1,-1.3,30.0

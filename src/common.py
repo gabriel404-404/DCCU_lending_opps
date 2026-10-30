@@ -1,5 +1,6 @@
 """Helpers shared by the pipeline stages."""
 
+import re
 import sys
 import time
 import zipfile
@@ -66,6 +67,21 @@ def dccu_branches(zip_path):
         raise ValueError(f"Expected one DCCU record in FOICU, found {len(cu)}")
     charter = cu["CU_NUMBER"].iloc[0]
     return charter, branches[branches["CU_NUMBER"] == charter]
+
+
+def neutral(df):
+    """Lender-neutral column names for Phase 5+ code: dccu_* -> lender_*, fom_* -> footprint_*.
+
+    Older stages still write DCCU/FOM names; the productize phase renames them at the source
+    and removes this helper.
+    """
+    return df.rename(columns=lambda c: re.sub(r"(?<![a-z])fom(?![a-z])", "footprint",
+                                              re.sub(r"(?<![a-z])dccu(?![a-z])", "lender", c)))
+
+
+def read_processed(name, **kw):
+    """Read data/processed/<name>.csv with lender-neutral column names."""
+    return neutral(pd.read_csv(s.PROCESSED / f"{name}.csv", **kw))
 
 
 def md_table(df):

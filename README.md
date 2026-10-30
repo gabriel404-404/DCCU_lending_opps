@@ -1,7 +1,7 @@
 # DCCU_lending_opps
-Combining public datasets to created a geographic opportunity analysis for Delta Community Credit Union.  This is a personal experiment, not requested by DCCU.
+Mortgage Growth Map: an outside-in analysis of public HMDA data showing where a lender wins and loses mortgage share, and whether its growth should come from deeper share in its current footprint, expansion into new markets, or both. It is meant to become a product for any lender; **Delta Community Credit Union (DCCU) is the illustrative example** used to build v1. DCCU did not request this.
 
-Requirements: [docs/PRD.md](docs/PRD.md). Data issues and check results: [DATA_QUALITY.md](DATA_QUALITY.md).
+Start with [FINDINGS.md](FINDINGS.md). Requirements: [docs/PRD.md](docs/PRD.md). Data issues and check results: [DATA_QUALITY.md](DATA_QUALITY.md).
 
 ## Setup (once)
 Needs Python 3.13. From the repo root:
@@ -23,8 +23,12 @@ This runs every stage in order and stops at the first failure:
 - `01_download.py` fetches all raw data into `data/raw/` (about 820 MB, git-ignored). Files already on disk are never downloaded again; the first run takes roughly an hour.
 - `02_validate.py` runs the Phase 1 checks, writes details to `data/processed/phase1_checks/`, and updates `DATA_QUALITY.md`.
 - `03_market.py` applies the PRD's market definition to every lender and writes `data/processed/market_{year}.parquet` (git-ignored), `lenders.csv`, and the checks in `phase2_checks/`.
-- `04_metrics.py` computes share, trend, depth opportunity and expansion gain, writes `outputs/opportunity_top25.csv`, the metric files below, and the checks in `phase3_checks/`.
+- `04_metrics.py` computes share, trend, depth opportunity and expansion gain, and writes the metric files below and the checks in `phase3_checks/`.
 - `05_context.py` adds households, density, penetration, distance to the nearest DCCU branch, county population growth, adjacency and growth clusters, and completes the expansion scorecard; checks in `phase4_checks/`.
+- `06_benchmarks.py` builds the benchmark ladder (footprint average, stretch, ceiling) and the market-structure evidence; checks in `phase5_checks/`.
+- `07_outputs.py` draws the maps and charts, writes the final tables and `outputs/key_numbers.csv`, and checks `FINDINGS.md` against the key numbers.
+
+Stages 06 and 07 are lender-neutral: the subject lender and its footprint come from `config/settings.py`.
 
 Each stage can also be run on its own, e.g. `.venv/Scripts/python src/03_market.py`.
 
@@ -46,14 +50,29 @@ Each stage can also be run on its own, e.g. `.venv/Scripts/python src/03_market.
 | `share_by_distance.csv` | R4: DCCU share by distance band (FOM, statewide, per FOM county, county-adjusted) |
 | `county_context.csv` | every county: households, density, population and growth, FOM neighbors, household-weighted branch distance, growth cluster |
 | `expansion_scorecard.csv` | R3a: the 139 non-FOM counties with expansion gain plus the county context |
-| `growth_clusters.csv` | R3b: groups of neighboring growing non-FOM counties |
+| `growth_clusters.csv` | R3b: groups of neighboring fast-growing non-FOM counties |
+| `opportunity_top25.csv` | R2: top 25 FOM tracts (stage 07 adds context for `outputs/`) |
+| `benchmark_ladder.csv` | base / stretch / ceiling: rule, share and depth |
+| `depth_ladder_by_county.csv` | depth at each benchmark rung, per footprint county |
+| `market_structure.csv` | top-quarter footprint counties vs. the rest: concentration, lenders per loan, broker-submitted share |
+| `peer_comparison.csv` | subject-lender share by loan size and by tract competition, top quarter vs. the rest |
 
 Parquet files are git-ignored and rebuilt by `run_all.py`; the CSVs are small and kept in git.
 
 ## Outputs
 | File | Contents |
 |---|---|
-| `outputs/opportunity_top25.csv` | R2: top 25 FOM tracts by opportunity score, with top 3 competitors |
+| `map_footprint_share.png` | R1: footprint tracts by share vs. the footprint average |
+| `map_footprint_opportunity.png` | R1, R2: footprint tracts by opportunity score, top 25 numbered |
+| `map_statewide.png` | R1, R3b: county share, and expansion gain with growth clusters |
+| `mortgage_map.html` | interactive map (open in a browser): share, opportunity, density, expansion; hover for numbers |
+| `chart_share_trend.png` | R5: purchase and refinance share, with the market's refi mix |
+| `chart_share_by_distance.png` | R4: share by distance band, raw and county-adjusted |
+| `chart_depth_vs_expansion.png` | R3a: depth at three benchmarks vs. expansion |
+| `opportunity_top25.csv` | R2, R6: top 25 tracts with competitors, density, penetration, nearest branch |
+| `depth_by_county.csv` | depth per footprint county at each benchmark, with branches and competitors |
+| `expansion_scorecard.csv`, `growth_clusters.csv` | R3a, R3b: the expansion scorecard and named clusters |
+| `key_numbers.csv` | every number quoted in `FINDINGS.md`, with its source file |
 
 ## Data sources
 | Source | Used for |
@@ -70,3 +89,4 @@ Parquet files are git-ignored and rebuilt by `run_all.py`; the CSVs are small an
 | DCCU eligibility page | `config/fom_counties.csv` |
 | GLEIF LEI registry | names for the few market LEIs missing from the HMDA filers lists |
 | Hand-maintained, with the basis per row | `config/builder_lenders.csv` (builder-owned lenders, for the contestable market) |
+| Esri World Light Gray Canvas | basemap tiles in `mortgage_map.html` (loaded by the viewer's browser) |

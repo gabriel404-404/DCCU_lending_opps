@@ -1,7 +1,7 @@
 """Stage 4: share, trend and opportunity metrics (PRD Appendix A, "Metrics").
 
 Reads the Phase 2 market files and writes:
-  outputs/opportunity_top25.csv             R2: top 25 FOM tracts by opportunity score
+  data/processed/opportunity_top25.csv      R2: top 25 FOM tracts (stage 07 adds context for outputs/)
   data/processed/tract_metrics.csv          every Georgia tract, scoring year
   data/processed/depth_by_county.csv        depth opportunity rolled up by FOM county
   data/processed/trend_summary.csv          FOM / non-FOM / statewide share by year and purpose
@@ -433,7 +433,6 @@ def check_groups(counties):
 
 def main():
     OUT.mkdir(parents=True, exist_ok=True)
-    s.OUTPUTS.mkdir(parents=True, exist_ok=True)
     counties = pd.read_csv(s.CONFIG / "ga_counties.csv", dtype=str)
     counties["fom_flag"] = counties["fom_flag"].astype(int)
     lender_table = pd.read_csv(s.PROCESSED / "lenders.csv", dtype=str)
@@ -472,7 +471,7 @@ def main():
     builder_check = check_builders(builder_list, orig)
     at_target = expansion[expansion["current_share"] >= s.EXPANSION_TARGET_SHARE]
 
-    top25.to_csv(s.OUTPUTS / "opportunity_top25.csv", index=False)
+    top25.to_csv(s.PROCESSED / "opportunity_top25.csv", index=False)
     for name, df in [("tract_metrics", tracts), ("depth_by_county", depth_county),
                      ("trend_summary", trend),
                      ("county_year_metrics", county_year), ("lender_trend_fom", lender_trend),
