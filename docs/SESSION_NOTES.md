@@ -4,6 +4,62 @@ Read this at the start of each session. Newest entry first.
 
 ---
 
+## 2026-10-27 to 2026-10-30: Phases 3, 4 and 5 (v1 complete)
+
+### Where we are
+**v1 is done: all five phases are complete and on GitHub.** `FINDINGS.md` recommends **both, led by depth**, with three actions. The project is now framed as a **product for any lender, with DCCU as the illustrative example** (CLAUDE.md, PRD §1–2).
+
+Next is the **productize phase** (PRD, Future phases): make the pipeline work for any lender, with DCCU as one configuration. Per CLAUDE.md, Claude writes that plan first and waits for approval. Finish the two reviews under Open items first.
+
+To start next time, say something like: *"Read docs/SESSION_NOTES.md and write the productize plan."*
+
+### What exists
+| Piece | Where |
+|---|---|
+| One-page findings and recommendation | `FINDINGS.md` |
+| Maps, charts, final tables, every quoted number | `outputs/` (`key_numbers.csv` backs FINDINGS) |
+| Interactive map (double-click to open; needs internet for the basemap) | `outputs/mortgage_map.html` |
+| Whole pipeline, one command (about 2 minutes once raw data is cached) | `.venv/Scripts/python src/run_all.py` |
+| Stages | `src/01`–`07`; 06 and 07 are lender-neutral (lender comes from `config/settings.py`) |
+| Hand-maintained lists | `config/builder_lenders.csv`, `config/branch_exclusions.csv`, `config/branch_coordinates_manual.csv` |
+| Every check result | `DATA_QUALITY.md` (Phases 1–5) |
+
+### Decisions made this session
+- **Scoring year:** opportunity is scored on 2025 only; 2022–2025 feeds the trends.
+- **Benchmark:** DCCU's FOM-wide share (1.96%), not its statewide share. Expansion target: 2%.
+- **Trend:** per county, not per tract; purchase and refinance shown separately, with the market's refi mix.
+- **Minimum volume:** no tract is dropped; tracts under 20 market loans get a `low_volume` flag.
+- **Stability:** only 12 of the top 25 tracts survive the 2024–25 check, so findings lead with counties and the top 25 carries a `stable_top25` flag.
+- **Builder-owned lenders:** a contestable-market score sits next to the main one; the list is pending your review.
+- **Missing lender names:** looked up in GLEIF.
+- **Branches:** the 28 public Georgia branches (behind-security, corporate-only and out-of-state sites excluded). The December 2025 snapshot is used for share by distance, the current one for the scorecard.
+- **Market groups and tiers:** the hybrid OMB rule, with OMB's metro/micro/rural tiers.
+- **Growth:** `growing` means above Georgia's 5.31%; named clusters need 1.5× that.
+- **Benchmark ladder:** base = FOM average; stretch = the weakest top-quarter county (Spalding, 4.04%); ceiling = the top quarter pooled (6.17%).
+- **Product framing:** new code, labels and outputs are lender-neutral.
+
+### Key numbers (FOM, 2025)
+- **DCCU:** 1,052 of 53,783 originations (1.96%), the #7 lender. Purchase share rose from 0.74% (2022) to 2.00%.
+- **Top quarter vs. the rest:** 6.17% vs. 1.55% share. Market structure is similar, and the gap holds within like-for-like bands. Broker-submitted loans are 29% of the market in the weaker counties vs. 20% in the top quarter, and DCCU takes none.
+- **Depth vs. expansion:** depth is 533 / 1,374 / 2,382 loans a year at base / stretch / ceiling. Expansion is at most 448 (all 139 non-FOM counties at 2%).
+- **Proximity:** within a county, tracts within 2 miles of a branch run 1.14× the county average.
+
+### Open items
+1. **Builder-lender list** (`config/builder_lenders.csv`): confirm the 7 included lenders, and set `include` for the 6 data-signature candidates. Then rebuild; the contestable numbers update (FINDINGS quotes 529).
+2. **Merger review:** 15 flagged lenders in DATA_QUALITY.md, Phase 3 check 8. HomeStar (no loans after 2023) and Home Point (none after 2022) are clear exits.
+3. **Productize phase:**
+   - a subject-lender config, and renaming the `dccu_*` columns (then dropping the `neutral()` helper)
+   - footprint types and branch data by charter type (NCUA, FDIC)
+   - product filters, and states beyond Georgia
+   - a basemap license for commercial use
+   - ladder rules that work for small footprints
+4. **Repo size:** `outputs/mortgage_map.html` is 7 MB and committed, so each regenerated version adds to the git history. Consider git-ignoring it in the productize phase.
+
+### Git, as practiced
+Same as before: one commit per phase after the check-in, with the session notes in their own commit.
+
+---
+
 ## 2026-10-26: setup, Phase 1 and Phase 2
 
 ### Where we are
