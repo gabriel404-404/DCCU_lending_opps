@@ -1,0 +1,21 @@
+# Subject lender: Delta Community Credit Union (DCCU), the illustrative example.
+# Every value is a confirmed fact or a named assumption; the comment says which.
+
+[lender]
+name = "Delta Community Credit Union"
+label = "DCCU"
+lei = "549300Y4BSP3BSFW7J29"     # HMDA /view/filers API, every year 2022-2025
+charter = "credit_union"
+ncua_charter = "66357"           # NCUA call report (FOICU file), Phase 1 check 8
+
+[footprint]
+label = "FOM"
+name = "field of membership"
+counties = "footprint.csv"       # DCCU eligibility page, checked 2026-10-26
+
+[branches]
+exclusions = "branch_exclusions.csv"     # sites left out of branch distance, with reasons
+coordinates = "branch_coordinates.csv"   # hand-placed points for addresses the geocoder can't match
+
+[expansion]
+target_share = 0.02              # planning assumption: 2025 FOM share of 1.96%, rounded

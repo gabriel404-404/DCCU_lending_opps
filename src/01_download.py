@@ -2,7 +2,9 @@
 
 Each download is skipped if its file already exists, so re-running this script
 only fetches what is missing (and makes no network calls once everything is cached).
-It also builds config/ga_counties.csv from the downloaded county and OMB files.
+Market files (shared by every lender) go to data/raw/<source>/; each configured
+lender's own files (its HMDA records, API check counts, geocoded branches) go to
+data/raw/lenders/<key>/. It also builds config/ga_counties.csv from the county and OMB files.
 
 Run from the repo root:  python src/01_download.py
 """
@@ -16,7 +18,8 @@ import pandas as pd
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 from config import settings as s  # noqa: E402
-from src.common import SESSION, dccu_branches, fetch  # noqa: E402
+from config.lender import configured  # noqa: E402
+from src.common import SESSION, fetch, ncua_branches  # noqa: E402
 
 
 def download_reference_files():
@@ -45,7 +48,7 @@ def county_tags(omb):
 
 
 def build_county_config():
-    """Write config/ga_counties.csv: all Georgia counties with FOM, Atlanta MSA and metro-area tags."""
+    """Write config/ga_counties.csv: all Georgia counties with metro-area tags (no lender columns)."""
     counties = pd.read_csv(s.RAW / "census" / "st13_ga_cou2020.txt", sep="|", dtype=str)
     counties["county_fips"] = counties["STATEFP"] + counties["COUNTYFP"]
     counties["county_name"] = counties["COUNTYNAME"].str.replace(" County", "", regex=False)
@@ -53,47 +56,37 @@ def build_county_config():
     omb = pd.read_excel(s.RAW / "omb" / "list1_2023.xlsx", skiprows=2, dtype=str)
     omb = omb[omb["FIPS State Code"] == s.STATE_FIPS].copy()
     omb["county_fips"] = omb["FIPS State Code"] + omb["FIPS County Code"]
-    atl_fips = set(omb.loc[omb["CBSA Code"] == s.ATLANTA_CBSA, "county_fips"])
-
-    fom = pd.read_csv(s.CONFIG / "fom_counties.csv", dtype=str)
-    # The FOM config was typed by hand, so check its FIPS codes against the Census list.
-    merged = fom.merge(counties[["county_fips", "county_name"]], on="county_fips",
-                       how="left", suffixes=("", "_census"))
-    bad = merged[merged["county_name"] != merged["county_name_census"]]
-    if len(bad):
-        raise ValueError(f"FOM config FIPS/name mismatch:\n{bad}")
 
     out = counties[["county_fips", "county_name"]].copy()
-    out["fom_flag"] = out["county_fips"].isin(fom["county_fips"]).astype(int)
-    out["atlanta_msa_flag"] = out["county_fips"].isin(atl_fips).astype(int)
     # Counties in no metro or micro area are rural and have no market group.
     out = out.merge(county_tags(omb), on="county_fips", how="left")
     out["urban_rural_tier"] = out["urban_rural_tier"].fillna("rural")
     out.to_csv(s.CONFIG / "ga_counties.csv", index=False)
     tiers = out["urban_rural_tier"].value_counts().to_dict()
-    print(f"  config/ga_counties.csv: {len(out)} counties, "
-          f"{out['fom_flag'].sum()} FOM, {out['atlanta_msa_flag'].sum()} in Atlanta MSA, tiers {tiers}")
-    return out["county_fips"].tolist()
+    print(f"  config/ga_counties.csv: {len(out)} counties, tiers {tiers}")
+    return out
+
+
+def check_footprint(lender, counties):
+    """A footprint list is typed by hand, so check its FIPS codes and names against the Census list."""
+    fp = pd.read_csv(lender.footprint_file, dtype=str)
+    merged = fp.merge(counties[["county_fips", "county_name"]], on="county_fips", how="left",
+                      suffixes=("", "_census"))
+    bad = merged[merged["county_name"] != merged["county_name_census"]]
+    if len(bad):
+        raise ValueError(f"{lender.key}: footprint FIPS/name mismatch:\n{bad}")
+    print(f"  {lender.key}: {len(fp)} footprint counties match the Census list")
 
 
 def download_hmda(county_fips):
-    print("HMDA filers, DCCU nationwide records, and row-count aggregations")
+    print("HMDA filers and row-count aggregations")
     hmda = s.RAW / "hmda"
     for y in s.YEARS:
         fetch(f"{s.HMDA_API}/filers", hmda / f"filers_{y}.json",
               params={"years": y, "states": s.STATE_ABBR})
-        fetch(f"{s.HMDA_API}/csv", hmda / f"dccu_{y}.csv",
-              params={"years": y, "leis": s.DCCU_LEI})
         # Statewide counts catch rows with no county code, which no county file contains.
         fetch(f"{s.HMDA_API}/aggregations", hmda / f"agg_{y}_state.json",
               params={"years": y, "states": s.STATE_ABBR, "actions_taken": "1,2,3,4,5,6,7,8"})
-        # DCCU's GA originations under one market filter at a time (Phase 2 reconciliation).
-        fetch(f"{s.HMDA_API}/aggregations", hmda / "dccu_checks" / f"{y}_none.json",
-              params={"years": y, "states": s.STATE_ABBR, "leis": s.DCCU_LEI, "actions_taken": "1"})
-        for param, (_, values) in s.API_CHECK_FILTERS.items():
-            fetch(f"{s.HMDA_API}/aggregations", hmda / "dccu_checks" / f"{y}_{param}.json",
-                  params={"years": y, "states": s.STATE_ABBR, "leis": s.DCCU_LEI,
-                          "actions_taken": "1", param: ",".join(values)})
 
     # One small request per year x county, so an interrupted run resumes where it stopped.
     jobs = []
@@ -112,6 +105,20 @@ def download_hmda(county_fips):
             done += 1
             if done % 50 == 0:
                 print(f"  {done}/{len(todo)}")
+
+
+def download_lender(lender):
+    """A lender's nationwide HMDA records (Phase 1) and its API counts one filter at a time (Phase 2)."""
+    print(f"  {lender.key}: HMDA records and API check counts")
+    for y in s.YEARS:
+        fetch(f"{s.HMDA_API}/csv", lender.raw / f"hmda_records_{y}.csv",
+              params={"years": y, "leis": lender.lei})
+        fetch(f"{s.HMDA_API}/aggregations", lender.raw / "api_checks" / f"{y}_none.json",
+              params={"years": y, "states": s.STATE_ABBR, "leis": lender.lei, "actions_taken": "1"})
+        for param, (_, values) in s.API_CHECK_FILTERS.items():
+            fetch(f"{s.HMDA_API}/aggregations", lender.raw / "api_checks" / f"{y}_{param}.json",
+                  params={"years": y, "states": s.STATE_ABBR, "leis": lender.lei,
+                          "actions_taken": "1", param: ",".join(values)})
 
 
 def download_ncua():
@@ -146,16 +153,18 @@ def download_context_files():
           s.RAW / "ncua" / f"call-report-data-{y}-{m:02d}.zip")
 
 
-def geocode_branches():
-    """Census Geocoder batch lookup of DCCU's Georgia sites, one cached file per NCUA snapshot."""
-    print("Geocoding DCCU branches (Census Geocoder)")
+def geocode_branches(lender):
+    """Census Geocoder batch lookup of a credit union's in-state sites, one file per NCUA snapshot."""
+    if lender.charter != "credit_union" or not lender.ncua_charter:
+        print(f"  {lender.key}: no NCUA charter; branch data for other charters comes later")
+        return
     for zip_path in sorted((s.RAW / "ncua").glob("call-report-data-*.zip")):
         cycle = zip_path.stem.replace("call-report-data-", "")
-        dest = s.RAW / "geocode" / f"branches_{cycle}.csv"
+        dest = lender.raw / f"geocode_{cycle}.csv"
         if dest.exists():
-            print(f"  cached: {dest.name}")
+            print(f"  {lender.key}: cached {dest.name}")
             continue
-        _, b = dccu_branches(zip_path)
+        _, b = ncua_branches(zip_path, lender.ncua_charter)
         b = b[b["PhysicalAddressStateCode"] == s.STATE_ABBR]
         # Batch format: id, street, city, state, ZIP (no header).
         rows = b[["SiteId", "PhysicalAddressLine1", "PhysicalAddressCity",
@@ -168,16 +177,20 @@ def geocode_branches():
         tmp = dest.with_name(dest.name + ".part")
         tmp.write_text(r.text, encoding="utf-8")
         tmp.replace(dest)
-        print(f"  geocoded {len(rows)} sites for {cycle}")
+        print(f"  {lender.key}: geocoded {len(rows)} sites for {cycle}")
 
 
 def main():
     download_reference_files()
-    county_fips = build_county_config()
-    download_hmda(county_fips)
+    counties = build_county_config()
+    download_hmda(counties["county_fips"].tolist())
     download_ncua()  # first, so it still picks the latest quarter on a fresh run
     download_context_files()
-    geocode_branches()
+    print("Lender files")
+    for lender in configured():
+        check_footprint(lender, counties)
+        download_lender(lender)
+        geocode_branches(lender)
     print("Done.")
 
 

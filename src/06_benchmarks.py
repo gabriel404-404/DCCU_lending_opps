@@ -1,13 +1,12 @@
 """Stage 6: benchmark ladder and market-structure evidence (PRD Appendix A, "Benchmark ladder").
 
-Reads the Phase 3 outputs and the Phase 2 market file for the scoring year, and writes:
-  data/processed/benchmark_ladder.csv         base / stretch / ceiling: rule, share, depth
-  data/processed/depth_ladder_by_county.csv   depth at each rung, per footprint county
-  data/processed/market_structure.csv         top-quarter footprint counties vs. the rest
-  data/processed/peer_comparison.csv          subject-lender share by loan size and tract competition
-plus the "Phase 5: benchmarks" section of DATA_QUALITY.md.
-
-Lender-neutral: the subject lender and its footprint come from config/settings.py.
+Runs for one lender (config/lender.py). Reads its Phase 3 outputs and the shared market file
+for the scoring year, and writes, in data/processed/<key>/:
+  benchmark_ladder.csv         base / stretch / ceiling: rule, share, depth
+  depth_ladder_by_county.csv   depth at each rung, per footprint county
+  market_structure.csv         top-quarter footprint counties vs. the rest
+  peer_comparison.csv          subject-lender share by loan size and tract competition
+plus the "Phase 5: benchmarks" section of the lender's data-quality log.
 Run from the repo root:  python src/06_benchmarks.py
 """
 
@@ -19,9 +18,10 @@ import pandas as pd
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 from config import settings as s  # noqa: E402
-from src.common import md_table, neutral, read_processed, write_data_quality  # noqa: E402
+from config.lender import LENDER as L  # noqa: E402
+from src.common import lender_log_heading, md_table, write_data_quality  # noqa: E402
 
-OUT = s.PROCESSED / "phase5_checks"
+OUT = L.processed / "phase5_checks"
 TOP, REST = "top quarter", "rest of footprint"
 
 
@@ -56,14 +56,14 @@ def build_ladder(counties, tracts):
 
 def load_market(builders, top_names):
     """Scoring-year footprint originations, loan level, with group and subject-lender flags."""
-    cols = ["lei", "county_fips", "census_tract", "action_taken", "fom_flag", "purpose_group",
+    cols = ["lei", "county_fips", "census_tract", "action_taken", "purpose_group",
             "has_tract", "loan_amount", "income", "conforming_loan_limit", "submission_of_application"]
-    m = neutral(pd.read_parquet(s.PROCESSED / f"market_{s.SCORING_YEAR}.parquet", columns=cols))
-    o = m[(m["action_taken"] == "1") & (m["footprint_flag"] == 1)].copy()
+    m = pd.read_parquet(s.PROCESSED / f"market_{s.SCORING_YEAR}.parquet", columns=cols)
+    o = m[(m["action_taken"] == "1") & m["county_fips"].isin(L.footprint)].copy()
     names = pd.read_csv(s.CONFIG / "ga_counties.csv", dtype=str).set_index("county_fips")["county_name"]
     o["county_name"] = o["county_fips"].map(names)
     o["group"] = np.where(o["county_name"].isin(top_names), TOP, REST)
-    o["subject"] = (o["lei"] == s.LENDER_LEI).astype(int)
+    o["subject"] = (o["lei"] == L.lei).astype(int)
     o["builder"] = o["lei"].isin(builders)
     o["amount"] = pd.to_numeric(o["loan_amount"], errors="coerce")
     o["income_k"] = pd.to_numeric(o["income"], errors="coerce")
@@ -133,9 +133,9 @@ def peer_comparison(o):
 
 def main():
     OUT.mkdir(parents=True, exist_ok=True)
-    cy = read_processed("county_year_metrics", dtype={"county_fips": str})
+    cy = pd.read_csv(L.processed / "county_year_metrics.csv", dtype={"county_fips": str})
     counties = cy[(cy["footprint_flag"] == 1) & (cy["year"] == s.SCORING_YEAR)].reset_index(drop=True)
-    tracts = read_processed("tract_metrics", dtype={"census_tract": str, "county_fips": str})
+    tracts = pd.read_csv(L.processed / "tract_metrics.csv", dtype={"census_tract": str, "county_fips": str})
     b = pd.read_csv(s.CONFIG / "builder_lenders.csv", dtype=str)
     builders = set(b.loc[b["include"] == "1", "lei"])
 
@@ -158,10 +158,10 @@ def main():
     min_cell = int(peers["market_loans"].min())
     excluded = counties.loc[counties["market_all"] < s.LADDER_MIN_MARKET, "county_name"].tolist()
 
-    ladder.round(6).to_csv(s.PROCESSED / "benchmark_ladder.csv", index=False)
-    by_county.round(6).to_csv(s.PROCESSED / "depth_ladder_by_county.csv", index=False)
-    structure.round(6).to_csv(s.PROCESSED / "market_structure.csv", index=False)
-    peers.round(6).to_csv(s.PROCESSED / "peer_comparison.csv", index=False)
+    ladder.round(6).to_csv(L.processed / "benchmark_ladder.csv", index=False)
+    by_county.round(6).to_csv(L.processed / "depth_ladder_by_county.csv", index=False)
+    structure.round(6).to_csv(L.processed / "market_structure.csv", index=False)
+    peers.round(6).to_csv(L.processed / "peer_comparison.csv", index=False)
     codes.to_csv(OUT / "channel_field_coverage.csv", index=False)
 
     show = ladder.assign(share=(ladder["share"] * 100).round(2)).rename(columns={"share": "share_pct"})
@@ -178,7 +178,8 @@ def main():
         "Originations without a tract have no tract-competition band and are left out of that "
         f"dimension ({int(o['tract_lenders'].isna().sum())} loans).",
     ]
-    write_data_quality("phase5_benchmarks", "Phase 5: benchmark ladder and market structure", sections)
+    write_data_quality("phase5_benchmarks", "Phase 5: benchmark ladder and market structure", sections,
+                       path=L.data_quality, heading=lender_log_heading(L))
 
     print(show[["rung", "rule", "share_pct", "reference", "depth", "depth_outside_top_quarter"]]
           .round(1).to_string(index=False))

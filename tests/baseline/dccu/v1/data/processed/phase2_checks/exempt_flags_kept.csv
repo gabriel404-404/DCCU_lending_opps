@@ -1,0 +1,13 @@
+year,filter,field,rows_kept_with_exempt,lenders
+2022,closed_end,open-end_line_of_credit,2861,102
+2022,not_reverse,reverse_mortgage,2861,102
+2022,not_business,business_or_commercial_purpose,2854,101
+2023,closed_end,open-end_line_of_credit,2565,130
+2023,not_reverse,reverse_mortgage,2566,131
+2023,not_business,business_or_commercial_purpose,2563,129
+2024,closed_end,open-end_line_of_credit,2877,123
+2024,not_reverse,reverse_mortgage,2877,123
+2024,not_business,business_or_commercial_purpose,2874,122
+2025,closed_end,open-end_line_of_credit,3720,135
+2025,not_reverse,reverse_mortgage,3720,135
+2025,not_business,business_or_commercial_purpose,3717,134

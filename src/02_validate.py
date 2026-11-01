@@ -1,7 +1,8 @@
 """Stage 2: validate the raw downloads. Nothing is dropped; every result is logged.
 
-Writes one CSV per check to data/processed/phase1_checks/ and replaces the
-Phase 1 section of DATA_QUALITY.md with a summary.
+Market checks write one CSV each to data/processed/phase1_checks/ and replace the Phase 1
+section of DATA_QUALITY.md. Each configured lender's checks (presence in HMDA, branches)
+go to data/processed/<key>/phase1_checks/ and that lender's own data-quality log.
 
 Run from the repo root:  python src/02_validate.py
 """
@@ -15,7 +16,8 @@ import pandas as pd
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 from config import settings as s  # noqa: E402
-from src.common import dccu_branches, md_table, read_hmda, write_data_quality  # noqa: E402
+from config.lender import configured  # noqa: E402
+from src.common import lender_log_heading, md_table, ncua_branches, read_hmda, write_data_quality  # noqa: E402
 
 OUT = s.PROCESSED / "phase1_checks"
 HMDA = s.RAW / "hmda"
@@ -69,26 +71,27 @@ def load_filers():
     return pd.DataFrame(rows)
 
 
-def check_dccu(filers, fom_fips):
-    """Checks 2 and 3: DCCU present every year; nationwide records reconcile to the filers count."""
+def check_lender(lender, filers):
+    """Checks 2 and 3: the lender is present every year; its records reconcile to the filers count."""
     rows = []
     for y in s.YEARS:
-        f = filers[(filers["year"] == y) & (filers["lei"] == s.DCCU_LEI)]
-        df = read_hmda(HMDA / f"dccu_{y}.csv")
+        f = filers[(filers["year"] == y) & (filers["lei"] == lender.lei)]
+        df = read_hmda(lender.raw / f"hmda_records_{y}.csv")
         county = df["county_code"]
+        in_footprint = county.isin(lender.footprint)
         rows.append({
             "year": y,
             "in_filers_list": len(f) == 1,
             "filers_name": f["name"].iloc[0] if len(f) else None,
-            # The filers list was requested for GA, so its count is DCCU's GA records only.
+            # The filers list was requested for GA, so its count is the lender's GA records only.
             "filers_count":int(f["filer_count"].iloc[0]) if len(f) else None,
             "records_downloaded": len(df),
             "records_in_ga": int((df["state_code"] == s.STATE_ABBR).sum()),
-            "records_in_fom": int(county.isin(fom_fips).sum()),
+            "records_in_footprint": int(in_footprint.sum()),
             "ga_records_no_county": int(((df["state_code"] == s.STATE_ABBR)
                                          & county.isin(["", "NA"])).sum()),
             "originations": int((df["action_taken"] == "1").sum()),
-            "originations_in_fom": int(((df["action_taken"] == "1") & county.isin(fom_fips)).sum()),
+            "originations_in_footprint": int(((df["action_taken"] == "1") & in_footprint).sum()),
         })
     out = pd.DataFrame(rows)
     out["reconciles"] = out["filers_count"] == out["records_in_ga"]
@@ -148,40 +151,64 @@ def check_tract_coverage(hmda_tracts, acs):
     return pd.DataFrame(rows, columns=["tract", "in", "missing_from"]), sizes
 
 
-def check_ncua():
-    """Check 8: find DCCU's branches in the latest NCUA call report."""
+def check_ncua(lender):
+    """Check 8: find a credit union's branches in the latest NCUA call report, by charter number."""
     zips = sorted((s.RAW / "ncua").glob("call-report-data-*.zip"))
-    charter, mine = dccu_branches(zips[-1])
+    record, mine = ncua_branches(zips[-1], lender.ncua_charter)
     lat_cols = [c for c in mine.columns if "lat" in c.lower() or "long" in c.lower()]
-    return zips[-1].name, charter, mine, lat_cols
+    return zips[-1].name, record["CU_NAME"], mine, lat_cols
 
+
+def lender_checks(lender, filers):
+    """Checks 2-3 and 8 for one lender, written to its own folder and data-quality log."""
+    out = lender.processed / "phase1_checks"
+    out.mkdir(parents=True, exist_ok=True)
+    presence = check_lender(lender, filers)
+    presence.to_csv(out / "2_3_lender_reconciliation.csv", index=False)
+    sections = [
+        f"### 2–3. {lender.label} presence and reconciliation\n"
+        f"`filers_count` is {lender.label}'s Georgia HMDA record count from the filers API (all "
+        "action types). It should equal `records_in_ga` from the nationwide LEI download. Records "
+        "outside GA are loans on out-of-state properties.\n\n" + md_table(presence)]
+    if lender.charter == "credit_union" and lender.ncua_charter:
+        ncua_file, ncua_name, branches, latlong_cols = check_ncua(lender)
+        branches.to_csv(out / "8_branches.csv", index=False)
+        sections.append(
+            f"### 8. {lender.label} branches (NCUA `{ncua_file}`)\n"
+            f"Charter {lender.ncua_charter} (`{ncua_name.strip()}` in NCUA). Branch records: "
+            f"{len(branches)}. "
+            + (f"Lat/long columns: {', '.join(latlong_cols)}."
+               if latlong_cols else "**No lat/long columns: branches need geocoding in Phase 4.**"))
+    sections.append(
+        "### Known limitations\n"
+        f"- The {lender.footprint_label} list is today's {len(lender.footprint)} counties, applied "
+        "to every year. A lender that added counties over time has its early-year footprint share "
+        "understated for the newer counties.")
+    write_data_quality("phase1_lender", "Phase 1: lender presence and branches", sections,
+                       path=lender.data_quality, heading=lender_log_heading(lender))
+    print(presence.to_string(index=False))
 
 
 def main():
     OUT.mkdir(parents=True, exist_ok=True)
     counties = pd.read_csv(s.CONFIG / "ga_counties.csv", dtype=str)
-    fom_fips = set(counties.loc[counties["fom_flag"] == "1", "county_fips"])
 
     print("Scanning HMDA county files (checks 1, 4, 5)...")
     counts, hmda_tracts, missing, exempt = scan_county_files(counties["county_fips"].tolist())
     filers = load_filers()
     names = filers.drop_duplicates("lei", keep="last").set_index("lei")["name"]
 
-    print("DCCU, lender names, ACS, tracts, NCUA (checks 2, 3, 6, 7, 4b, 8)...")
-    dccu = check_dccu(filers, fom_fips)
+    print("Lender names, ACS, tracts (checks 6, 7, 4b)...")
     changes = check_name_changes(filers)
     acs = check_acs(load_acs())
     coverage, sizes = check_tract_coverage(hmda_tracts, acs)
-    ncua_file, charter, branches, latlong_cols = check_ncua()
 
     counts.to_csv(OUT / "1_row_counts.csv", index=False)
-    dccu.to_csv(OUT / "2_3_dccu_reconciliation.csv", index=False)
     missing.assign(lender=missing["lei"].map(names)).to_csv(OUT / "4_missing_tracts.csv", index=False)
     coverage.to_csv(OUT / "4_tract_coverage.csv", index=False)
     exempt.assign(lender=exempt["lei"].map(names)).to_csv(OUT / "5_exempt_fields.csv", index=False)
     changes.to_csv(OUT / "6_lender_name_changes.csv", index=False)
     acs.to_csv(OUT / "7_acs_households.csv", index=False)
-    branches.to_csv(OUT / "8_dccu_branches.csv", index=False)
 
     # Summaries for DATA_QUALITY.md
     by_year = counts.groupby("year")[["rows_downloaded", "rows_api"]].sum().reset_index()
@@ -209,12 +236,8 @@ def main():
           "`no_county_rows` are Georgia records with no county code. Downloads are by county, "
           "so these rows are not in the raw data. They can't be placed in a tract either, so "
           "tract and county metrics are unaffected; statewide totals are understated by "
-          "`no_county_pct`. DCCU's own no-county records are in the table below.",
-        "### 2–3. DCCU presence and reconciliation\n"
-        "`filers_count` is DCCU's Georgia HMDA record count from the filers API (all action "
-        "types). It should equal `records_in_ga` from the nationwide LEI download. Records "
-        "outside GA are loans on out-of-state properties.\n\n"
-        + md_table(dccu),
+          "`no_county_pct`. Lender checks 2, 3 and 8 (including each lender's own no-county "
+          "records) are in `outputs/<lender>/DATA_QUALITY.md`.",
         "### 4. Census tracts\n"
         f"Rows with missing/NA tract, by year (all lenders):\n\n{md_table(miss_by_year)}\n\n"
         f"Tract sets: HMDA {sizes['hmda']:,}, TIGER {sizes['tiger']:,}, ACS {sizes['acs']:,}. "
@@ -237,18 +260,14 @@ def main():
         "### 7. ACS household reliability\n"
         f"ACS {s.ACS_YEAR - 4}–{s.ACS_YEAR} 5-year, table B11001. CV = (MOE / 1.645) / estimate; "
         "flag when CV > 30%.\n\n" + md_table(flags),
-        f"### 8. DCCU branches (NCUA `{ncua_file}`)\n"
-        f"Charter: {charter}. Branch records: {len(branches)}. "
-        + (f"Lat/long columns: {', '.join(latlong_cols)}."
-           if latlong_cols else "**No lat/long columns: branches need geocoding in Phase 4.**"),
-        "### Known limitations\n"
-        "- The FOM list is DCCU's current 20 counties, applied to every year. DCCU added counties "
-        "over time, so early-year FOM share may be understated for recently added counties.",
     ]
     write_data_quality("phase1", "Phase 1: download and validate", sections)
     print(by_year.to_string(index=False))
-    print(dccu.to_string(index=False))
-    print(f"Cells off: {len(off)}; tract sets {sizes}; branches {len(branches)}; lat/long {latlong_cols}")
+    print(f"Cells off: {len(off)}; tract sets {sizes}")
+
+    print("Lender checks (2, 3, 8)...")
+    for lender in configured():
+        lender_checks(lender, filers)
 
 
 if __name__ == "__main__":

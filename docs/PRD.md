@@ -52,18 +52,17 @@ Membership is defined by the **person** (lives or works in an eligible county, D
 Pricing/rate comparison, underserved-area analysis, fair-lending analysis, forecasting, interactive dashboards, Finastra/Mortgagebot data. For expansion: real estate, site selection, and the regulatory filing and compliance work.
 
 ### Future phases (ideas, not commitments)
-- **Productize (planned next after v1):** make the pipeline work for any lender, with DCCU as one configuration.
-  - Subject-lender config: LEI, name, footprint, branch source, product filters; rename `dccu_*` columns to lender-neutral names.
-  - Footprint types: credit-union field of membership, bank CRA assessment area, or a custom county list; "expansion" means an FOM filing for a credit union and new markets or branches for others.
-  - Branch data by charter type: NCUA (credit unions), FDIC Summary of Deposits (banks); nonbank branch locations to be sourced.
-  - Market definition per lender: product filters (e.g., add FHA/VA for lenders that offer them); states beyond Georgia.
-  - Hand-maintained lists (builder-owned lenders, branch exclusions) maintained per market rather than per customer.
-  - Benchmark-ladder rules that work for small footprints (a top quartile of 3 counties is degenerate).
+- **Productize:** in progress for credit unions in Georgia (see §7). Later steps, after §7:
+  - Footprint types for other charters: bank CRA assessment area or branch counties; for nonbanks, a custom county list. "Expansion" means an FOM filing for a credit union and new markets or branches for others.
+  - Branch data by charter type: FDIC Summary of Deposits (banks); nonbank branch locations to be sourced.
+  - States beyond Georgia, and footprints that cross state lines.
+  - Hand-maintained lists (builder-owned lenders) maintained per market rather than per customer.
+  - A licensed basemap for paid deliveries.
 - **Underserved-area index:** tracts with little lending relative to potential demand. Candidate inputs: penetration (originations per 1,000 owner-occupied units), applications per 1,000 households, denial rates and reasons, lender count per tract, share of high-cost/nonbank lending, and Census renter households with incomes high enough to buy. Build on income and lending data, not neighborhood racial composition, and route through compliance review before it informs decisions (fair-lending/redlining risk).
 - **Pricing:** HMDA includes interest rate, rate spread, total loan costs, discount points and lender credits for originated loans, so a partial comparison of DCCU vs. competitors is possible. Limits: annual and lagged; no credit score in public data, so comparisons can only control for loan-to-value, debt-to-income, loan amount and product; it shows what borrowers paid, not current rate sheets.
 
 ## 6. Open questions
-- ~~Exact current list of DCCU field-of-membership counties~~ Resolved 2026-10-26: 20 counties from DCCU's eligibility page, stored in `config/fom_counties.csv`. The current list is applied to all years (DCCU expanded over time; logged as a limitation).
+- ~~Exact current list of DCCU field-of-membership counties~~ Resolved 2026-10-26: 20 counties from DCCU's eligibility page, stored in `config/fom_counties.csv` (now `config/lenders/dccu/footprint.csv`). The current list is applied to all years (DCCU expanded over time; logged as a limitation).
 - ~~Latest published HMDA year~~ Resolved 2026-10-26: 2025, so v1 covers 2022–2025.
 - ~~Opportunity benchmark under a statewide market~~ Resolved 2026-10-27: benchmark to DCCU's FOM-wide share (`fom_share`), not statewide share. Statewide share is diluted by counties where most people can't join DCCU (2025: 1.43% statewide vs. 1.96% FOM). Expansion uses the same share, rounded to 2%.
 - ~~Pool years for scoring?~~ Resolved 2026-10-27: no. Opportunity is scored on the latest year (2025), the closest thing to current state. 2022–2025 is used for trends.
@@ -73,6 +72,23 @@ Pricing/rate comparison, underserved-area analysis, fair-lending analysis, forec
 - Builder-lender list (`config/builder_lenders.csv`): 7 lenders included, 6 data-signature candidates excluded until confirmed. Pending user review.
 - ~~Growth-cluster threshold~~ Resolved 2026-10-27: two tiers. At Georgia's rate the Atlanta exurban ring chains into one 28-county cluster, too broad to act on, so named clusters use 1.5× Georgia's rate (5 clusters); `growing` stays at Georgia's rate on the scorecard.
 
+## 7. Productize phase (approved 2026-11-01)
+**Goal:** one command runs the full analysis for any configured lender. DCCU becomes one configuration, and v1's DCCU numbers reproduce exactly.
+
+**Scope now:** credit unions in Georgia. Banks, nonbanks and other states come later (Future phases).
+
+| # | Requirement | Sub-phase |
+|---|---|---|
+| P-R1 | Each lender is a config folder `config/lenders/<key>/`: `lender.toml` (name, label, LEI, charter, NCUA charter number for the branch lookup, footprint label, expansion target) plus its footprint county list, branch exclusions and hand-placed branch coordinates | P1 |
+| P-R2 | `python src/run_all.py --lender <key>` (or `all`). Market stages 01–03 run once and cover every configured lender's raw inputs and presence checks; lender stages 04–07 run per lender | P1 |
+| P-R3 | Lender-neutral names in code and files (`lender_*`, `footprint_*`); no hard-coded lender in `src/` | P1 |
+| P-R4 | Per-lender layout: `data/processed/<key>/` and `outputs/<key>/` (with that lender's FINDINGS.md and DATA_QUALITY.md). The root DATA_QUALITY.md holds market checks only | P1 |
+| P-R5 | Regression baseline: v1's DCCU files saved under `tests/baseline/dccu/v1/`. Every DCCU run must reproduce them (counts exactly; shares within 1e-9) | P1 |
+| P-R6 | Generated HTML maps are git-ignored (rebuilt locally). The basemap is a setting: Esri for internal demos; license one before any paid delivery | P1 |
+| P-R7 | Market files keep all loan types; each lender's product filter (`loan_types` in its config) is applied in its own stages | P2 |
+| P-R8 | General rules: market groups split the CSA that holds the footprint's main metro area (replacing the Atlanta special case); the benchmark ladder uses tracts instead of counties when a footprint has fewer than 8 qualifying counties | P2 |
+| P-R9 | A second Georgia credit union (Associated Credit Union) runs end to end from facts: LEI from HMDA's filers list, footprint counties from its website, charter from NCUA. It passes the Phase 3–5 checks | P3 |
+
 ---
 
 ## Appendix A: Technical spec
@@ -80,13 +96,13 @@ Pricing/rate comparison, underserved-area analysis, fair-lending analysis, forec
 ### Data sources
 - **HMDA loan-level data:** CFPB Data Browser API (`https://ffiec.cfpb.gov/v2/data-browser-api/view/csv`).
   - **Years:** every published year from 2022 onward. 2022+ uses 2020 census tract boundaries, so tracts are comparable across years. Do not pull 2018–2021 (2010 tracts).
-  - **Geography:** the market is all 159 Georgia counties (state FIPS 13), kept as a fixed county list in `config/ga_counties.csv`. Each county is tagged `fom_flag` and `atlanta_msa_flag`. The Atlanta MSA tag comes from OMB's 2023 delineation (CBSA 12060) and is used for display only; it does not define the market. The same OMB file supplies each county's CBSA, CSA, `urban_rural_tier` and `market_group` (see Metrics).
+  - **Geography:** the market is all 159 Georgia counties (state FIPS 13), kept as a fixed county list in `config/ga_counties.csv`. The OMB 2023 delineation supplies each county's CBSA, CSA, `urban_rural_tier` and `market_group` (see Metrics). Lender columns are not stored there: each lender's footprint list is in `config/lenders/<key>/footprint.csv`, and stages flag footprint counties from it.
   - Use `/view/filers` to map LEIs to lender names. Confirm DCCU's LEI there; do not hard-code a guess.
 - **Lender names not in the filers lists:** GLEIF LEI registry API (`https://api.gleif.org/api/v1/lei-records`), one cached call per missing LEI.
 - **Builder-owned lenders:** hand-maintained `config/builder_lenders.csv`, with the basis for each row; reviewed by the user.
 - **Households:** Census ACS 5-year, table B11001 (total households, `B11001_001E`), tract level. Use the latest 5-year release on 2020 tracts. Census API key optional at this volume.
 - **Tract geometry and land area:** Census TIGER/Line or cartographic boundary files, Georgia, 2020 tracts. Use `ALAND` for density and internal points for distance.
-- **Branch locations:** NCUA quarterly call report data (branch information file), two snapshots: December of the scoring year (branches open during that year's lending; used for R4) and the latest quarter (current footprint; used for the expansion scorecard). NCUA has no lat/long, so addresses are geocoded with the Census Geocoder batch API; addresses it can't match are placed by hand in `config/branch_coordinates_manual.csv`, with the method. Distance uses the 28 public Georgia branches: behind-security sites, corporate offices without member services and out-of-state sites are excluded (`config/branch_exclusions.csv`).
+- **Branch locations:** NCUA quarterly call report data (branch information file), two snapshots: December of the scoring year (branches open during that year's lending; used for R4) and the latest quarter (current footprint; used for the expansion scorecard). NCUA has no lat/long, so addresses are geocoded with the Census Geocoder batch API; addresses it can't match are placed by hand in the lender's `branch_coordinates.csv`, with the method. Distance uses the 28 public Georgia branches: behind-security sites, corporate offices without member services and out-of-state sites are excluded (the lender's `branch_exclusions.csv`). Branches are found by NCUA charter number (DCCU: 66357), from the lender config.
 - **Field-of-membership counties:** DCCU website; store as a small config file.
 - **County population:** Census Population Estimates Program, county totals from the 2020 base to the latest vintage. Confirm the latest vintage when downloading.
 - **County adjacency:** Census county adjacency file, latest release.

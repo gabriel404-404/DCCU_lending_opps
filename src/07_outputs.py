@@ -1,6 +1,7 @@
 """Stage 7: maps, charts, final tables and key numbers (PRD R1-R7).
 
-Reads earlier stages' outputs and writes everything in outputs/:
+Runs for one lender (config/lender.py). Reads its earlier stages' outputs and writes
+everything in outputs/<key>/:
   map_footprint_share.png        R1: footprint tracts by share vs. the footprint average
   map_footprint_opportunity.png  R1, R2: footprint tracts by opportunity score, top 25 numbered
   map_statewide.png              R1, R3b: county share, and expansion gain with growth clusters
@@ -10,10 +11,10 @@ Reads earlier stages' outputs and writes everything in outputs/:
   chart_depth_vs_expansion.png   R3a: depth at the three benchmark rungs vs. expansion
   opportunity_top25.csv, depth_by_county.csv, expansion_scorecard.csv, growth_clusters.csv
   key_numbers.csv                every number FINDINGS.md quotes, with its source file
-plus the "Phase 5: map, table and findings" section of DATA_QUALITY.md, which also checks
-FINDINGS.md (length, and any number in it that isn't in key_numbers.csv).
+plus the "Phase 5: map, table and findings" section of the lender's data-quality log, which
+also checks the lender's FINDINGS.md (length, and any number in it that isn't in key_numbers.csv).
 
-Lender-neutral: names and labels come from config/settings.py. Colors follow the reference
+Names and labels come from the lender config (config/lenders/<key>/lender.toml). Colors follow the reference
 palette of the data-viz guidance (surfaces, ink, the blue ramp, categorical slots 1-2).
 Run from the repo root:  python src/07_outputs.py
 """
@@ -37,10 +38,11 @@ from matplotlib.patches import Patch  # noqa: E402
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 from config import settings as s  # noqa: E402
-from src.common import md_table, neutral, read_processed, write_data_quality  # noqa: E402
+from config.lender import LENDER as L  # noqa: E402
+from src.common import lender_log_heading, md_table, write_data_quality  # noqa: E402
 
-OUT = s.OUTPUTS
-FINDINGS = s.ROOT / "FINDINGS.md"
+OUT = L.outputs
+FINDINGS = L.findings
 FINDINGS_WORD_LIMIT = 550  # about one page
 TOP_N = 25
 
@@ -154,31 +156,37 @@ def save(fig, name):
 
 # ---------------------------------------------------------------- data
 
+def proc(name, **kw):
+    """One of this lender's processed files (data/processed/<key>/<name>.csv)."""
+    return pd.read_csv(L.processed / f"{name}.csv", **kw)
+
+
 def load():
     d = {}
-    d["tracts"] = read_processed("tract_metrics", dtype={"census_tract": str, "county_fips": str})
-    ctx = read_processed("tract_context", dtype={"census_tract": str, "county_fips": str})
+    d["tracts"] = proc("tract_metrics", dtype={"census_tract": str, "county_fips": str})
+    ctx = proc("tract_context", dtype={"census_tract": str, "county_fips": str})
     d["tracts"] = d["tracts"].merge(ctx[["census_tract", "households", "household_density", "penetration",
                                         "branch_miles_scoring_year", "nearest_branch_scoring_year",
                                         "distance_band"]], on="census_tract", how="left")
-    d["county_year"] = read_processed("county_year_metrics", dtype={"county_fips": str})
-    d["trend"] = read_processed("trend_summary")
-    d["lender_trend"] = read_processed("lender_trend_fom")
-    d["bands"] = read_processed("share_by_distance")
-    d["depth"] = read_processed("depth_by_county", dtype={"county_fips": str})
-    d["ladder"] = read_processed("benchmark_ladder")
-    d["ladder_county"] = read_processed("depth_ladder_by_county", dtype={"county_fips": str})
-    d["structure"] = read_processed("market_structure")
-    d["peers"] = read_processed("peer_comparison")
-    d["scorecard"] = read_processed("expansion_scorecard", dtype={"county_fips": str})
-    d["clusters"] = read_processed("growth_clusters")
-    d["county_ctx"] = read_processed("county_context", dtype={"county_fips": str})
-    d["top25"] = read_processed("opportunity_top25", dtype={"census_tract": str})
-    b = read_processed("branches", dtype={"site_id": str})
+    d["county_year"] = proc("county_year_metrics", dtype={"county_fips": str})
+    d["trend"] = proc("trend_summary")
+    d["lender_trend"] = proc("lender_trend_footprint")
+    d["bands"] = proc("share_by_distance")
+    d["depth"] = proc("depth_by_county", dtype={"county_fips": str})
+    d["ladder"] = proc("benchmark_ladder")
+    d["ladder_county"] = proc("depth_ladder_by_county", dtype={"county_fips": str})
+    d["structure"] = proc("market_structure")
+    d["peers"] = proc("peer_comparison")
+    d["scorecard"] = proc("expansion_scorecard", dtype={"county_fips": str})
+    d["clusters"] = proc("growth_clusters")
+    d["county_ctx"] = proc("county_context", dtype={"county_fips": str})
+    d["top25"] = proc("opportunity_top25", dtype={"census_tract": str})
+    b = proc("branches", dtype={"site_id": str})
     d["branches"] = b[(b["snapshot"] == "current") & b["in_scope"]]
-    d["counties"] = neutral(pd.read_csv(s.CONFIG / "ga_counties.csv", dtype={"county_fips": str}))
-    d["market_size"] = pd.read_csv(s.PROCESSED / "phase2_checks" / "market_size.csv")
-    d["recon"] = pd.read_csv(s.PROCESSED / "phase2_checks" / "dccu_api_reconciliation.csv")
+    d["counties"] = pd.read_csv(s.CONFIG / "ga_counties.csv", dtype={"county_fips": str})
+    d["counties"]["footprint_flag"] = d["counties"]["county_fips"].isin(L.footprint).astype(int)
+    d["market_size"] = pd.read_csv(L.processed / "phase2_checks" / "market_size.csv")
+    d["recon"] = pd.read_csv(L.processed / "phase2_checks" / "api_reconciliation.csv")
     builders = pd.read_csv(s.CONFIG / "builder_lenders.csv", dtype=str)
     d["builders_included"] = int((builders["include"] == "1").sum())
 
@@ -253,11 +261,11 @@ def map_footprint_share(d):
     handles = swatches(DIVERGING, DIV_LABELS) + [
         Patch(facecolor=SURFACE, edgecolor=AXIS, linewidth=0.5,
               label=f"Fewer than {s.LOW_VOLUME_THRESHOLD} market loans (not shaded)"),
-        branch_handle(f"{s.LENDER_LABEL} branch")]
-    legend_below(ax, handles, ncol=2, title=f"{s.LENDER_LABEL} share vs. its {s.FOOTPRINT_LABEL} "
+        branch_handle(f"{L.label} branch")]
+    legend_below(ax, handles, ncol=2, title=f"{L.label} share vs. its {L.footprint_label} "
                                              f"average ({d['base']:.2%})")
-    header(fig, f"{s.LENDER_LABEL} share of {s.SCORING_YEAR} mortgage originations, by tract",
-           f"{s.FOOTPRINT_LABEL} counties. Red: below {s.LENDER_LABEL}'s own average; blue: above it.",
+    header(fig, f"{L.label} share of {s.SCORING_YEAR} mortgage originations, by tract",
+           f"{L.footprint_label} counties. Red: below {L.label}'s own average; blue: above it.",
            "Source: HMDA (CFPB), conventional first-lien purchase and refinance originations, all "
            "lenders; Census TIGER 2024 tracts; NCUA branch list.")
     fig.subplots_adjust(left=0.01, right=0.99, top=0.9, bottom=0.17)
@@ -278,10 +286,10 @@ def map_footprint_opportunity(d):
         ax.text(p.x, p.y, str(int(r["opportunity_rank"])), fontsize=7, color=INK, ha="center",
                 va="center", fontweight="bold" if r["stable_top25"] else "normal", zorder=7,
                 path_effects=halo(2.8))
-    handles = swatches(OPP_COLORS, OPP_LABELS) + [branch_handle(f"{s.LENDER_LABEL} branch")]
+    handles = swatches(OPP_COLORS, OPP_LABELS) + [branch_handle(f"{L.label} branch")]
     legend_below(ax, handles, ncol=3, title="Loans a year gained if the tract reached the "
-                                            f"{s.FOOTPRINT_LABEL} average")
-    header(fig, f"Where {s.LENDER_LABEL} is below its own {s.FOOTPRINT_LABEL} average, by tract",
+                                            f"{L.footprint_label} average")
+    header(fig, f"Where {L.label} is below its own {L.footprint_label} average, by tract",
            f"Numbers: the top {TOP_N} tracts by opportunity score ({s.SCORING_YEAR}). Bold: also top "
            f"{TOP_N} using {s.SCORING_YEAR - 1}-{s.SCORING_YEAR} share (stable).",
            "Opportunity score = tract market originations x the gap to the footprint average. "
@@ -301,11 +309,11 @@ def map_statewide(d):
     cg.plot(ax=a1, color=colors, edgecolor=SURFACE, linewidth=0.4)
     cg[low].plot(ax=a1, facecolor="none", edgecolor=AXIS, linewidth=0.5)
     cg[cg["footprint_flag"] == 1].dissolve().boundary.plot(ax=a1, color=INK, linewidth=1.0)
-    a1.set_title(f"{s.LENDER_LABEL} share by county vs. its {s.FOOTPRINT_LABEL} average", pad=4)
+    a1.set_title(f"{L.label} share by county vs. its {L.footprint_label} average", pad=4)
     legend_below(a1, swatches(DIVERGING, DIV_LABELS) + [
         Patch(facecolor=SURFACE, edgecolor=AXIS, linewidth=0.5,
               label=f"Fewer than {s.LOW_VOLUME_THRESHOLD} market loans (not shaded)"),
-        Line2D([], [], color=INK, linewidth=1.0, label=f"{s.FOOTPRINT_LABEL} boundary")], ncol=2)
+        Line2D([], [], color=INK, linewidth=1.0, label=f"{L.footprint_label} boundary")], ncol=2)
 
     outside = cg[cg["footprint_flag"] == 0]
     outside.plot(ax=a2, color=classes(outside["expansion_gain"], EXP_EDGES, EXP_COLORS),
@@ -323,12 +331,12 @@ def map_statewide(d):
         p = r.geometry.representative_point()
         a2.text(p.x, p.y, f"{r['county_name']}\n{r['expansion_gain']:.0f}", fontsize=7, color=INK,
                 ha="center", va="center", path_effects=halo(2.5))
-    a2.set_title(f"Loans a year if {s.LENDER_LABEL} reached {s.EXPANSION_TARGET_SHARE:.0%} in a new county",
+    a2.set_title(f"Loans a year if {L.label} reached {L.expansion_target_share:.0%} in a new county",
                  pad=4)
     legend_below(a2, swatches(EXP_COLORS, EXP_LABELS) + [
-        Patch(facecolor=AXIS, edgecolor=AXIS, label=f"Current {s.FOOTPRINT_LABEL}"),
+        Patch(facecolor=AXIS, edgecolor=AXIS, label=f"Current {L.footprint_label}"),
         Line2D([], [], color=INK, linewidth=1.3, label="Growth cluster (fast-growing neighbors)")], ncol=2)
-    header(fig, f"{s.LENDER_LABEL} across the state: share today, and the expansion upside",
+    header(fig, f"{L.label} across the state: share today, and the expansion upside",
            f"{s.SCORING_YEAR}. Expansion gain is an upper bound: new counties take years to reach "
            "the footprint's share.",
            f"Source: HMDA (CFPB); Census population estimates (Vintage {s.PEP_YEAR}) and county adjacency. "
@@ -363,8 +371,8 @@ def html_map(d):
     t["Tract"] = t["census_tract"]
     t["County"] = t["county_name"]
     t["Market loans"] = t["market_all"].map(lambda v: fmt(v, ",.0f"))
-    t[f"{s.LENDER_LABEL} loans"] = t["lender_all"].map(lambda v: fmt(v, ",.0f"))
-    t[f"{s.LENDER_LABEL} share"] = t["share_all"].map(lambda v: fmt(v, ".1%"))
+    t[f"{L.label} loans"] = t["lender_all"].map(lambda v: fmt(v, ",.0f"))
+    t[f"{L.label} share"] = t["share_all"].map(lambda v: fmt(v, ".1%"))
     t["vs. average"] = (t["share_all"] / d["base"]).map(lambda v: fmt(v, ".2f") + "x" if pd.notna(v) else "n/a")
     t["Opportunity"] = t["opportunity_score"].map(lambda v: fmt(v, ".1f", "outside footprint"))
     t["Rank"] = t["opportunity_rank"].map(lambda v: fmt(v, ".0f", "-"))
@@ -373,7 +381,7 @@ def html_map(d):
     t["Loans per 1,000 owner homes"] = t["penetration"].map(lambda v: fmt(v, ".0f"))
     t["Nearest branch"] = t["nearest_branch_scoring_year"]
     t["Miles"] = t["branch_miles_scoring_year"].map(lambda v: fmt(v, ".1f"))
-    tip = ["Tract", "County", "Market loans", f"{s.LENDER_LABEL} loans", f"{s.LENDER_LABEL} share",
+    tip = ["Tract", "County", "Market loans", f"{L.label} loans", f"{L.label} share",
            "vs. average", "Opportunity", "Rank", "Households", "Households / sq mi",
            "Loans per 1,000 owner homes", "Nearest branch", "Miles"]
 
@@ -382,9 +390,13 @@ def html_map(d):
     t["fill_opp"] = classes(t["opportunity_score"], OPP_EDGES, OPP_COLORS, zero_class=True)
     t["fill_density"] = classes(t["household_density"], DEN_EDGES, DEN_COLORS)
 
-    m = folium.Map(location=[33.85, -84.35], zoom_start=9, tiles=None, control_scale=True)
-    # No-key basemap; a commercial product would need its own basemap license (productize phase).
-    folium.TileLayer("Esri.WorldGrayCanvas", name="Base map", control=False).add_to(m)
+    # Open on the lender's footprint.
+    minx, miny, maxx, maxy = t[t["footprint_flag"] == 1].total_bounds
+    m = folium.Map(location=[(miny + maxy) / 2, (minx + maxx) / 2], zoom_start=9, tiles=None,
+                   control_scale=True)
+    m.fit_bounds([[miny, minx], [maxy, maxx]])
+    if s.BASEMAP:  # settings.BASEMAP: license a basemap before any paid delivery
+        folium.TileLayer(s.BASEMAP, name="Base map", control=False).add_to(m)
 
     def layer(name, gdf, fill, fields, show):
         group = folium.FeatureGroup(name=name, overlay=False, show=show)
@@ -396,7 +408,7 @@ def html_map(d):
             tooltip=folium.GeoJsonTooltip(fields=fields, sticky=True)).add_to(group)
         group.add_to(m)
 
-    layer(f"{s.LENDER_LABEL} share vs. {s.FOOTPRINT_LABEL} average", t, "fill_share", tip, True)
+    layer(f"{L.label} share vs. {L.footprint_label} average", t, "fill_share", tip, True)
     layer("Opportunity score (footprint tracts)", t[t["footprint_flag"] == 1], "fill_opp", tip, False)
     layer("Household density (footprint tracts)", t[t["footprint_flag"] == 1], "fill_density", tip, False)
 
@@ -404,13 +416,13 @@ def html_map(d):
     c["geometry"] = c.geometry.simplify(0.0008, preserve_topology=True)
     c["County"] = c["county_name"]
     c["In footprint"] = np.where(c["footprint_flag"] == 1, "yes", "no")
-    c[f"{s.LENDER_LABEL} share"] = c["share_all"].map(lambda v: fmt(v, ".2%"))
-    c[f"Gain at {s.EXPANSION_TARGET_SHARE:.0%}"] = c["expansion_gain"].map(lambda v: fmt(v, ".1f", "-"))
+    c[f"{L.label} share"] = c["share_all"].map(lambda v: fmt(v, ".2%"))
+    c[f"Gain at {L.expansion_target_share:.0%}"] = c["expansion_gain"].map(lambda v: fmt(v, ".1f", "-"))
     c["Growth cluster"] = c["growth_cluster"].fillna("")
     c["fill_exp"] = np.where(c["footprint_flag"] == 1, AXIS,
                              classes(c["expansion_gain"], EXP_EDGES, EXP_COLORS))
-    layer(f"Expansion gain at {s.EXPANSION_TARGET_SHARE:.0%} (counties)", c, "fill_exp",
-          ["County", "In footprint", f"{s.LENDER_LABEL} share", f"Gain at {s.EXPANSION_TARGET_SHARE:.0%}",
+    layer(f"Expansion gain at {L.expansion_target_share:.0%} (counties)", c, "fill_exp",
+          ["County", "In footprint", f"{L.label} share", f"Gain at {L.expansion_target_share:.0%}",
            "Growth cluster"], False)
 
     lines = folium.FeatureGroup(name="County lines", overlay=True, show=True)
@@ -418,7 +430,7 @@ def html_map(d):
     folium.GeoJson(rounded_geojson(c[["county_name", "geometry"]]),
                    style_function=lambda f: {"fill": False, "color": INK_2, "weight": 0.7}).add_to(lines)
     lines.add_to(m)
-    branches = folium.FeatureGroup(name=f"{s.LENDER_LABEL} branches", overlay=True, show=True)
+    branches = folium.FeatureGroup(name=f"{L.label} branches", overlay=True, show=True)
     for _, b in d["branches"].iterrows():
         folium.CircleMarker([b["lat"], b["lon"]], radius=4, color=SURFACE, weight=1.5, fill=True,
                             fill_color=INK, fill_opacity=1, tooltip=b["site_name"]).add_to(branches)
@@ -434,14 +446,14 @@ def html_map(d):
         f'<div style="position:fixed;bottom:24px;left:12px;z-index:9999;background:{SURFACE};'
         f'color:{INK};padding:10px 12px;border-radius:6px;font:12px system-ui,-apple-system,'
         f'\'Segoe UI\',sans-serif;box-shadow:0 1px 4px rgba(11,11,11,0.15);max-width:260px">'
-        f'<div style="font-weight:700">{s.LENDER_LABEL} mortgage map, {s.SCORING_YEAR}</div>'
+        f'<div style="font-weight:700">{L.label} mortgage map, {s.SCORING_YEAR}</div>'
         f'<div style="color:{INK_2}">Hover a tract or county for its numbers.</div>'
-        + block(f"Share vs. {s.FOOTPRINT_LABEL} average ({d['base']:.2%})", DIVERGING + [SURFACE],
+        + block(f"Share vs. {L.footprint_label} average ({d['base']:.2%})", DIVERGING + [SURFACE],
                 DIV_LABELS + [f"Fewer than {s.LOW_VOLUME_THRESHOLD} market loans"])
         + block("Opportunity score", OPP_COLORS, OPP_LABELS)
         + block("Household density", DEN_COLORS, DEN_LABELS)
-        + block(f"Expansion gain at {s.EXPANSION_TARGET_SHARE:.0%}", EXP_COLORS + [AXIS],
-                EXP_LABELS + [f"Current {s.FOOTPRINT_LABEL}"])
+        + block(f"Expansion gain at {L.expansion_target_share:.0%}", EXP_COLORS + [AXIS],
+                EXP_LABELS + [f"Current {L.footprint_label}"])
         + "</div>")
     m.get_root().html.add_child(folium.Element(legend))
     m.save(str(OUT / "mortgage_map.html"))
@@ -452,7 +464,7 @@ def html_map(d):
 # ---------------------------------------------------------------- charts (R3a, R4, R5)
 
 def chart_trend(d):
-    t = d["trend"][d["trend"]["scope"] == "fom"].sort_values("year")
+    t = d["trend"][d["trend"]["scope"] == "footprint"].sort_values("year")
     years = t["year"].to_numpy()
     fig, (a1, a2) = plt.subplots(2, 1, figsize=(7.6, 6.2), sharex=True,
                                  gridspec_kw={"height_ratios": [2.3, 1], "hspace": 0.35})
@@ -467,7 +479,7 @@ def chart_trend(d):
                 va="center", color=INK, fontsize=9, fontweight="bold")
     a1.set_ylim(0, 100 * t[["share_purchase", "share_refinance"]].to_numpy().max() * 1.18)
     a1.set_ylabel("Share of originations (%)")
-    a1.set_title(f"{s.LENDER_LABEL} share in its {s.FOOTPRINT_LABEL} counties")
+    a1.set_title(f"{L.label} share in its {L.footprint_label} counties")
     a1.legend(loc="upper left", ncol=2)
     mix = 100 * t["market_refi_mix"].to_numpy()
     a2.bar(years, mix, width=0.42, color=MUTED)
@@ -478,8 +490,8 @@ def chart_trend(d):
     a2.set_title("Market refinance mix (refinances as a share of all originations)")
     a2.grid(axis="x", visible=False)
     a2.set_xticks(years, [f"{y}\n(tail of the 2020-21\nrefi boom)" if y == 2022 else str(y) for y in years])
-    header(fig, f"{s.LENDER_LABEL} purchase share went from {p[0]:.2f}% to {p[-1]:.2f}%",
-           f"{s.FOOTPRINT_LABEL} counties, {years[0]}-{years[-1]}. Refinance share swings with the "
+    header(fig, f"{L.label} purchase share went from {p[0]:.2f}% to {p[-1]:.2f}%",
+           f"{L.footprint_label} counties, {years[0]}-{years[-1]}. Refinance share swings with the "
            "refi market, so purchase is the cleaner trend.")
     fig.subplots_adjust(top=1 - 0.95 / fig.get_figheight())
     save(fig, "chart_share_trend.png")
@@ -487,8 +499,8 @@ def chart_trend(d):
 
 def chart_distance(d):
     order = ["0-2", "2-5", "5-10", "10+"]
-    raw = d["bands"][d["bands"]["scope"] == "fom"].set_index("band").loc[order]
-    adj = d["bands"][d["bands"]["scope"] == "fom_county_adjusted"].set_index("band").loc[order]
+    raw = d["bands"][d["bands"]["scope"] == "footprint"].set_index("band").loc[order]
+    adj = d["bands"][d["bands"]["scope"] == "footprint_county_adjusted"].set_index("band").loc[order]
     x = np.arange(len(order))
     ticks = ["0-2", "2-5", "5-10", "10+"]
     fig, (a1, a2) = plt.subplots(1, 2, figsize=(9.4, 4.0), gridspec_kw={"wspace": 0.3})
@@ -498,7 +510,7 @@ def chart_distance(d):
         a1.text(xi, vi - 0.08, f"{vi:.2f}%", ha="center", va="top", fontsize=8.5, color="#ffffff",
                 fontweight="bold")
     a1.axhline(100 * d["base"], color=INK_2, linewidth=1)
-    a1.text(len(order) - 0.55, 100 * d["base"] + 0.06, f"{s.FOOTPRINT_LABEL} average",
+    a1.text(len(order) - 0.55, 100 * d["base"] + 0.06, f"{L.footprint_label} average",
             ha="right", va="bottom", fontsize=8, color=INK_2)
     a1.set_xticks(x, ticks)
     a1.set_xlabel("Miles from tract to nearest branch")
@@ -519,7 +531,7 @@ def chart_distance(d):
     a2.set_title("Compared with each tract's own county")
     a2.grid(axis="x", visible=False)
     header(fig, "Being close to a branch helps, but mostly within the same county",
-           f"{s.FOOTPRINT_LABEL} tracts, {s.SCORING_YEAR}. Most of the raw drop-off is a difference "
+           f"{L.footprint_label} tracts, {s.SCORING_YEAR}. Most of the raw drop-off is a difference "
            "between counties, not distance.")
     fig.subplots_adjust(top=1 - 0.95 / fig.get_figheight())
     save(fig, "chart_share_by_distance.png")
@@ -528,11 +540,11 @@ def chart_distance(d):
 def chart_depth_vs_expansion(d):
     lad = d["ladder"].set_index("rung")
     cl = d["clusters"][d["clusters"]["touches_footprint"]].sort_values("expansion_gain", ascending=False)
-    rows = [(f"Base: {s.FOOTPRINT_LABEL} average ({lad.loc['base', 'share']:.2%})", lad.loc["base", "depth"], "depth"),
+    rows = [(f"Base: {L.footprint_label} average ({lad.loc['base', 'share']:.2%})", lad.loc["base", "depth"], "depth"),
             (f"Stretch: {lad.loc['stretch', 'reference']} level ({lad.loc['stretch', 'share']:.2%})",
              lad.loc["stretch", "depth"], "depth"),
             (f"Ceiling: top-quarter counties ({lad.loc['ceiling', 'share']:.2%})", lad.loc["ceiling", "depth"], "depth"),
-            (f"All {len(d['scorecard'])} non-{s.FOOTPRINT_LABEL} counties at {s.EXPANSION_TARGET_SHARE:.0%}",
+            (f"All {len(d['scorecard'])} non-{L.footprint_label} counties at {L.expansion_target_share:.0%}",
              d["scorecard"]["expansion_gain"].sum(), "expansion")]
     for _, r in cl.iterrows():
         names = r["county_names"].split(", ")
@@ -548,20 +560,20 @@ def chart_depth_vs_expansion(d):
         ax.text(v + 25, yi, f"{v:,.0f}", va="center", ha="left", fontsize=9, color=INK)
     current = d["county_year"].query("year == @s.SCORING_YEAR and footprint_flag == 1")["lender_all"].sum()
     ax.axvline(current, color=INK_2, linewidth=1)
-    ax.text(current + 18, y.max() + 0.55, f"today: {current:,.0f} {s.FOOTPRINT_LABEL} loans",
+    ax.text(current + 18, y.max() + 0.55, f"today: {current:,.0f} {L.footprint_label} loans",
             fontsize=8, color=INK_2, va="bottom")
     ax.set_yticks(y, labels)
     ax.tick_params(axis="y", length=0)
     ax.set_xlim(0, max(values) * 1.12)
     ax.set_xlabel("Added loans a year")
     ax.grid(axis="y", visible=False)
-    ax.legend(handles=[Patch(color=SLOT_1, label=f"Depth: lagging {s.FOOTPRINT_LABEL} tracts rise to the benchmark"),
-                       Patch(color=SLOT_2, label=f"Expansion: a new county reaches {s.EXPANSION_TARGET_SHARE:.0%} "
+    ax.legend(handles=[Patch(color=SLOT_1, label=f"Depth: lagging {L.footprint_label} tracts rise to the benchmark"),
+                       Patch(color=SLOT_2, label=f"Expansion: a new county reaches {L.expansion_target_share:.0%} "
                                                  "(upper bound)")],
               loc="lower right")
-    header(fig, f"Deeper share inside the {s.FOOTPRINT_LABEL} outweighs the expansion upside",
+    header(fig, f"Deeper share inside the {L.footprint_label} outweighs the expansion upside",
            f"Added originations a year, {s.SCORING_YEAR} market. Clusters shown are the growth "
-           f"clusters that border the {s.FOOTPRINT_LABEL}.")
+           f"clusters that border the {L.footprint_label}.")
     fig.subplots_adjust(top=0.84)
     save(fig, "chart_depth_vs_expansion.png")
 
@@ -634,15 +646,15 @@ def key_numbers(d, depth_table):
         "county_year_metrics.csv", f"subject-lender originations in the footprint, {s.SCORING_YEAR}")
     add("footprint_share", d["base"], f"{d['base']:.2%}", "county_year_metrics.csv", "footprint share")
 
-    tr = d["trend"][d["trend"]["scope"] == "fom"].set_index("year")
+    tr = d["trend"][d["trend"]["scope"] == "footprint"].set_index("year")
     first = s.YEARS[0]
     for col, name in [("share_purchase", "purchase"), ("share_refinance", "refinance")]:
         for y in (first, s.SCORING_YEAR):
             add(f"{name}_share_{y}", tr.loc[y, col], f"{tr.loc[y, col]:.2%}", "trend_summary.csv",
                 f"footprint {name} share, {y}")
     lt = d["lender_trend"]
-    rank = int(lt.loc[lt["lei"] == s.LENDER_LEI, f"footprint_rank_{s.SCORING_YEAR}"].iloc[0])
-    add("lender_rank_footprint", rank, f"#{rank}", "lender_trend_fom.csv",
+    rank = int(lt.loc[lt["lei"] == L.lei, f"footprint_rank_{s.SCORING_YEAR}"].iloc[0])
+    add("lender_rank_footprint", rank, f"#{rank}", "lender_trend_footprint.csv",
         f"subject lender's rank among footprint lenders, {s.SCORING_YEAR}")
 
     lad = d["ladder"].set_index("rung")
@@ -694,8 +706,8 @@ def key_numbers(d, depth_table):
         "depth_by_county.csv", "base depth on the contestable (non-builder) market")
 
     bands = d["bands"]
-    adj = bands[bands["scope"] == "fom_county_adjusted"].set_index("band")
-    raw = bands[bands["scope"] == "fom"].set_index("band")
+    adj = bands[bands["scope"] == "footprint_county_adjusted"].set_index("band")
+    raw = bands[bands["scope"] == "footprint"].set_index("band")
     add("near_vs_county", adj.loc["0-2", "vs_county_average"], f"{adj.loc['0-2', 'vs_county_average']:.2f}x",
         "share_by_distance.csv", "tracts within 2 miles vs. their county's average")
     add("near_share_raw", raw.loc["0-2", "share_all"], f"{raw.loc['0-2', 'share_all']:.2%}",
@@ -709,7 +721,8 @@ def key_numbers(d, depth_table):
 
     sc = d["scorecard"]
     add("expansion_counties", len(sc), f"{len(sc)}", "expansion_scorecard.csv", "non-footprint counties")
-    add("expansion_target", s.EXPANSION_TARGET_SHARE, f"{s.EXPANSION_TARGET_SHARE:.0%}", "config/settings.py",
+    add("expansion_target", L.expansion_target_share, f"{L.expansion_target_share:.0%}",
+        f"config/lenders/{L.key}/lender.toml",
         "expansion target share")
     add("expansion_total", sc["expansion_gain"].sum(), f"{sc['expansion_gain'].sum():,.0f}",
         "expansion_scorecard.csv", "expansion gain, all non-footprint counties (upper bound)")
@@ -729,7 +742,7 @@ def key_numbers(d, depth_table):
         add(f"cluster_{cid}_growth", r["pop_growth"], f"{r['pop_growth']:.1%}", "growth_clusters.csv",
             f"cluster {cid} population growth")
     mismatches = int((~d["recon"]["match"]).sum())
-    add("reconciliation_mismatches", mismatches, f"{mismatches}", "phase2_checks/dccu_api_reconciliation.csv",
+    add("reconciliation_mismatches", mismatches, f"{mismatches}", "phase2_checks/api_reconciliation.csv",
         "subject-lender totals vs. HMDA API, mismatches")
     add("builder_lenders_included", d["builders_included"], f"{d['builders_included']}",
         "config/builder_lenders.csv", "builder-owned lenders in the contestable-market rule")
@@ -776,11 +789,11 @@ def main():
 
     # Ties between files (key numbers must agree with the stages that made them).
     k = keys.set_index("key")["value"]
-    size = d["market_size"].query("year == @s.SCORING_YEAR and scope == 'fom'").iloc[0]
+    size = d["market_size"].query("year == @s.SCORING_YEAR and scope == 'footprint'").iloc[0]
     ladder = d["ladder"].set_index("rung")
     ties = pd.DataFrame([
         ("footprint market loans = Phase 2 market size", k["footprint_market_loans"], size["market_originations"]),
-        ("footprint lender loans = Phase 2 market size", k["footprint_lender_loans"], size["dccu_originations"]),
+        ("footprint lender loans = Phase 2 market size", k["footprint_lender_loans"], size["lender_originations"]),
         ("base rung = footprint share", ladder.loc["base", "share"], d["base"]),
         ("base depth = sum of opportunity scores", ladder.loc["base", "depth"],
          d["tracts"].loc[d["tracts"]["footprint_flag"] == 1, "opportunity_score"].sum()),
@@ -794,21 +807,24 @@ def main():
 
     blanks = int(top[["household_density", "miles_to_branch", "competitor_1"]].isna().any(axis=1).sum())
     findings = check_findings(keys)
+    o, pr = L.outputs, L.processed
     reqs = [("R1", "tract map of share (footprint + statewide)",
-             ["map_footprint_share.png", "map_statewide.png", "mortgage_map.html"]),
-            ("R2", "top 25 tracts with top 3 competitors", ["opportunity_top25.csv", "map_footprint_opportunity.png"]),
-            ("R3", "inside vs. outside footprint", ["../data/processed/trend_summary.csv"]),
-            ("R3a", "depth vs. expansion scorecard", ["depth_by_county.csv", "expansion_scorecard.csv",
-                                                      "chart_depth_vs_expansion.png"]),
-            ("R3b", "expansion rankings and clusters", ["growth_clusters.csv", "../data/processed/expansion_groups.csv",
-                                                        "map_statewide.png"]),
-            ("R4", "share by distance band", ["../data/processed/share_by_distance.csv", "chart_share_by_distance.png"]),
-            ("R5", "share trend 2022 onward", ["../data/processed/trend_summary.csv",
-                                               "../data/processed/county_year_metrics.csv", "chart_share_trend.png"]),
-            ("R6", "household density on map and table", ["mortgage_map.html", "opportunity_top25.csv"]),
-            ("R7", "FINDINGS.md and DATA_QUALITY.md", ["../FINDINGS.md", "../DATA_QUALITY.md"])]
-    checklist = pd.DataFrame([{"requirement": r, "what": w, "files": ", ".join(f.replace("../", "") for f in fs),
-                               "present": all((OUT / f).resolve().exists() for f in fs)} for r, w, fs in reqs])
+             [o / "map_footprint_share.png", o / "map_statewide.png", o / "mortgage_map.html"]),
+            ("R2", "top 25 tracts with top 3 competitors",
+             [o / "opportunity_top25.csv", o / "map_footprint_opportunity.png"]),
+            ("R3", "inside vs. outside footprint", [pr / "trend_summary.csv"]),
+            ("R3a", "depth vs. expansion scorecard",
+             [o / "depth_by_county.csv", o / "expansion_scorecard.csv", o / "chart_depth_vs_expansion.png"]),
+            ("R3b", "expansion rankings and clusters",
+             [o / "growth_clusters.csv", pr / "expansion_groups.csv", o / "map_statewide.png"]),
+            ("R4", "share by distance band", [pr / "share_by_distance.csv", o / "chart_share_by_distance.png"]),
+            ("R5", "share trend 2022 onward",
+             [pr / "trend_summary.csv", pr / "county_year_metrics.csv", o / "chart_share_trend.png"]),
+            ("R6", "household density on map and table", [o / "mortgage_map.html", o / "opportunity_top25.csv"]),
+            ("R7", "FINDINGS.md and DATA_QUALITY.md", [L.findings, L.data_quality])]
+    checklist = pd.DataFrame([{"requirement": r, "what": w,
+                               "files": ", ".join(f.relative_to(s.ROOT).as_posix() for f in fs),
+                               "present": all(f.exists() for f in fs)} for r, w, fs in reqs])
 
     sections = [
         f"### 1. Maps\nFootprint maps draw **{n_share:,}** footprint tracts (share map) and **{n_opp:,}** "
@@ -821,13 +837,14 @@ def main():
         "### 3. Key numbers tie to their sources\n" + md_table(ties.round(4)),
         "### 4. FINDINGS.md\n" + (
             f"{findings['words']} words (limit about {FINDINGS_WORD_LIMIT}, one page). Numbers not found in "
-            f"`outputs/key_numbers.csv`: " + (", ".join(findings["unmatched"]) or "**none**") + "."
+            f"`outputs/{L.key}/key_numbers.csv`: " + (", ".join(findings["unmatched"]) or "**none**") + "."
             if findings["exists"] else "Not written yet."),
         "### 5. Definition of done (v1)\n" + md_table(checklist)
         + f"\n\nSubject-lender totals vs. the HMDA API: **{k['reconciliation_mismatches']:.0f}** mismatches "
-        "(tolerance: exact match). The full pipeline rebuilds with `python src/run_all.py`.",
+        f"(tolerance: exact match). The full pipeline rebuilds with `python src/run_all.py --lender {L.key}`.",
     ]
-    write_data_quality("phase5_outputs", "Phase 5: map, table and findings", sections)
+    write_data_quality("phase5_outputs", "Phase 5: map, table and findings", sections,
+                       path=L.data_quality, heading=lender_log_heading(L))
     print(f"Maps: {n_share} footprint tracts, {n_low} low-volume; HTML {html['mb']:.1f} MB")
     print(f"Key numbers: {len(keys)}; ties all match: {ties['match'].all()}")
     print(f"FINDINGS: {findings}")

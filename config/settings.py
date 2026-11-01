@@ -1,4 +1,8 @@
-"""Project-wide settings: years, IDs, URLs and paths, kept in one place."""
+"""Project-wide settings: years, URLs, rules and paths, kept in one place.
+
+Facts about one lender (LEI, footprint, branches) live in config/lenders/<key>/lender.toml;
+see config/lender.py.
+"""
 
 from pathlib import Path
 
@@ -14,24 +18,10 @@ YEARS = [2022, 2023, 2024, 2025]
 # Phase 3 scoring (PRD Appendix A, "Metrics"). Depth and expansion use the latest year only;
 # the other years feed the trend.
 SCORING_YEAR = YEARS[-1]
-# Planning assumption: the share DCCU would reach in a new county (2025 FOM share of 1.96%, rounded).
-EXPANSION_TARGET_SHARE = 0.02
 # Tracts with fewer scoring-year market originations are flagged low-volume, not dropped.
 LOW_VOLUME_THRESHOLD = 20
 # Purchase-market change is measured from this year to SCORING_YEAR (2022 is skewed by rates).
 PURCHASE_CHANGE_BASE_YEAR = 2023
-
-# Confirmed in the HMDA /view/filers API (2024, 2025). Validation re-checks every year.
-DCCU_LEI = "549300Y4BSP3BSFW7J29"
-DCCU_NAME = "DELTA COMMUNITY CREDIT UNION"
-
-# Subject lender, for lender-neutral code (Phase 5 onward). DCCU is the illustrative example;
-# stages 01-05 still use DCCU_* names until the productize phase (PRD, Future phases).
-LENDER_LEI = DCCU_LEI
-LENDER_NAME = "Delta Community Credit Union"
-LENDER_LABEL = "DCCU"
-FOOTPRINT_LABEL = "FOM"
-FOOTPRINT_NAME = "field of membership"
 
 # Benchmark ladder (PRD Appendix A): base = footprint average; stretch = the weakest county in
 # the top quarter of footprint counties by share; ceiling = the top quarter's pooled share.
@@ -76,7 +66,7 @@ MARKET_FILTERS = [
 ]
 EXEMPT_CODE = "1111"
 
-# The HMDA API counts with at most two filters, so DCCU is reconciled one filter at a
+# The HMDA API counts with at most two filters, so each lender is reconciled one filter at a
 # time (originations + that filter). API parameter name -> (HMDA field, values).
 # occupancy_type is left out: the API silently ignores that filter.
 API_CHECK_FILTERS = {
@@ -108,6 +98,10 @@ POP_RECENT_BASE_YEAR = 2023  # recent momentum, same window as purchase_market_c
 # (at 1x, the Atlanta exurban ring chains into one 28-county cluster). Decided 2026-10-27.
 CLUSTER_GROWTH_MULTIPLE = 1.5
 
-# Distance bands in miles. FOM tables use the PRD's bands; statewide tables split 10+.
+# Distance bands in miles. Footprint tables use the PRD's bands; statewide tables split 10+.
 DISTANCE_BANDS = [0, 2, 5, 10, float("inf")]
 DISTANCE_BANDS_DETAIL = [0, 2, 5, 10, 20, float("inf")]
+
+# Interactive-map basemap (an xyzservices name, or None for no basemap). Esri's light-gray
+# canvas needs no key and is fine for internal demos; license a basemap before paid delivery.
+BASEMAP = "Esri.WorldGrayCanvas"

@@ -35,14 +35,18 @@ Keep lender-specific facts (LEI, footprint, branches, product mix) in config, an
 
 ## Layout
 ```
-config/           county lists (metro FIPS, FOM counties), small hand-maintained files
-data/raw/         raw downloads, git-ignored, cached
-data/processed/   cleaned, intermediate outputs
-src/              one script per pipeline stage
-outputs/          map, opportunity CSV, charts
-docs/PRD.md       requirements
-FINDINGS.md       ≤ 1 page, ends with a depth vs. expansion recommendation
-DATA_QUALITY.md   every exclusion, gap and check result
+config/                  market config (settings.py, ga_counties.csv, builder_lenders.csv)
+config/lenders/<key>/    one lender: lender.toml, footprint.csv, branch exclusions and coordinates
+data/raw/                raw downloads, git-ignored, cached; data/raw/lenders/<key>/ per lender
+data/processed/          market files shared by every lender, Phase 1-2 checks
+data/processed/<key>/    one lender's metrics and checks
+src/                     one script per pipeline stage (01-03 market, 04-07 per lender)
+outputs/<key>/           one lender's maps, charts, tables, key_numbers.csv, and:
+  FINDINGS.md            ≤ 1 page, ends with a depth vs. expansion recommendation
+  DATA_QUALITY.md        that lender's exclusions, gaps and check results
+tests/baseline/<key>/    saved outputs a lender's runs must reproduce
+docs/PRD.md              requirements
+DATA_QUALITY.md          market-wide exclusions, gaps and check results
 ```
 
 ## Pipeline rules
@@ -51,7 +55,8 @@ DATA_QUALITY.md   every exclusion, gap and check result
 - **Each `src/` stage reads from the previous stage's outputs on disk**, not from in-memory state.
 - **Keep the market fixed.** Filter by a fixed county FIPS list in `config/`, not by MSA code.
 - **Use HMDA 2022 onward only** (2020 census tracts).
-- **Apply the market definition (PRD Appendix A) to every lender, not just DCCU.**
+- **Apply the market definition (PRD Appendix A) to every lender, not just the subject lender.**
+- **Run a lender with `--lender <key>`.** DCCU's runs must keep matching `tests/baseline/dccu/` (the check runs automatically); a refactor that changes DCCU's numbers is a bug unless we decided the change.
 
 ## Definition of done (v1)
 - Requirements R1–R7 from the PRD are met.

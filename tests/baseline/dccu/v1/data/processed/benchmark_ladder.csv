@@ -1,0 +1,4 @@
+rung,rule,share,reference,depth,depth_outside_top_quarter,depth_vs_current_loans
+base,footprint average,0.01956,all footprint counties,532.917753,519.017813,0.506576
+stretch,weakest county in the top quarter,0.040449,Spalding,1374.312568,1335.693054,1.306381
+ceiling,"top quarter, pooled",0.061715,"Fayette, Coweta, Butts, Henry, Spalding",2381.879373,2301.810889,2.264144

@@ -4,9 +4,12 @@ For each year:
   1. Combine the 159 county CSVs into data/processed/hmda_ga_{year}.parquet (all rows, all columns).
   2. Apply the market filters from config/settings.py to every lender, logging rows removed at each step.
   3. Write data/processed/market_{year}.parquet with added columns:
-     county_fips, fom_flag, purpose_group (purchase / refinance), has_tract.
-Also writes data/processed/lenders.csv (LEI -> latest name), reconciles DCCU against the
-HMDA API, and replaces the Phase 2 section of DATA_QUALITY.md.
+     county_fips, purpose_group (purchase / refinance), has_tract.
+The market files are shared by every lender: lender stages add their own footprint flag.
+Also writes data/processed/lenders.csv (LEI -> latest name) and the Phase 2 section of
+DATA_QUALITY.md. For each configured lender it writes data/processed/<key>/phase2_checks/
+(its filter waterfall, reconciliation with the HMDA API, and market size) and the Phase 2
+section of its own data-quality log.
 
 Run from the repo root:  python src/03_market.py
 """
@@ -23,7 +26,8 @@ import requests
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 from config import settings as s  # noqa: E402
-from src.common import fetch, md_table, write_data_quality  # noqa: E402
+from config.lender import configured  # noqa: E402
+from src.common import fetch, lender_log_heading, md_table, write_data_quality  # noqa: E402
 
 HMDA = s.RAW / "hmda"
 OUT = s.PROCESSED / "phase2_checks"
@@ -48,16 +52,22 @@ def _text_schema(path):
     return {n.strip('"'): pa.string() for n in names}
 
 
-def apply_filters(df, year):
-    """Apply each market filter in order. Like a chain of SQL WHERE clauses, with a COUNT(*) after each."""
-    waterfall, exempt_kept = [], []
+def apply_filters(df, year, lenders):
+    """Apply each market filter in order. Like a chain of SQL WHERE clauses, with a COUNT(*) after each.
+
+    Returns the market waterfall and, per lender, that lender's rows at each step.
+    """
+    waterfall, lender_steps, exempt_kept = [], [], []
 
     def log(step):
         orig = df["action_taken"] == "1"
-        dccu = df["lei"] == s.DCCU_LEI
         waterfall.append({"year": year, "step": step, "rows_all": len(df),
-                          "originations_all": int(orig.sum()), "rows_dccu": int(dccu.sum()),
-                          "originations_dccu": int((orig & dccu).sum())})
+                          "originations_all": int(orig.sum())})
+        for lender in lenders:
+            mine = df["lei"] == lender.lei
+            lender_steps.append({"lender": lender.key, "year": year, "step": step,
+                                 "rows_lender": int(mine.sum()),
+                                 "originations_lender": int((orig & mine).sum())})
 
     log("start: all GA rows with a county")
     for name, field, op, values in s.MARKET_FILTERS:
@@ -72,31 +82,53 @@ def apply_filters(df, year):
                                     "rows_kept_with_exempt": n_ex,
                                     "lenders": df.loc[df[field] == s.EXEMPT_CODE, "lei"].nunique()})
         log(name)
-    return df, waterfall, exempt_kept
+    return df, waterfall, lender_steps, exempt_kept
 
 
-def add_columns(df, fom_fips):
+def add_columns(df):
     df = df.copy()
     df["county_fips"] = df["county_code"]
-    df["fom_flag"] = df["county_fips"].isin(fom_fips).astype("int8")
     df["purpose_group"] = df["loan_purpose"].map({"1": "purchase", "31": "refinance", "32": "refinance"})
     df["has_tract"] = (~df["census_tract"].isin(["", "NA"])).astype("int8")
     return df
 
 
-def reconcile_dccu(year, ga):
-    """Compare DCCU's GA originations under one filter at a time with the HMDA API's own count."""
-    d = ga[(ga["lei"] == s.DCCU_LEI) & (ga["action_taken"] == "1")]
+def reconcile_lender(lender, year, ga):
+    """Compare a lender's GA originations under one filter at a time with the HMDA API's own count."""
+    d = ga[(ga["lei"] == lender.lei) & (ga["action_taken"] == "1")]
     checks = {"none": (None, None)} | s.API_CHECK_FILTERS
     rows = []
     for param, (field, values) in checks.items():
-        resp = json.loads((HMDA / "dccu_checks" / f"{year}_{param}.json").read_text())
+        resp = json.loads((lender.raw / "api_checks" / f"{year}_{param}.json").read_text())
         # The API silently ignores filters it doesn't support; make sure this one was applied.
         applied = param == "none" or param in resp["parameters"]
         api = sum(a["count"] for a in resp["aggregations"])
         ours = len(d) if field is None else int(d[field].isin(values).sum())
         rows.append({"year": year, "filter": param, "api_applied_filter": applied,
-                     "dccu_api": api, "dccu_ours": ours, "match": applied and api == ours})
+                     "lender_api": api, "lender_ours": ours, "match": applied and api == ours})
+    return rows
+
+
+def market_size(orig, year, lender=None):
+    """Market originations, and the lender's, statewide and (with a lender) in its footprint."""
+    scopes = [("statewide", orig)]
+    if lender:
+        scopes.append(("footprint", orig[orig["county_fips"].isin(lender.footprint)]))
+    rows = []
+    for scope, sub in scopes:
+        row = {"year": year, "scope": scope,
+               "market_originations": len(sub),
+               "market_purchase": int((sub["purpose_group"] == "purchase").sum()),
+               "market_refinance": int((sub["purpose_group"] == "refinance").sum()),
+               "market_no_tract": int((sub["has_tract"] == 0).sum()),
+               "lenders": sub["lei"].nunique()}
+        if lender:
+            mine = sub[sub["lei"] == lender.lei]
+            row |= {"lender_originations": len(mine),
+                    "lender_purchase": int((mine["purpose_group"] == "purchase").sum()),
+                    "lender_refinance": int((mine["purpose_group"] == "refinance").sum()),
+                    "lender_no_tract": int((mine["has_tract"] == 0).sum())}
+        rows.append(row)
     return rows
 
 
@@ -132,48 +164,67 @@ def build_lenders(market_leis):
     return lenders
 
 
+def lender_report(lender, steps, recon, sizes):
+    """Write one lender's Phase 2 checks to its folder and its data-quality log."""
+    out = lender.processed / "phase2_checks"
+    out.mkdir(parents=True, exist_ok=True)
+    steps = steps.drop(columns="lender")
+    steps.to_csv(out / "filter_waterfall.csv", index=False)
+    recon.to_csv(out / "api_reconciliation.csv", index=False)
+    sizes.to_csv(out / "market_size.csv", index=False)
+
+    latest = s.YEARS[-1]
+    wf = steps[steps["year"] == latest].drop(columns="year")
+    wf["originations_removed"] = (-wf["originations_lender"].diff()).fillna(0).astype(int)
+    sections = [
+        f"### {lender.label} through the market filters ({latest}; all years in "
+        "`phase2_checks/filter_waterfall.csv`)\nThe same filters apply to every lender; each row "
+        f"is {lender.label}'s count after every filter above it.\n\n" + md_table(wf),
+        f"### {lender.label} reconciliation with the HMDA API\n{lender.label}'s GA originations "
+        "with one market filter at a time, our data vs. the API's own count (the API allows at most "
+        "two filters, so the full definition can't be checked in one query). Occupancy can't be "
+        f"checked: the API ignores that filter.\n\nMismatches: **{int((~recon['match']).sum())}** "
+        f"of {len(recon)}.\n\n" + md_table(recon[recon["year"] == latest].drop(columns="year")),
+        f"### Market size and {lender.label} (originations, after all filters)\n"
+        + md_table(sizes),
+    ]
+    write_data_quality("phase2_lender", "Phase 2: lender within the market definition", sections,
+                       path=lender.data_quality, heading=lender_log_heading(lender))
+    print(f"{lender.key}: reconciliation mismatches {int((~recon['match']).sum())} of {len(recon)}")
+
+
 def main():
     OUT.mkdir(parents=True, exist_ok=True)
     counties = pd.read_csv(s.CONFIG / "ga_counties.csv", dtype=str)
-    fom_fips = set(counties.loc[counties["fom_flag"] == "1", "county_fips"])
+    lenders_cfg = configured()
 
-    waterfall, exempt, recon, sizes = [], [], [], []
+    waterfall, exempt, sizes = [], [], []
+    steps, recon, lender_sizes = [], {lc.key: [] for lc in lenders_cfg}, {lc.key: [] for lc in lenders_cfg}
     market_leis = {}  # lei -> latest year with market rows
     for y in s.YEARS:
         print(f"{y}: combining county files...")
         ga = combine_year(y, counties["county_fips"].tolist())
-        recon += reconcile_dccu(y, ga)
-        market, w, e = apply_filters(ga, y)
+        for lc in lenders_cfg:
+            recon[lc.key] += reconcile_lender(lc, y, ga)
+        market, w, st, e = apply_filters(ga, y, lenders_cfg)
         waterfall += w
+        steps += st
         exempt += e
-        market = add_columns(market, fom_fips)
+        market = add_columns(market)
         market.to_parquet(s.PROCESSED / f"market_{y}.parquet", index=False)
         market_leis |= dict.fromkeys(market["lei"].unique(), y)
 
         orig = market[market["action_taken"] == "1"]
-        for scope, sub in [("statewide", orig), ("fom", orig[orig["fom_flag"] == 1])]:
-            dccu = sub[sub["lei"] == s.DCCU_LEI]
-            sizes.append({
-                "year": y, "scope": scope,
-                "market_originations": len(sub),
-                "market_purchase": int((sub["purpose_group"] == "purchase").sum()),
-                "market_refinance": int((sub["purpose_group"] == "refinance").sum()),
-                "market_no_tract": int((sub["has_tract"] == 0).sum()),
-                "lenders": sub["lei"].nunique(),
-                "dccu_originations": len(dccu),
-                "dccu_purchase": int((dccu["purpose_group"] == "purchase").sum()),
-                "dccu_refinance": int((dccu["purpose_group"] == "refinance").sum()),
-                "dccu_no_tract": int((dccu["has_tract"] == 0).sum()),
-            })
+        sizes += market_size(orig, y)
+        for lc in lenders_cfg:
+            lender_sizes[lc.key] += market_size(orig, y, lc)
         print(f"  market rows {len(market):,}, originations {len(orig):,}")
 
     lenders = build_lenders(market_leis)
-    waterfall, exempt = pd.DataFrame(waterfall), pd.DataFrame(exempt)
-    recon, sizes = pd.DataFrame(recon), pd.DataFrame(sizes)
+    waterfall, exempt, sizes = pd.DataFrame(waterfall), pd.DataFrame(exempt), pd.DataFrame(sizes)
     waterfall.to_csv(OUT / "filter_waterfall.csv", index=False)
     exempt.to_csv(OUT / "exempt_flags_kept.csv", index=False)
-    recon.to_csv(OUT / "dccu_api_reconciliation.csv", index=False)
-    sizes.to_csv(OUT / "market_size.csv", index=False)
+    sizes.drop(columns="scope").to_csv(OUT / "market_size.csv", index=False)
 
     # Summaries for DATA_QUALITY.md
     latest = s.YEARS[-1]
@@ -184,16 +235,13 @@ def main():
         f"### Filter waterfall ({latest}; all years in `phase2_checks/filter_waterfall.csv`)\n"
         "Filters run in order, so each row's count is after every filter above it. "
         "Rows with no county code (Phase 1, check 1) never enter, so the start is slightly "
-        "below the statewide total.\n\n" + md_table(wf),
+        "below the statewide total. Each lender's own waterfall and reconciliation with the HMDA "
+        "API are in `outputs/<lender>/DATA_QUALITY.md`.\n\n" + md_table(wf),
         "### Exempt flags kept\nRows kept although the lender reported the field as exempt "
         "(`1111`), all years. Exempt lenders are small and rarely make these products.\n\n"
         + md_table(ex),
-        "### DCCU reconciliation with the HMDA API\nDCCU's GA originations with one market "
-        "filter at a time, our data vs. the API's own count (the API allows at most two filters, "
-        "so the full definition can't be checked in one query). Occupancy can't be checked: the "
-        f"API ignores that filter.\n\nMismatches: **{int((~recon['match']).sum())}** of {len(recon)}.\n\n"
-        + md_table(recon[recon["year"] == latest].drop(columns="year")),
-        "### Market size (originations, after all filters)\n" + md_table(sizes),
+        "### Market size (originations, after all filters, statewide)\n"
+        + md_table(sizes.drop(columns="scope")),
         "### Rows without a census tract\n`market_no_tract` originations stay in the market "
         "data (`has_tract = 0`) and count toward county and statewide totals, but can't be "
         "placed on the map or in tract metrics.",
@@ -205,7 +253,11 @@ def main():
     ]
     write_data_quality("phase2", "Phase 2: market definition", sections)
     print(sizes.to_string(index=False))
-    print(f"Reconciliation mismatches: {int((~recon['match']).sum())} of {len(recon)}")
+
+    steps = pd.DataFrame(steps)
+    for lc in lenders_cfg:
+        lender_report(lc, steps[steps["lender"] == lc.key], pd.DataFrame(recon[lc.key]),
+                      pd.DataFrame(lender_sizes[lc.key]))
 
 
 if __name__ == "__main__":

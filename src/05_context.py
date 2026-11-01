@@ -1,13 +1,14 @@
 """Stage 5: households, density, branch distance, population growth and clusters (PRD Appendix A).
 
-Reads the Phase 3 outputs and the Phase 4 raw files, and writes:
-  data/processed/branches.csv              DCCU sites in both NCUA snapshots, geocoded
-  data/processed/tract_context.csv         every tract: households, density, penetration, distance
-  data/processed/share_by_distance.csv     R4: DCCU share by distance band (FOM, statewide, FOM county)
-  data/processed/county_context.csv        every county: households, population growth, adjacency
-  data/processed/expansion_scorecard.csv   R3a: non-FOM counties, Phase 3 fields plus this context
-  data/processed/growth_clusters.csv       R3b: neighboring fast-growing non-FOM counties
-plus the checks in data/processed/phase4_checks/ and the Phase 4 section of DATA_QUALITY.md.
+Runs for one lender (config/lender.py). Reads its Phase 3 outputs and the Phase 4 raw files,
+and writes, in data/processed/<key>/:
+  branches.csv              the lender's sites in both NCUA snapshots, geocoded
+  tract_context.csv         every tract: households, density, penetration, distance
+  share_by_distance.csv     R4: lender share by distance band (footprint, statewide, footprint county)
+  county_context.csv        every county: households, population growth, adjacency
+  expansion_scorecard.csv   R3a: non-footprint counties, Phase 3 fields plus this context
+  growth_clusters.csv       R3b: neighboring fast-growing non-footprint counties
+plus the checks in phase4_checks/ and the Phase 4 section of the lender's data-quality log.
 
 Run from the repo root:  python src/05_context.py
 """
@@ -21,9 +22,10 @@ import pandas as pd
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 from config import settings as s  # noqa: E402
-from src.common import dccu_branches, md_table, write_data_quality  # noqa: E402
+from config.lender import LENDER as L  # noqa: E402
+from src.common import lender_log_heading, md_table, ncua_branches, write_data_quality  # noqa: E402
 
-OUT = s.PROCESSED / "phase4_checks"
+OUT = L.processed / "phase4_checks"
 SQ_METERS_PER_SQ_MILE = 2_589_988.11
 EARTH_RADIUS_MILES = 3958.8
 GEOCODE_COLS = ["site_id", "input_address", "match", "match_type", "matched_address",
@@ -38,17 +40,17 @@ def band_labels(edges):
 # ---------------------------------------------------------------- branches
 
 def load_branches():
-    """DCCU's sites in the scoring-year and latest NCUA snapshots, with coordinates and scope."""
-    exclusions = pd.read_csv(s.CONFIG / "branch_exclusions.csv", dtype=str).set_index("site_id")
-    manual = pd.read_csv(s.CONFIG / "branch_coordinates_manual.csv", dtype=str).set_index("site_id")
+    """The lender's sites in the scoring-year and latest NCUA snapshots, with coordinates and scope."""
+    exclusions = pd.read_csv(L.branch_exclusions, dtype=str).set_index("site_id")
+    manual = pd.read_csv(L.branch_coordinates, dtype=str).set_index("site_id")
     zips = sorted((s.RAW / "ncua").glob("call-report-data-*.zip"))
     y, m = s.NCUA_SCORING_CYCLE
     snapshots = {"scoring_year": f"{y}-{m:02d}", "current": zips[-1].stem.split("data-")[1]}
 
     frames = []
     for snapshot, cycle in snapshots.items():
-        _, b = dccu_branches(s.RAW / "ncua" / f"call-report-data-{cycle}.zip")
-        geo = pd.read_csv(s.RAW / "geocode" / f"branches_{cycle}.csv", header=None,
+        _, b = ncua_branches(s.RAW / "ncua" / f"call-report-data-{cycle}.zip", L.ncua_charter)
+        geo = pd.read_csv(L.raw / f"geocode_{cycle}.csv", header=None,
                           names=GEOCODE_COLS, dtype=str)
         b = b.rename(columns={"SiteId": "site_id", "SiteName": "site_name",
                               "PhysicalAddressLine1": "address", "PhysicalAddressCity": "city",
@@ -96,15 +98,15 @@ def nearest(points_lat, points_lon, branches):
 # ---------------------------------------------------------------- tracts (R4, R6)
 
 def build_tract_context(tiger, branches):
-    tm = pd.read_csv(s.PROCESSED / "tract_metrics.csv", dtype={"census_tract": str, "county_fips": str})
+    tm = pd.read_csv(L.processed / "tract_metrics.csv", dtype={"census_tract": str, "county_fips": str})
     acs = pd.read_csv(s.PROCESSED / "phase1_checks" / "7_acs_households.csv", dtype={"tract": str})
     hm = pd.read_parquet(s.PROCESSED / f"hmda_ga_{s.SCORING_YEAR}.parquet",
                          columns=["census_tract", "tract_owner_occupied_units"])
     owner = (hm[~hm["census_tract"].isin(["", "NA"])]
              .drop_duplicates("census_tract").set_index("census_tract")["tract_owner_occupied_units"])
 
-    t = tm[["census_tract", "county_fips", "county_name", "fom_flag", "market_all", "market_purchase",
-            "market_refinance", "dccu_all", "dccu_purchase", "dccu_refinance", "low_volume"]].copy()
+    t = tm[["census_tract", "county_fips", "county_name", "footprint_flag", "market_all", "market_purchase",
+            "market_refinance", "lender_all", "lender_purchase", "lender_refinance", "low_volume"]].copy()
     t = t.merge(tiger[["census_tract", "ALAND", "INTPTLAT", "INTPTLON"]], on="census_tract", how="left")
     t = t.merge(acs[["tract", "households", "households_moe", "flag"]].rename(
         columns={"tract": "census_tract", "flag": "households_flag"}), on="census_tract", how="left")
@@ -126,32 +128,32 @@ def build_tract_context(tiger, branches):
 
 
 def share_by_distance(t):
-    """R4: pooled DCCU share by band (SUM(dccu) / SUM(market), not an average of tract shares)."""
+    """R4: pooled lender share by band (SUM(lender) / SUM(market), not an average of tract shares)."""
     def agg(df, keys):
         g = df.groupby(keys, observed=True).agg(
             tracts=("census_tract", "size"), households=("households", "sum"),
-            market_all=("market_all", "sum"), dccu_all=("dccu_all", "sum"),
-            market_purchase=("market_purchase", "sum"), dccu_purchase=("dccu_purchase", "sum"),
-            market_refinance=("market_refinance", "sum"), dccu_refinance=("dccu_refinance", "sum"))
+            market_all=("market_all", "sum"), lender_all=("lender_all", "sum"),
+            market_purchase=("market_purchase", "sum"), lender_purchase=("lender_purchase", "sum"),
+            market_refinance=("market_refinance", "sum"), lender_refinance=("lender_refinance", "sum"))
         for p in ["all", "purchase", "refinance"]:
-            g[f"share_{p}"] = g[f"dccu_{p}"] / g[f"market_{p}"].where(g[f"market_{p}"] > 0)
+            g[f"share_{p}"] = g[f"lender_{p}"] / g[f"market_{p}"].where(g[f"market_{p}"] > 0)
         return g.reset_index().rename(columns={keys[-1]: "band"})
 
-    fom = t[t["fom_flag"] == 1]
-    by_county = agg(fom, ["county_name", "distance_band"])
-    # County-adjusted view: is a band above its own county's average? Expected DCCU loans =
+    footprint = t[t["footprint_flag"] == 1]
+    by_county = agg(footprint, ["county_name", "distance_band"])
+    # County-adjusted view: is a band above its own county's average? Expected lender loans =
     # band market x the county's share (like indirect standardization). This separates
-    # proximity from county-level differences such as DCCU's south-side legacy.
-    county_share = by_county.groupby("county_name")[["dccu_all", "market_all"]].sum()
-    by_county["expected_dccu"] = by_county["market_all"] * by_county["county_name"].map(
-        county_share["dccu_all"] / county_share["market_all"])
-    adjusted = by_county.groupby("band", observed=True)[["tracts", "market_all", "dccu_all",
-                                                        "expected_dccu"]].sum().reset_index()
-    adjusted["vs_county_average"] = adjusted["dccu_all"] / adjusted["expected_dccu"]
-    parts = [agg(fom, ["distance_band"]).assign(scope="fom"),
+    # proximity from county-level differences such as a lender's legacy areas.
+    county_share = by_county.groupby("county_name")[["lender_all", "market_all"]].sum()
+    by_county["expected_lender"] = by_county["market_all"] * by_county["county_name"].map(
+        county_share["lender_all"] / county_share["market_all"])
+    adjusted = by_county.groupby("band", observed=True)[["tracts", "market_all", "lender_all",
+                                                        "expected_lender"]].sum().reset_index()
+    adjusted["vs_county_average"] = adjusted["lender_all"] / adjusted["expected_lender"]
+    parts = [agg(footprint, ["distance_band"]).assign(scope="footprint"),
              agg(t, ["distance_band_detail"]).assign(scope="statewide"),
-             by_county.assign(scope="fom_county"),
-             adjusted.assign(scope="fom_county_adjusted")]
+             by_county.assign(scope="footprint_county"),
+             adjusted.assign(scope="footprint_county_adjusted")]
     out = pd.concat(parts, ignore_index=True)
     first = ["scope", "county_name", "band"]
     return out[first + [c for c in out.columns if c not in first]]
@@ -208,7 +210,7 @@ def build_county_context(t, counties, pop, pairs):
     w = t.assign(hh_miles=t["households"] * t["branch_miles_current"]).groupby("county_fips")
     g["branch_miles_hh_weighted"] = w["hh_miles"].sum() / w["households"].sum()
     g["household_density"] = g["households"] / g["land_sq_mi"]
-    c = counties[["county_fips", "county_name", "fom_flag", "market_group", "urban_rural_tier"]].merge(
+    c = counties[["county_fips", "county_name", "footprint_flag", "market_group", "urban_rural_tier"]].merge(
         g.reset_index(), on="county_fips", how="left")
     c = c.merge(pop[pop["SUMLEV"] == "050"].drop(columns=["SUMLEV", "STATE", "COUNTY", "CTYNAME"]),
                 on="county_fips", how="left")
@@ -220,15 +222,15 @@ def build_county_context(t, counties, pop, pairs):
     c["growing"] = c["pop_growth"] > state_growth
     c["fast_growing"] = c["pop_growth"] > s.CLUSTER_GROWTH_MULTIPLE * state_growth
 
-    fom = set(c.loc[c["fom_flag"] == 1, "county_fips"])
+    footprint = set(c.loc[c["footprint_flag"] == 1, "county_fips"])
     name = c.set_index("county_fips")["county_name"]
-    fom_nbrs = pairs[pairs["neighbor_fips"].isin(fom)].groupby("county_fips")["neighbor_fips"].apply(
+    footprint_nbrs = pairs[pairs["neighbor_fips"].isin(footprint)].groupby("county_fips")["neighbor_fips"].apply(
         lambda x: ", ".join(sorted(name[x])))
-    c["fom_neighbors"] = c["county_fips"].map(fom_nbrs).fillna("")
-    c["adjacent_to_fom"] = (c["fom_neighbors"] != "") & (c["fom_flag"] == 0)
+    c["footprint_neighbors"] = c["county_fips"].map(footprint_nbrs).fillna("")
+    c["adjacent_to_footprint"] = (c["footprint_neighbors"] != "") & (c["footprint_flag"] == 0)
 
-    # Growth clusters: 2+ neighboring non-FOM counties, all fast-growing.
-    grow = set(c.loc[c["fast_growing"] & (c["fom_flag"] == 0), "county_fips"])
+    # Growth clusters: 2+ neighboring non-footprint counties, all fast-growing.
+    grow = set(c.loc[c["fast_growing"] & (c["footprint_flag"] == 0), "county_fips"])
     comps = [comp for comp in find_clusters(grow, pairs) if len(comp) >= 2]
     comps.sort(key=lambda comp: -c.loc[c["county_fips"].isin(comp), end].sum())
     cluster = {f: f"C{i + 1}" for i, comp in enumerate(comps) for f in comp}
@@ -237,10 +239,10 @@ def build_county_context(t, counties, pop, pairs):
 
 
 def build_scorecard(county_ctx):
-    e = pd.read_csv(s.PROCESSED / "expansion_counties.csv", dtype={"county_fips": str})
+    e = pd.read_csv(L.processed / "expansion_counties.csv", dtype={"county_fips": str})
     ctx = county_ctx[["county_fips", "households", "household_density", "land_sq_mi",
                       f"pop_{s.PEP_YEAR}", "pop_growth", "pop_growth_recent", "growing", "fast_growing",
-                      "adjacent_to_fom", "fom_neighbors", "branch_miles_hh_weighted", "growth_cluster"]]
+                      "adjacent_to_footprint", "footprint_neighbors", "branch_miles_hh_weighted", "growth_cluster"]]
     return e.merge(ctx, on="county_fips", how="left")
 
 
@@ -251,7 +253,7 @@ def build_clusters(scorecard):
     g = sc.groupby("growth_cluster").agg(
         counties=("county_name", "size"), county_names=("county_name", lambda x: ", ".join(sorted(x))),
         market_groups=("market_group", lambda x: "; ".join(sorted(x.dropna().unique()))),
-        touches_fom=("adjacent_to_fom", "any"), **{end: (end, "sum"), base: (base, "sum")},
+        touches_footprint=("adjacent_to_footprint", "any"), **{end: (end, "sum"), base: (base, "sum")},
         market_all=("market_all", "sum"), expansion_gain=("expansion_gain", "sum"))
     g["pop_growth"] = g[end] / g[base] - 1
     g[base] = g[base].round().astype(int)
@@ -263,7 +265,7 @@ def build_clusters(scorecard):
 def main():
     OUT.mkdir(parents=True, exist_ok=True)
     counties = pd.read_csv(s.CONFIG / "ga_counties.csv", dtype=str)
-    counties["fom_flag"] = counties["fom_flag"].astype(int)
+    counties["footprint_flag"] = counties["county_fips"].isin(L.footprint).astype(int)
     tiger = gpd.read_file(s.RAW / "tiger" / "tl_2024_13_tract.zip").rename(columns={"GEOID": "census_tract"})
 
     branches, snapshots = load_branches()
@@ -311,7 +313,7 @@ def main():
          "count": int(tracts["penetration"].isna().sum())},
         {"check": "missing distance", "count": int(tracts["branch_miles_scoring_year"].isna().sum())},
     ])
-    fom_t = tracts[tracts["fom_flag"] == 1]
+    footprint_t = tracts[tracts["footprint_flag"] == 1]
     # 6. Population: counties sum to the state row.
     pop_check = pd.DataFrame([{"year": y, "state_row": int(pop.loc[pop["SUMLEV"] == "040", f"pop_{y}"].iloc[0]),
                                "county_sum": int(pop.loc[pop["SUMLEV"] == "050", f"pop_{y}"].sum())}
@@ -325,16 +327,16 @@ def main():
     key_cols = ["households", "household_density", f"pop_{s.PEP_YEAR}", "pop_growth",
                 "branch_miles_hh_weighted"]
     blanks = int(scorecard[key_cols].isna().any(axis=1).sum())
-    gain_phase3 = pd.read_csv(s.PROCESSED / "expansion_counties.csv")["expansion_gain"].sum()
+    gain_phase3 = pd.read_csv(L.processed / "expansion_counties.csv")["expansion_gain"].sum()
     if len(scorecard) != 139 or blanks or not np.isclose(scorecard["expansion_gain"].sum(), gain_phase3):
         raise ValueError("Expansion scorecard is incomplete or doesn't match Phase 3")
 
     # ---- write
-    branches.to_csv(s.PROCESSED / "branches.csv", index=False)
+    branches.to_csv(L.processed / "branches.csv", index=False)
     for name_, df in [("tract_context", tracts), ("share_by_distance", bands),
                       ("county_context", county_ctx), ("expansion_scorecard", scorecard),
                       ("growth_clusters", clusters)]:
-        df.round(6).to_csv(s.PROCESSED / f"{name_}.csv", index=False)
+        df.round(6).to_csv(L.processed / f"{name_}.csv", index=False)
     for name_, df in [("1_branch_geocoding", geocode_check), ("3_tract_coverage", coverage),
                       ("6_population_totals", pop_check)]:
         df.round(4).to_csv(OUT / f"{name_}.csv", index=False)
@@ -343,17 +345,19 @@ def main():
     current = branches[branches["snapshot"] == "current"]
     excluded = current[~current["in_scope"]]
     no_services = current.loc[current["in_scope"] & current["ncua_no_member_services"], "site_name"]
-    band_fom = bands[bands["scope"] == "fom"][["band", "tracts", "households", "market_all", "dccu_all",
+    band_footprint = bands[bands["scope"] == "footprint"][["band", "tracts", "households", "market_all", "lender_all",
                                               "share_all", "share_purchase"]]
-    fom_dist = fom_t["distance_band"].value_counts(sort=False).rename_axis("band").reset_index(name="fom_tracts")
+    footprint_dist = footprint_t["distance_band"].value_counts(sort=False).rename_axis("band").reset_index(name="footprint_tracts")
     sections = [
         f"### 1. Branches and geocoding\nNCUA snapshots: scoring year `{snapshots['scoring_year']}` "
         f"(share by distance) and current `{snapshots['current']}` (expansion scorecard). "
         f"In-scope Georgia branches: **{len(ids['scoring_year'])}** and **{len(ids['current'])}**. "
-        "Excluded sites (`config/branch_exclusions.csv`, plus out-of-state):\n\n"
+        f"Excluded sites (`{L.branch_exclusions.relative_to(s.ROOT).as_posix()}`, plus "
+        "out-of-state):\n\n"
         + md_table(excluded[["site_id", "site_name", "state", "exclusion_reason"]])
         + "\n\nThe Census Geocoder matched every in-scope branch except those below, whose "
-        "coordinates come from `config/branch_coordinates_manual.csv` (interpolated between two "
+        f"coordinates come from `{L.branch_coordinates.relative_to(s.ROOT).as_posix()}` "
+        "(interpolated between two "
         "matched house numbers on the same street; error a few hundred meters).\n\n"
         + md_table(current[current["coord_source"] == "manual (config)"]
                    [["site_id", "site_name", "address", "lat", "lon"]])
@@ -369,14 +373,16 @@ def main():
         f"Closed: {', '.join(closed) or 'none'}.",
         "### 3-5. Tract coverage, penetration and distance\nNo tract is dropped; gaps are flags or "
         "blanks.\n\n" + md_table(coverage)
-        + f"\n\nFOM tracts by distance band ({snapshots['scoring_year']} branches); farthest FOM "
-        f"tract: {fom_t['branch_miles_scoring_year'].max():.1f} mi.\n\n" + md_table(fom_dist)
-        + "\n\nDCCU share by band, FOM tracts (pooled: sum of DCCU loans / sum of market loans):\n\n"
-        + md_table(band_fom.round(4))
-        + "\n\nCounty-adjusted (`vs_county_average` = DCCU loans / loans expected at the county's "
+        + f"\n\n{L.footprint_label} tracts by distance band ({snapshots['scoring_year']} "
+        f"branches); farthest {L.footprint_label} "
+        f"tract: {footprint_t['branch_miles_scoring_year'].max():.1f} mi.\n\n" + md_table(footprint_dist)
+        + f"\n\n{L.label} share by band, {L.footprint_label} tracts (pooled: sum of {L.label} "
+        "loans / sum of market loans):\n\n"
+        + md_table(band_footprint.round(4))
+        + f"\n\nCounty-adjusted (`vs_county_average` = {L.label} loans / loans expected at the county's "
         "own share). Most of the raw gradient is between counties, not proximity:\n\n"
-        + md_table(bands[bands["scope"] == "fom_county_adjusted"][
-            ["band", "tracts", "market_all", "dccu_all", "expected_dccu", "vs_county_average"]].round(2)),
+        + md_table(bands[bands["scope"] == "footprint_county_adjusted"][
+            ["band", "tracts", "market_all", "lender_all", "expected_lender", "vs_county_average"]].round(2)),
         f"### 6. Population estimates (Vintage {s.PEP_YEAR})\nCounty totals sum to the state row "
         f"in every year used. Georgia grew **{state_growth:.2%}** from July {s.POP_GROWTH_BASE_YEAR} "
         f"to July {s.PEP_YEAR}; counties above that are `growing`, and counties above "
@@ -385,26 +391,27 @@ def main():
         f"### 7. County adjacency\n{len(pairs):,} Georgia county pairs (both directions); "
         f"{out_of_state} out-of-state neighbor pairs dropped. Asymmetric pairs: **{asymmetric}**. "
         f"Counties with no Georgia neighbor: {', '.join(no_neighbor) or 'none'}.",
-        f"### 8. Expansion scorecard\n{len(scorecard)} non-FOM counties, no blanks in "
+        f"### 8. Expansion scorecard\n{len(scorecard)} non-{L.footprint_label} counties, no blanks in "
         f"{', '.join(key_cols)}; expansion gain total matches Phase 3 "
         f"({scorecard['expansion_gain'].sum():,.0f} loans). Growth clusters (2+ neighboring "
-        f"fast-growing non-FOM counties): **{len(clusters)}**.\n\n"
-        + md_table(clusters[["growth_cluster", "counties", "county_names", "touches_fom",
+        f"fast-growing non-{L.footprint_label} counties): **{len(clusters)}**.\n\n"
+        + md_table(clusters[["growth_cluster", "counties", "county_names", "touches_footprint",
                              "pop_growth", "expansion_gain"]].round(3)),
     ]
-    write_data_quality("phase4", "Phase 4: households, density, branch distance and growth", sections)
+    write_data_quality("phase4", "Phase 4: households, density, branch distance and growth", sections,
+                       path=L.data_quality, heading=lender_log_heading(L))
 
     # ---- console summary
     print(f"Branches in scope: {len(ids['scoring_year'])} ({snapshots['scoring_year']}), "
           f"{len(ids['current'])} ({snapshots['current']}); opened {opened}, closed {closed}")
-    print("\nFOM share by distance band:")
-    print(band_fom.to_string(index=False))
+    print(f"\n{L.footprint_label} share by distance band:")
+    print(band_footprint.to_string(index=False))
     print("\nStatewide share by distance band:")
-    print(bands[bands["scope"] == "statewide"][["band", "tracts", "market_all", "dccu_all", "share_all"]]
+    print(bands[bands["scope"] == "statewide"][["band", "tracts", "market_all", "lender_all", "share_all"]]
           .to_string(index=False))
     print(f"\nGeorgia population growth {s.POP_GROWTH_BASE_YEAR}-{s.PEP_YEAR}: {state_growth:.2%}; "
-          f"growing non-FOM counties: {int((county_ctx['growing'] & (county_ctx['fom_flag'] == 0)).sum())}, "
-          f"fast-growing: {int((county_ctx['fast_growing'] & (county_ctx['fom_flag'] == 0)).sum())}; "
+          f"growing non-{L.footprint_label} counties: {int((county_ctx['growing'] & (county_ctx['footprint_flag'] == 0)).sum())}, "
+          f"fast-growing: {int((county_ctx['fast_growing'] & (county_ctx['footprint_flag'] == 0)).sum())}; "
           f"clusters: {len(clusters)}")
 
 

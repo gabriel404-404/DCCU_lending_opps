@@ -224,3 +224,6 @@ data/raw/
 
 # Large processed data files (rebuilt by src/run_all.py); small summary CSVs stay in git
 data/processed/*.parquet
+
+# Interactive HTML maps are large and rebuilt by src/run_all.py
+outputs/*/mortgage_map.html

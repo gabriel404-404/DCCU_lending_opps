@@ -1,0 +1,45 @@
+year,step,rows_lender,originations_lender
+2022,start: all GA rows with a county,6971,3867
+2022,exclude_purchased,6971,3867
+2022,conventional,6971,3867
+2022,first_lien,2830,1644
+2022,units_1_to_4,2830,1644
+2022,site_built,2830,1644
+2022,principal_residence,2638,1576
+2022,purchase_or_refi,2222,1387
+2022,closed_end,2098,1305
+2022,not_reverse,2098,1305
+2022,not_business,2098,1305
+2023,start: all GA rows with a county,5799,3180
+2023,exclude_purchased,5799,3180
+2023,conventional,5799,3180
+2023,first_lien,1477,839
+2023,units_1_to_4,1477,839
+2023,site_built,1477,839
+2023,principal_residence,1357,788
+2023,purchase_or_refi,982,617
+2023,closed_end,874,537
+2023,not_reverse,874,537
+2023,not_business,874,537
+2024,start: all GA rows with a county,5947,3269
+2024,exclude_purchased,5947,3269
+2024,conventional,5947,3269
+2024,first_lien,2069,1252
+2024,units_1_to_4,2069,1252
+2024,site_built,2069,1252
+2024,principal_residence,1925,1186
+2024,purchase_or_refi,1537,1019
+2024,closed_end,1408,930
+2024,not_reverse,1408,930
+2024,not_business,1408,930
+2025,start: all GA rows with a county,5508,2867
+2025,exclude_purchased,5508,2867
+2025,conventional,5508,2867
+2025,first_lien,2507,1437
+2025,units_1_to_4,2507,1437
+2025,site_built,2507,1437
+2025,principal_residence,2366,1379
+2025,purchase_or_refi,1991,1219
+2025,closed_end,1868,1154
+2025,not_reverse,1868,1154
+2025,not_business,1868,1154

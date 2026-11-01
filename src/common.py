@@ -1,6 +1,5 @@
 """Helpers shared by the pipeline stages."""
 
-import re
 import sys
 import time
 import zipfile
@@ -52,50 +51,42 @@ def read_hmda(path, **kw):
     return pd.read_csv(path, dtype=str, keep_default_na=False, **kw)
 
 
-def dccu_branches(zip_path):
-    """DCCU's charter number and branch rows from one NCUA call report zip."""
+def ncua_branches(zip_path, charter):
+    """A credit union's NCUA record (FOICU) and branch rows from one call report zip."""
     with zipfile.ZipFile(zip_path) as z:
         names = z.namelist()
         foicu_name = next(n for n in names if n.lower().endswith("foicu.txt"))
         branch_name = next(n for n in names if "branch" in n.lower())
         foicu = pd.read_csv(z.open(foicu_name), dtype=str, encoding="latin-1")
         branches = pd.read_csv(z.open(branch_name), dtype=str, encoding="latin-1")
-    # NCUA lists DCCU as "DELTA COMMUNITY" (no "CREDIT UNION"), so match on that plus state.
-    cu = foicu[foicu["CU_NAME"].str.upper().str.strip().str.startswith("DELTA COMMUNITY")
-               & (foicu["STATE"] == s.STATE_ABBR)]
+    cu = foicu[foicu["CU_NUMBER"] == charter]
     if len(cu) != 1:
-        raise ValueError(f"Expected one DCCU record in FOICU, found {len(cu)}")
-    charter = cu["CU_NUMBER"].iloc[0]
-    return charter, branches[branches["CU_NUMBER"] == charter]
-
-
-def neutral(df):
-    """Lender-neutral column names for Phase 5+ code: dccu_* -> lender_*, fom_* -> footprint_*.
-
-    Older stages still write DCCU/FOM names; the productize phase renames them at the source
-    and removes this helper.
-    """
-    return df.rename(columns=lambda c: re.sub(r"(?<![a-z])fom(?![a-z])", "footprint",
-                                              re.sub(r"(?<![a-z])dccu(?![a-z])", "lender", c)))
-
-
-def read_processed(name, **kw):
-    """Read data/processed/<name>.csv with lender-neutral column names."""
-    return neutral(pd.read_csv(s.PROCESSED / f"{name}.csv", **kw))
+        raise ValueError(f"Expected one FOICU record for NCUA charter {charter}, found {len(cu)}")
+    return cu.iloc[0], branches[branches["CU_NUMBER"] == charter]
 
 
 def md_table(df):
     return df.to_markdown(index=False) if len(df) else "_none_"
 
 
-def write_data_quality(phase, title, sections):
-    """Replace one phase's section of DATA_QUALITY.md, keeping the other sections."""
-    path = s.ROOT / "DATA_QUALITY.md"
+def write_data_quality(phase, title, sections, path=None, heading="# Data quality log"):
+    """Replace one phase's section of a data-quality log, keeping the other sections.
+
+    path defaults to the repo's DATA_QUALITY.md (market checks); lender stages pass the
+    lender's own log (outputs/<key>/DATA_QUALITY.md).
+    """
+    path = path or s.ROOT / "DATA_QUALITY.md"
     start, end = f"<!-- {phase}:start -->", f"<!-- {phase}:end -->"
     body = f"{start}\n## {title}\n\n" + "\n\n".join(sections) + f"\n{end}"
-    text = path.read_text(encoding="utf-8") if path.exists() else "# Data quality log\n\n"
+    text = path.read_text(encoding="utf-8") if path.exists() else f"{heading}\n\n"
     if start in text:
         text = text[:text.index(start)] + body + text[text.index(end) + len(end):]
     else:
         text = text.rstrip() + "\n\n" + body + "\n"
+    path.parent.mkdir(parents=True, exist_ok=True)
     path.write_text(text, encoding="utf-8")
+
+
+def lender_log_heading(lender):
+    return (f"# Data quality log: {lender.name}\n\nChecks for this lender. Market-wide checks "
+            "(Phases 1-2: downloads, tracts, market definition) are in the repo's DATA_QUALITY.md.")
