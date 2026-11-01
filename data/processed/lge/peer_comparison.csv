@@ -1,0 +1,17 @@
+dimension,band,group,market_loans,lender_loans,lender_share
+loan_size,$5k-$235k,rest of footprint,4561,44,0.009647
+loan_size,$5k-$235k,top quarter,1283,31,0.024162
+loan_size,$235k-$325k,rest of footprint,4568,44,0.009632
+loan_size,$235k-$325k,top quarter,1181,20,0.016935
+loan_size,$325k-$425k,rest of footprint,4524,43,0.009505
+loan_size,$325k-$425k,top quarter,754,16,0.02122
+loan_size,$425k-$605k,rest of footprint,4901,39,0.007958
+loan_size,$425k-$605k,top quarter,402,8,0.0199
+loan_size,"$605k-$10,005k",rest of footprint,5303,30,0.005657
+loan_size,"$605k-$10,005k",top quarter,168,9,0.053571
+tract_competition,1-23,rest of footprint,7907,49,0.006197
+tract_competition,1-23,top quarter,1490,34,0.022819
+tract_competition,23-35,rest of footprint,8077,61,0.007552
+tract_competition,23-35,top quarter,1376,28,0.020349
+tract_competition,35-66,rest of footprint,7862,90,0.011447
+tract_competition,35-66,top quarter,922,22,0.023861

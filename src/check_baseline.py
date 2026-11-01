@@ -4,17 +4,23 @@ Compares every CSV in tests/baseline/<key>/<version>/ with the file the pipeline
 cell by cell. Text must match exactly; numbers must match to 1e-9. Exits with an error on any
 difference, and writes the result to the lender's data-quality log.
 
-The v1 baseline was saved before the productize refactor, so it uses v1 names and paths
+DCCU's v1 baseline was saved before the productize refactor, so it uses v1 names and paths
 (`dccu_*` and `fom_*` columns, everything in data/processed/ and outputs/). map_v1() translates
-each v1 file to where, and under what names, the same numbers live now.
+each v1 file to where, and under what names, the same numbers live now. Changes decided on
+purpose are listed below (SUPERSEDED, ADDED_COLUMNS), each with the productize step that made
+it. Everything else must match.
 
-Changes decided on purpose are listed below (SUPERSEDED, ADDED_COLUMNS), each with the
-productize step that made it. Everything else must match.
+Later baselines are saved with --save under current names: processed/ is a copy of the
+lender's data/processed/<key>/ CSVs and outputs/ of its outputs/<key>/ CSVs.
 
-Run from the repo root:  python src/check_baseline.py   (MGM_LENDER picks the lender)
+Run from the repo root (MGM_LENDER picks the lender):
+    python src/check_baseline.py               # compare every saved baseline
+    python src/check_baseline.py --save p3     # save this run as tests/baseline/<key>/p3/
 """
 
+import argparse
 import re
+import shutil
 import sys
 from pathlib import Path
 
@@ -69,6 +75,27 @@ def map_v1(rel):
     return [(L.processed.joinpath(*sub) / f"{v1_names(name)}.csv", None, None)]
 
 
+def map_saved(rel):
+    """Where a file of a baseline saved under current names (with --save) lives now."""
+    top, rest = Path(rel).parts[0], Path(*Path(rel).parts[1:])
+    return [((L.processed if top == "processed" else L.outputs) / rest, None, None)]
+
+
+def save(version):
+    """Copy the lender's current CSVs to tests/baseline/<key>/<version>/ (never overwrites)."""
+    dest = BASELINES / version
+    if dest.exists():
+        sys.exit(f"{dest.relative_to(s.ROOT).as_posix()} already exists; pick a new version name")
+    n = 0
+    for top, src in [("processed", L.processed), ("outputs", L.outputs)]:
+        for path in sorted(src.rglob("*.csv")):
+            target = dest / top / path.relative_to(src)
+            target.parent.mkdir(parents=True, exist_ok=True)
+            shutil.copy2(path, target)
+            n += 1
+    print(f"Saved {n} CSVs to {dest.relative_to(s.ROOT).as_posix()}")
+
+
 def read(path):
     return pd.read_csv(path, dtype=str, keep_default_na=False)
 
@@ -103,18 +130,25 @@ def compare(base, now, columns, ignore, added=frozenset()):
 
 
 def main():
+    parser = argparse.ArgumentParser(description="Compare this run with the lender's saved baselines.")
+    parser.add_argument("--save", metavar="VERSION", help="save this run as a new baseline instead")
+    args = parser.parse_args()
+    if args.save:
+        return save(args.save)
     rows = []
     for version in sorted(p for p in BASELINES.iterdir() if p.is_dir()):
         for path in sorted(version.rglob("*.csv")):
             rel = path.relative_to(version).as_posix()
-            if path.stem in SUPERSEDED:
+            v1 = version.name == "v1"  # the only baseline saved under pre-productize names
+            if v1 and path.stem in SUPERSEDED:
                 rows.append({"baseline": f"{version.name}/{rel}", "now": "", "rows": 0,
                              "result": f"superseded: {SUPERSEDED[path.stem]}"})
                 continue
             base = read(path)
-            base.columns = [v1_names(c) for c in base.columns]
-            base = base.map(v1_names)
-            for target, row_filter, columns in map_v1(rel):
+            if v1:
+                base.columns = [v1_names(c) for c in base.columns]
+                base = base.map(v1_names)
+            for target, row_filter, columns in (map_v1(rel) if v1 else map_saved(rel)):
                 b = base
                 if row_filter:
                     b = b[b[row_filter[0]] == row_filter[1]].reset_index(drop=True)
@@ -130,13 +164,15 @@ def main():
     superseded = out[out["result"].str.startswith("superseded")]
     failed = out[(out["result"] != "match") & ~out["result"].str.startswith("superseded")]
     compared = len(out) - len(superseded)
+    v1_note = (
+        " The v1 files use pre-productize names and paths, which the check translates. Decided "
+        "changes (`src/check_baseline.py`): superseded files, and columns added later "
+        f"({', '.join(f'`{f}`: {sorted(c)}' for f, c in ADDED_COLUMNS.items())}), which are allowed "
+        "while every v1 column still matches." if (BASELINES / "v1").exists() else "")
     sections = [
         f"### Result\n{compared} comparisons against `tests/baseline/{L.key}/`: **{compared - len(failed)} "
         f"match**, **{len(failed)} differ**; {len(superseded)} file(s) superseded on purpose. Text must "
-        "match exactly and numbers to 1e-9; the v1 files use pre-productize names and paths, which "
-        "the check translates. Decided changes (`src/check_baseline.py`): superseded files, and "
-        f"columns added later ({', '.join(f'`{f}`: {sorted(c)}' for f, c in ADDED_COLUMNS.items())}), "
-        "which are allowed while every v1 column still matches.\n\n"
+        f"match exactly and numbers to 1e-9.{v1_note}\n\n"
         + md_table(pd.concat([failed, superseded])[["baseline", "now", "rows", "result"]])
         + ("" if len(failed) else "\n\nEvery compared file matches.")]
     write_data_quality("baseline", "Regression check against the saved baseline", sections,

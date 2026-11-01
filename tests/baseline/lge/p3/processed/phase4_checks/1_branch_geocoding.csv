@@ -1,0 +1,37 @@
+snapshot,site_id,site_name,ncua_county,geocoded_county,county_match,coord_source,match_type,census_tract,own_tract_miles
+scoring_year,21782,Marietta Branch,Cobb,Cobb,True,census_geocoder,Exact,13067030800,0.3927
+scoring_year,27720,Austell,Cobb,Cobb,True,manual (config),,13067031411,0.2393
+scoring_year,27726,Acworth,Cobb,Cobb,True,manual (config),,13067030108,1.1186
+scoring_year,27739,Hiram,Paulding,Paulding,True,census_geocoder,Exact,13223120206,1.6989
+scoring_year,27744,Kennesaw,Cobb,Cobb,True,census_geocoder,Exact,13067030278,1.4405
+scoring_year,27749,East Cobb,Cobb,Cobb,True,manual (config),,13067030332,0.5782
+scoring_year,27751,Woodstock,Cherokee,Cherokee,True,census_geocoder,Exact,13057090906,0.5844
+scoring_year,27752,Roswell,Fulton,Fulton,True,census_geocoder,Exact,13121011437,0.7062
+scoring_year,27753,Canton,Cherokee,Cherokee,True,census_geocoder,Exact,13057090603,1.9959
+scoring_year,27754,West Cobb Branch,Cobb,Cobb,True,census_geocoder,Non_Exact,13067030253,1.4725
+scoring_year,27755,Smyrna,Cobb,Cobb,True,census_geocoder,Exact,13067031111,0.7982
+scoring_year,27756,Dallas,Paulding,Paulding,True,census_geocoder,Exact,13223120305,0.9981
+scoring_year,27757,Alpharetta Branch,Fulton,Fulton,True,census_geocoder,Exact,13121011639,0.4755
+scoring_year,27759,Towne Lake,Cherokee,Cherokee,True,manual (config),,13057091009,1.4838
+scoring_year,27760,Sandy Springs,Fulton,Fulton,True,census_geocoder,Exact,13121010121,0.5869
+scoring_year,27761,Calhoun,Gordon,Gordon,True,census_geocoder,Exact,13129970602,0.7649
+scoring_year,27764,Rome-Main,Floyd,Floyd,True,census_geocoder,Non_Exact,13115000300,7.1779
+scoring_year,27765,Cartersville,Bartow,Bartow,True,census_geocoder,Exact,13015960602,0.8368
+current,21782,Marietta Branch,Cobb,Cobb,True,census_geocoder,Exact,13067030800,0.3927
+current,27720,Austell,Cobb,Cobb,True,manual (config),,13067031411,0.2393
+current,27726,Acworth,Cobb,Cobb,True,manual (config),,13067030108,1.1186
+current,27739,Hiram,Paulding,Paulding,True,census_geocoder,Exact,13223120206,1.6989
+current,27744,Kennesaw,Cobb,Cobb,True,census_geocoder,Exact,13067030278,1.4405
+current,27749,East Cobb,Cobb,Cobb,True,manual (config),,13067030332,0.5782
+current,27751,Woodstock,Cherokee,Cherokee,True,census_geocoder,Exact,13057090906,0.5844
+current,27752,Roswell,Fulton,Fulton,True,census_geocoder,Exact,13121011437,0.7062
+current,27753,Canton,Cherokee,Cherokee,True,census_geocoder,Exact,13057090603,1.9959
+current,27754,West Cobb Branch,Cobb,Cobb,True,census_geocoder,Non_Exact,13067030253,1.4725
+current,27755,Smyrna,Cobb,Cobb,True,census_geocoder,Exact,13067031111,0.7982
+current,27756,Dallas,Paulding,Paulding,True,census_geocoder,Exact,13223120305,0.9981
+current,27757,Alpharetta Branch,Fulton,Fulton,True,census_geocoder,Exact,13121011639,0.4755
+current,27759,Towne Lake,Cherokee,Cherokee,True,manual (config),,13057091009,1.4838
+current,27760,Sandy Springs,Fulton,Fulton,True,census_geocoder,Exact,13121010121,0.5869
+current,27761,Calhoun,Gordon,Gordon,True,census_geocoder,Exact,13129970602,0.7649
+current,27764,Rome-Main,Floyd,Floyd,True,census_geocoder,Non_Exact,13115000300,7.1779
+current,27765,Cartersville,Bartow,Bartow,True,census_geocoder,Exact,13015960602,0.8368

@@ -1,0 +1,5 @@
+year,in_filers_list,filers_name,filers_count,records_downloaded,records_in_ga,records_in_footprint,ga_records_no_county,originations,originations_in_footprint,reconciles
+2022,True,LGE COMMUNITY,520,664,520,449,0,322,273,True
+2023,True,LGE COMMUNITY CREDIT UNION,921,921,921,802,0,567,499,True
+2024,True,LGE COMMUNITY CREDIT UNION,1131,1134,1131,947,0,763,637,True
+2025,True,LGE COMMUNITY CREDIT UNION,1058,1059,1058,916,0,744,643,True

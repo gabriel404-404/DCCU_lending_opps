@@ -498,40 +498,48 @@ def chart_trend(d):
 
 def chart_distance(d):
     order = ["0-2", "2-5", "5-10", "10+"]
-    raw = d["bands"][d["bands"]["scope"] == "footprint"].set_index("band").loc[order]
-    adj = d["bands"][d["bands"]["scope"] == "footprint_county_adjusted"].set_index("band").loc[order]
+    # reindex, not loc: a compact footprint may have no tract in a band (its bar is left empty).
+    raw = d["bands"][d["bands"]["scope"] == "footprint"].set_index("band").reindex(order)
+    adj = d["bands"][d["bands"]["scope"] == "footprint_county_adjusted"].set_index("band").reindex(order)
     x = np.arange(len(order))
     ticks = ["0-2", "2-5", "5-10", "10+"]
     fig, (a1, a2) = plt.subplots(1, 2, figsize=(9.4, 4.0), gridspec_kw={"wspace": 0.3})
     v = 100 * raw["share_all"].to_numpy()
     a1.bar(x, v, width=0.5, color=SLOT_1)
     for xi, vi in zip(x, v):  # inside the bar top, clear of the average line
-        a1.text(xi, vi - 0.08, f"{vi:.2f}%", ha="center", va="top", fontsize=8.5, color="#ffffff",
-                fontweight="bold")
+        if np.isfinite(vi):
+            a1.text(xi, vi - 0.08, f"{vi:.2f}%", ha="center", va="top", fontsize=8.5, color="#ffffff",
+                    fontweight="bold")
     a1.axhline(100 * d["base"], color=INK_2, linewidth=1)
     a1.text(len(order) - 0.55, 100 * d["base"] + 0.06, f"{L.footprint_label} average",
             ha="right", va="bottom", fontsize=8, color=INK_2)
     a1.set_xticks(x, ticks)
     a1.set_xlabel("Miles from tract to nearest branch")
     a1.set_ylabel("Share of originations (%)")
-    a1.set_ylim(0, v.max() * 1.25)
+    a1.set_ylim(0, np.nanmax(v) * 1.25)
     a1.set_title("Raw share")
     a1.grid(axis="x", visible=False)
     r = adj["vs_county_average"].to_numpy()
     a2.bar(x, r - 1, bottom=1, width=0.5, color=SLOT_1)
     for xi, ri in zip(x, r):
-        a2.text(xi, ri + (0.008 if ri >= 1 else -0.008), f"{ri:.2f}x", ha="center",
-                va="bottom" if ri >= 1 else "top", fontsize=8.5, color=INK)
+        if np.isfinite(ri):
+            a2.text(xi, ri + (0.008 if ri >= 1 else -0.008), f"{ri:.2f}x", ha="center",
+                    va="bottom" if ri >= 1 else "top", fontsize=8.5, color=INK)
     a2.axhline(1, color=INK_2, linewidth=1)
     a2.set_xticks(x, ticks)
     a2.set_xlabel("Miles from tract to nearest branch")
     a2.set_ylabel("x the tract's own county average")
-    a2.set_ylim(0.8, 1.2)
+    span = max(0.2, 1.15 * np.nanmax(np.abs(r - 1)))  # at least 0.8-1.2, wider if a bar needs it
+    a2.set_ylim(1 - span, 1 + span)
     a2.set_title("Compared with each tract's own county")
     a2.grid(axis="x", visible=False)
-    header(fig, "Being close to a branch helps, but mostly within the same county",
-           f"{L.footprint_label} tracts, {s.SCORING_YEAR}. Most of the raw drop-off is a difference "
-           "between counties, not distance.")
+    # The title states the measured result, so it holds for any lender.
+    near, far = order[0], order[-1]
+    header(fig, f"Tracts within {s.DISTANCE_BANDS[1]:g} miles of a branch run "
+                f"{adj.loc[near, 'vs_county_average']:.2f}x their county's average",
+           f"{L.footprint_label} tracts, {s.SCORING_YEAR}. Raw share is {raw.loc[near, 'share_all']:.2%} "
+           f"within {s.DISTANCE_BANDS[1]:g} miles and {raw.loc[far, 'share_all']:.2%} at "
+           f"{s.DISTANCE_BANDS[-2]:g}+ miles; the right panel removes differences between counties.")
     fig.subplots_adjust(top=1 - 0.95 / fig.get_figheight())
     save(fig, "chart_share_by_distance.png")
 
@@ -571,7 +579,16 @@ def chart_depth_vs_expansion(d):
                        Patch(color=SLOT_2, label=f"Expansion: a new county reaches {L.expansion_target_share:.0%} "
                                                  "(upper bound)")],
               loc="lower right")
-    header(fig, f"Deeper share inside the {L.footprint_label} outweighs the expansion upside",
+    # The title follows the numbers: which benchmark rungs beat the expansion upside.
+    expansion = d["scorecard"]["expansion_gain"].sum()
+    beats = [rung for rung in ["base", "stretch", "ceiling"] if lad.loc[rung, "depth"] > expansion]
+    if "base" in beats:
+        title = f"Deeper share inside the {L.footprint_label} outweighs the expansion upside"
+    elif beats:
+        title = f"Depth beats the expansion upside only at the {' and '.join(beats)} benchmark"
+    else:
+        title = "The expansion upside (an upper bound) exceeds depth at every benchmark"
+    header(fig, title,
            f"Added originations a year, {s.SCORING_YEAR} market. Clusters shown are the growth "
            f"clusters that border the {L.footprint_label}.")
     fig.subplots_adjust(top=0.84)
@@ -690,9 +707,9 @@ def key_numbers(d, depth_table):
         add(f"{tag}_lenders_per_100", st.loc[g, "lenders_per_100_loans"],
             f"{st.loc[g, 'lenders_per_100_loans']:.0f}", "market_structure.csv",
             f"median lenders per 100 loans in a tract, {g}")
-    add("lender_broker_share", st["lender_broker_submitted_share"].max(),
-        f"{st['lender_broker_submitted_share'].max():.0%}", "market_structure.csv",
-        "subject lender's broker-submitted share")
+    broker = st["lender_broker_submitted_share"].max()  # NaN: the lender reports the field as exempt
+    add("lender_broker_share", broker, f"{broker:.0%}" if pd.notna(broker) else "n/a (exempt)",
+        "market_structure.csv", "subject lender's broker-submitted share")
     rest_broker = st.loc["rest of footprint", "market_loans"] * st.loc["rest of footprint", "broker_submitted_share"]
     add("rest_broker_loans", rest_broker, f"{rest_broker:,.0f}", "market_structure.csv",
         "approx. broker-submitted originations outside the top quarter")
@@ -716,16 +733,19 @@ def key_numbers(d, depth_table):
     bands = d["bands"]
     adj = bands[bands["scope"] == "footprint_county_adjusted"].set_index("band")
     raw = bands[bands["scope"] == "footprint"].set_index("band")
-    add("near_vs_county", adj.loc["0-2", "vs_county_average"], f"{adj.loc['0-2', 'vs_county_average']:.2f}x",
-        "share_by_distance.csv", "tracts within 2 miles vs. their county's average")
-    add("near_share_raw", raw.loc["0-2", "share_all"], f"{raw.loc['0-2', 'share_all']:.2%}",
-        "share_by_distance.csv", "raw share within 2 miles")
+    # A compact footprint may have no tract in the nearest or farthest band: skip that number.
+    if "0-2" in adj.index:
+        add("near_vs_county", adj.loc["0-2", "vs_county_average"], f"{adj.loc['0-2', 'vs_county_average']:.2f}x",
+            "share_by_distance.csv", "tracts within 2 miles vs. their county's average")
+        add("near_share_raw", raw.loc["0-2", "share_all"], f"{raw.loc['0-2', 'share_all']:.2%}",
+            "share_by_distance.csv", "raw share within 2 miles")
     add("near_band_miles", s.DISTANCE_BANDS[1], f"{s.DISTANCE_BANDS[1]:g}", "config/settings.py",
         "edge of the nearest distance band, miles")
     add("far_band_miles", s.DISTANCE_BANDS[-2], f"{s.DISTANCE_BANDS[-2]:g}", "config/settings.py",
         "start of the farthest distance band, miles")
-    add("far_share_raw", raw.loc["10+", "share_all"], f"{raw.loc['10+', 'share_all']:.2%}",
-        "share_by_distance.csv", "raw share 10+ miles")
+    if "10+" in raw.index:
+        add("far_share_raw", raw.loc["10+", "share_all"], f"{raw.loc['10+', 'share_all']:.2%}",
+            "share_by_distance.csv", "raw share 10+ miles")
 
     sc = d["scorecard"]
     add("expansion_counties", len(sc), f"{len(sc)}", "expansion_scorecard.csv", "non-footprint counties")

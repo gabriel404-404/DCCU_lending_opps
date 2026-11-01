@@ -1,0 +1,5 @@
+site_id,site_name,lat,lon,method,date_checked
+27720,Austell,33.86640,-84.62493,"Census Geocoder has no address range on East West Connector; OpenStreetMap (Nominatim) places LGE Community Credit Union at 2760 East-West Connector",2026-11-01
+27726,Acworth,34.04975,-84.70074,"Census Geocoder has no match for 3891 Cobb Pkwy NW; interpolated (0.95) between its matches for 3691 and 3901 Cobb Pkwy N",2026-11-01
+27749,East Cobb,33.97961,-84.43405,"NCUA gives a shopping-center name, not an address; LGE's branch page gives 4101 Roswell Rd Ste 309, which the Census Geocoder doesn't match; interpolated between its matches for 4091 and 4111 Roswell Rd",2026-11-01
+27759,Towne Lake,34.10272,-84.53539,"Neither the Census Geocoder nor OpenStreetMap matches 936 Towne Lake Pkwy; placed at OpenStreetMap's 950 Towne Lake Pkwy (Walgreens), the nearest numbered address on the same side of the street",2026-11-01

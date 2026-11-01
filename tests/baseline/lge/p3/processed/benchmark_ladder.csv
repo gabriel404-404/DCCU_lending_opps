@@ -1,0 +1,4 @@
+rung,unit,rule,share,reference,depth,depth_outside_top_quarter,depth_vs_current_loans
+base,county,footprint average,0.010273,all footprint counties,191.288228,174.88238,0.67355
+stretch,county,weakest county in the top quarter,0.015683,Bartow,297.203444,270.578305,1.046491
+ceiling,county,"top quarter, pooled",0.022175,"Floyd, Paulding, Gordon, Bartow",435.661995,395.767576,1.534021

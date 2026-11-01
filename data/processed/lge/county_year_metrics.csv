@@ -1,0 +1,637 @@
+county_fips,county_name,footprint_flag,market_group,urban_rural_tier,year,market_purchase,market_refinance,lender_purchase,lender_refinance,market_all,lender_all,share_purchase,share_refinance,share_all
+13001,Appling,0,,rural,2022,40,44,0,0,84,0,0.0,0.0,0.0
+13001,Appling,0,,rural,2023,23,13,0,0,36,0,0.0,0.0,0.0
+13001,Appling,0,,rural,2024,22,18,0,0,40,0,0.0,0.0,0.0
+13001,Appling,0,,rural,2025,20,28,0,0,48,0,0.0,0.0,0.0
+13003,Atkinson,0,"Douglas, GA",micro,2022,6,9,0,0,15,0,0.0,0.0,0.0
+13003,Atkinson,0,"Douglas, GA",micro,2023,3,1,0,0,4,0,0.0,0.0,0.0
+13003,Atkinson,0,"Douglas, GA",micro,2024,6,4,0,0,10,0,0.0,0.0,0.0
+13003,Atkinson,0,"Douglas, GA",micro,2025,1,8,0,0,9,0,0.0,0.0,0.0
+13005,Bacon,0,,rural,2022,22,15,0,0,37,0,0.0,0.0,0.0
+13005,Bacon,0,,rural,2023,15,10,0,0,25,0,0.0,0.0,0.0
+13005,Bacon,0,,rural,2024,10,10,0,0,20,0,0.0,0.0,0.0
+13005,Bacon,0,,rural,2025,10,10,0,0,20,0,0.0,0.0,0.0
+13007,Baker,0,,rural,2022,3,9,0,0,12,0,0.0,0.0,0.0
+13007,Baker,0,,rural,2023,1,2,0,0,3,0,0.0,0.0,0.0
+13007,Baker,0,,rural,2024,2,2,0,0,4,0,0.0,0.0,0.0
+13007,Baker,0,,rural,2025,0,1,0,0,1,0,,0.0,0.0
+13009,Baldwin,0,"Milledgeville, GA",micro,2022,132,122,0,0,254,0,0.0,0.0,0.0
+13009,Baldwin,0,"Milledgeville, GA",micro,2023,113,36,0,0,149,0,0.0,0.0,0.0
+13009,Baldwin,0,"Milledgeville, GA",micro,2024,81,46,0,0,127,0,0.0,0.0,0.0
+13009,Baldwin,0,"Milledgeville, GA",micro,2025,84,56,0,0,140,0,0.0,0.0,0.0
+13011,Banks,0,,rural,2022,142,97,0,0,239,0,0.0,0.0,0.0
+13011,Banks,0,,rural,2023,104,45,0,0,149,0,0.0,0.0,0.0
+13011,Banks,0,,rural,2024,106,40,0,0,146,0,0.0,0.0,0.0
+13011,Banks,0,,rural,2025,112,47,1,0,159,1,0.008929,0.0,0.006289
+13013,Barrow,0,"Atlanta-Sandy Springs-Roswell, GA",metro,2022,1021,669,1,0,1690,1,0.000979,0.0,0.000592
+13013,Barrow,0,"Atlanta-Sandy Springs-Roswell, GA",metro,2023,834,172,0,0,1006,0,0.0,0.0,0.0
+13013,Barrow,0,"Atlanta-Sandy Springs-Roswell, GA",metro,2024,736,191,0,0,927,0,0.0,0.0,0.0
+13013,Barrow,0,"Atlanta-Sandy Springs-Roswell, GA",metro,2025,718,247,1,0,965,1,0.001393,0.0,0.001036
+13015,Bartow,1,"Atlanta-Sandy Springs-Roswell, GA",metro,2022,1000,614,4,1,1614,5,0.004,0.001629,0.003098
+13015,Bartow,1,"Atlanta-Sandy Springs-Roswell, GA",metro,2023,780,197,4,0,977,4,0.005128,0.0,0.004094
+13015,Bartow,1,"Atlanta-Sandy Springs-Roswell, GA",metro,2024,854,232,6,2,1086,8,0.007026,0.008621,0.007366
+13015,Bartow,1,"Atlanta-Sandy Springs-Roswell, GA",metro,2025,790,294,8,9,1084,17,0.010127,0.030612,0.015683
+13017,Ben Hill,0,"Fitzgerald, GA",micro,2022,22,23,0,0,45,0,0.0,0.0,0.0
+13017,Ben Hill,0,"Fitzgerald, GA",micro,2023,15,11,0,0,26,0,0.0,0.0,0.0
+13017,Ben Hill,0,"Fitzgerald, GA",micro,2024,19,9,0,0,28,0,0.0,0.0,0.0
+13017,Ben Hill,0,"Fitzgerald, GA",micro,2025,15,23,0,0,38,0,0.0,0.0,0.0
+13019,Berrien,0,,rural,2022,45,42,0,0,87,0,0.0,0.0,0.0
+13019,Berrien,0,,rural,2023,27,26,0,0,53,0,0.0,0.0,0.0
+13019,Berrien,0,,rural,2024,27,17,0,0,44,0,0.0,0.0,0.0
+13019,Berrien,0,,rural,2025,26,27,0,0,53,0,0.0,0.0,0.0
+13021,Bibb,0,"Macon-Bibb County--Warner Robins, GA",metro,2022,713,363,0,0,1076,0,0.0,0.0,0.0
+13021,Bibb,0,"Macon-Bibb County--Warner Robins, GA",metro,2023,528,101,0,0,629,0,0.0,0.0,0.0
+13021,Bibb,0,"Macon-Bibb County--Warner Robins, GA",metro,2024,525,137,0,0,662,0,0.0,0.0,0.0
+13021,Bibb,0,"Macon-Bibb County--Warner Robins, GA",metro,2025,523,171,0,0,694,0,0.0,0.0,0.0
+13023,Bleckley,0,,rural,2022,42,37,0,0,79,0,0.0,0.0,0.0
+13023,Bleckley,0,,rural,2023,25,17,0,0,42,0,0.0,0.0,0.0
+13023,Bleckley,0,,rural,2024,28,25,0,0,53,0,0.0,0.0,0.0
+13023,Bleckley,0,,rural,2025,35,27,0,0,62,0,0.0,0.0,0.0
+13025,Brantley,0,"Brunswick-St. Simons, GA",metro,2022,32,38,0,0,70,0,0.0,0.0,0.0
+13025,Brantley,0,"Brunswick-St. Simons, GA",metro,2023,35,28,0,0,63,0,0.0,0.0,0.0
+13025,Brantley,0,"Brunswick-St. Simons, GA",metro,2024,31,32,0,0,63,0,0.0,0.0,0.0
+13025,Brantley,0,"Brunswick-St. Simons, GA",metro,2025,16,23,0,0,39,0,0.0,0.0,0.0
+13027,Brooks,0,"Valdosta, GA",metro,2022,39,52,0,0,91,0,0.0,0.0,0.0
+13027,Brooks,0,"Valdosta, GA",metro,2023,24,29,0,0,53,0,0.0,0.0,0.0
+13027,Brooks,0,"Valdosta, GA",metro,2024,31,29,0,0,60,0,0.0,0.0,0.0
+13027,Brooks,0,"Valdosta, GA",metro,2025,32,30,0,0,62,0,0.0,0.0,0.0
+13029,Bryan,0,"Savannah-Hinesville-Statesboro, GA",metro,2022,523,160,0,0,683,0,0.0,0.0,0.0
+13029,Bryan,0,"Savannah-Hinesville-Statesboro, GA",metro,2023,381,55,0,0,436,0,0.0,0.0,0.0
+13029,Bryan,0,"Savannah-Hinesville-Statesboro, GA",metro,2024,386,54,0,0,440,0,0.0,0.0,0.0
+13029,Bryan,0,"Savannah-Hinesville-Statesboro, GA",metro,2025,400,97,0,0,497,0,0.0,0.0,0.0
+13031,Bulloch,0,"Savannah-Hinesville-Statesboro, GA",micro,2022,373,198,0,0,571,0,0.0,0.0,0.0
+13031,Bulloch,0,"Savannah-Hinesville-Statesboro, GA",micro,2023,272,90,0,0,362,0,0.0,0.0,0.0
+13031,Bulloch,0,"Savannah-Hinesville-Statesboro, GA",micro,2024,284,100,0,0,384,0,0.0,0.0,0.0
+13031,Bulloch,0,"Savannah-Hinesville-Statesboro, GA",micro,2025,247,123,0,0,370,0,0.0,0.0,0.0
+13033,Burke,0,"Augusta-Richmond County, GA-SC",metro,2022,56,38,0,0,94,0,0.0,0.0,0.0
+13033,Burke,0,"Augusta-Richmond County, GA-SC",metro,2023,66,20,0,0,86,0,0.0,0.0,0.0
+13033,Burke,0,"Augusta-Richmond County, GA-SC",metro,2024,68,33,0,0,101,0,0.0,0.0,0.0
+13033,Burke,0,"Augusta-Richmond County, GA-SC",metro,2025,67,32,0,0,99,0,0.0,0.0,0.0
+13035,Butts,0,"Atlanta-Sandy Springs-Roswell, GA",metro,2022,158,139,0,0,297,0,0.0,0.0,0.0
+13035,Butts,0,"Atlanta-Sandy Springs-Roswell, GA",metro,2023,94,35,0,0,129,0,0.0,0.0,0.0
+13035,Butts,0,"Atlanta-Sandy Springs-Roswell, GA",metro,2024,97,45,0,0,142,0,0.0,0.0,0.0
+13035,Butts,0,"Atlanta-Sandy Springs-Roswell, GA",metro,2025,86,58,0,0,144,0,0.0,0.0,0.0
+13037,Calhoun,0,,rural,2022,7,12,0,0,19,0,0.0,0.0,0.0
+13037,Calhoun,0,,rural,2023,3,7,0,0,10,0,0.0,0.0,0.0
+13037,Calhoun,0,,rural,2024,2,3,0,0,5,0,0.0,0.0,0.0
+13037,Calhoun,0,,rural,2025,5,9,0,0,14,0,0.0,0.0,0.0
+13039,Camden,0,"Jacksonville-Kingsland-Palatka, FL-GA",micro,2022,377,209,0,0,586,0,0.0,0.0,0.0
+13039,Camden,0,"Jacksonville-Kingsland-Palatka, FL-GA",micro,2023,276,78,0,0,354,0,0.0,0.0,0.0
+13039,Camden,0,"Jacksonville-Kingsland-Palatka, FL-GA",micro,2024,253,69,0,0,322,0,0.0,0.0,0.0
+13039,Camden,0,"Jacksonville-Kingsland-Palatka, FL-GA",micro,2025,267,97,1,0,364,1,0.003745,0.0,0.002747
+13043,Candler,0,,rural,2022,18,21,0,0,39,0,0.0,0.0,0.0
+13043,Candler,0,,rural,2023,18,9,0,0,27,0,0.0,0.0,0.0
+13043,Candler,0,,rural,2024,7,12,0,0,19,0,0.0,0.0,0.0
+13043,Candler,0,,rural,2025,25,7,0,0,32,0,0.0,0.0,0.0
+13045,Carroll,0,"Atlanta-Sandy Springs-Roswell, GA",metro,2022,899,625,0,1,1524,1,0.0,0.0016,0.000656
+13045,Carroll,0,"Atlanta-Sandy Springs-Roswell, GA",metro,2023,600,161,3,0,761,3,0.005,0.0,0.003942
+13045,Carroll,0,"Atlanta-Sandy Springs-Roswell, GA",metro,2024,587,203,2,3,790,5,0.003407,0.014778,0.006329
+13045,Carroll,0,"Atlanta-Sandy Springs-Roswell, GA",metro,2025,601,229,1,1,830,2,0.001664,0.004367,0.00241
+13047,Catoosa,1,"Chattanooga-Cleveland-Dalton, TN-GA-AL",metro,2022,551,452,0,0,1003,0,0.0,0.0,0.0
+13047,Catoosa,1,"Chattanooga-Cleveland-Dalton, TN-GA-AL",metro,2023,415,110,0,0,525,0,0.0,0.0,0.0
+13047,Catoosa,1,"Chattanooga-Cleveland-Dalton, TN-GA-AL",metro,2024,439,136,1,0,575,1,0.002278,0.0,0.001739
+13047,Catoosa,1,"Chattanooga-Cleveland-Dalton, TN-GA-AL",metro,2025,396,184,1,0,580,1,0.002525,0.0,0.001724
+13049,Charlton,0,,rural,2022,21,18,0,0,39,0,0.0,0.0,0.0
+13049,Charlton,0,,rural,2023,14,6,0,0,20,0,0.0,0.0,0.0
+13049,Charlton,0,,rural,2024,13,9,0,0,22,0,0.0,0.0,0.0
+13049,Charlton,0,,rural,2025,11,15,0,0,26,0,0.0,0.0,0.0
+13051,Chatham,0,"Savannah-Hinesville-Statesboro, GA",metro,2022,2346,1003,0,1,3349,1,0.0,0.000997,0.000299
+13051,Chatham,0,"Savannah-Hinesville-Statesboro, GA",metro,2023,1762,275,0,0,2037,0,0.0,0.0,0.0
+13051,Chatham,0,"Savannah-Hinesville-Statesboro, GA",metro,2024,1615,332,0,0,1947,0,0.0,0.0,0.0
+13051,Chatham,0,"Savannah-Hinesville-Statesboro, GA",metro,2025,1663,492,0,0,2155,0,0.0,0.0,0.0
+13053,Chattahoochee,0,"Columbus-Auburn-Opelika, GA-AL",metro,2022,1,3,0,0,4,0,0.0,0.0,0.0
+13053,Chattahoochee,0,"Columbus-Auburn-Opelika, GA-AL",metro,2023,3,0,0,0,3,0,0.0,,0.0
+13053,Chattahoochee,0,"Columbus-Auburn-Opelika, GA-AL",metro,2024,2,2,0,0,4,0,0.0,0.0,0.0
+13053,Chattahoochee,0,"Columbus-Auburn-Opelika, GA-AL",metro,2025,1,2,0,0,3,0,0.0,0.0,0.0
+13055,Chattooga,1,"Chattanooga-Cleveland-Dalton, TN-GA-AL",micro,2022,71,84,0,0,155,0,0.0,0.0,0.0
+13055,Chattooga,1,"Chattanooga-Cleveland-Dalton, TN-GA-AL",micro,2023,58,35,0,0,93,0,0.0,0.0,0.0
+13055,Chattooga,1,"Chattanooga-Cleveland-Dalton, TN-GA-AL",micro,2024,73,45,1,0,118,1,0.013699,0.0,0.008475
+13055,Chattooga,1,"Chattanooga-Cleveland-Dalton, TN-GA-AL",micro,2025,54,36,1,0,90,1,0.018519,0.0,0.011111
+13057,Cherokee,1,"Atlanta-Sandy Springs-Roswell, GA",metro,2022,4013,2241,15,9,6254,24,0.003738,0.004016,0.003838
+13057,Cherokee,1,"Atlanta-Sandy Springs-Roswell, GA",metro,2023,3068,413,12,2,3481,14,0.003911,0.004843,0.004022
+13057,Cherokee,1,"Atlanta-Sandy Springs-Roswell, GA",metro,2024,3134,715,25,10,3849,35,0.007977,0.013986,0.009093
+13057,Cherokee,1,"Atlanta-Sandy Springs-Roswell, GA",metro,2025,2759,1039,35,24,3798,59,0.012686,0.023099,0.015534
+13059,Clarke,0,"Athens-Clarke County, GA",metro,2022,710,390,0,0,1100,0,0.0,0.0,0.0
+13059,Clarke,0,"Athens-Clarke County, GA",metro,2023,546,108,1,0,654,1,0.001832,0.0,0.001529
+13059,Clarke,0,"Athens-Clarke County, GA",metro,2024,597,119,0,0,716,0,0.0,0.0,0.0
+13059,Clarke,0,"Athens-Clarke County, GA",metro,2025,518,167,0,0,685,0,0.0,0.0,0.0
+13061,Clay,0,,rural,2022,8,8,0,0,16,0,0.0,0.0,0.0
+13061,Clay,0,,rural,2023,7,4,0,0,11,0,0.0,0.0,0.0
+13061,Clay,0,,rural,2024,5,5,0,0,10,0,0.0,0.0,0.0
+13061,Clay,0,,rural,2025,3,9,0,0,12,0,0.0,0.0,0.0
+13063,Clayton,0,"Atlanta-Sandy Springs-Roswell, GA",metro,2022,935,1226,0,0,2161,0,0.0,0.0,0.0
+13063,Clayton,0,"Atlanta-Sandy Springs-Roswell, GA",metro,2023,772,341,0,1,1113,1,0.0,0.002933,0.000898
+13063,Clayton,0,"Atlanta-Sandy Springs-Roswell, GA",metro,2024,806,369,0,0,1175,0,0.0,0.0,0.0
+13063,Clayton,0,"Atlanta-Sandy Springs-Roswell, GA",metro,2025,668,359,0,0,1027,0,0.0,0.0,0.0
+13065,Clinch,0,,rural,2022,14,22,0,0,36,0,0.0,0.0,0.0
+13065,Clinch,0,,rural,2023,8,11,0,0,19,0,0.0,0.0,0.0
+13065,Clinch,0,,rural,2024,8,8,0,0,16,0,0.0,0.0,0.0
+13065,Clinch,0,,rural,2025,7,13,0,0,20,0,0.0,0.0,0.0
+13067,Cobb,1,"Atlanta-Sandy Springs-Roswell, GA",metro,2022,8151,4795,23,41,12946,64,0.002822,0.008551,0.004944
+13067,Cobb,1,"Atlanta-Sandy Springs-Roswell, GA",metro,2023,6186,1014,16,9,7200,25,0.002586,0.008876,0.003472
+13067,Cobb,1,"Atlanta-Sandy Springs-Roswell, GA",metro,2024,5907,1291,27,13,7198,40,0.004571,0.01007,0.005557
+13067,Cobb,1,"Atlanta-Sandy Springs-Roswell, GA",metro,2025,5681,1816,56,56,7497,112,0.009857,0.030837,0.014939
+13069,Coffee,0,"Douglas, GA",micro,2022,62,56,0,0,118,0,0.0,0.0,0.0
+13069,Coffee,0,"Douglas, GA",micro,2023,38,12,0,0,50,0,0.0,0.0,0.0
+13069,Coffee,0,"Douglas, GA",micro,2024,32,28,0,0,60,0,0.0,0.0,0.0
+13069,Coffee,0,"Douglas, GA",micro,2025,26,35,0,0,61,0,0.0,0.0,0.0
+13071,Colquitt,0,"Moultrie, GA",micro,2022,102,101,0,0,203,0,0.0,0.0,0.0
+13071,Colquitt,0,"Moultrie, GA",micro,2023,75,35,0,0,110,0,0.0,0.0,0.0
+13071,Colquitt,0,"Moultrie, GA",micro,2024,80,43,0,0,123,0,0.0,0.0,0.0
+13071,Colquitt,0,"Moultrie, GA",micro,2025,92,58,0,0,150,0,0.0,0.0,0.0
+13073,Columbia,0,"Augusta-Richmond County, GA-SC",metro,2022,1357,637,1,0,1994,1,0.000737,0.0,0.000502
+13073,Columbia,0,"Augusta-Richmond County, GA-SC",metro,2023,1033,150,0,0,1183,0,0.0,0.0,0.0
+13073,Columbia,0,"Augusta-Richmond County, GA-SC",metro,2024,897,168,0,0,1065,0,0.0,0.0,0.0
+13073,Columbia,0,"Augusta-Richmond County, GA-SC",metro,2025,927,258,0,0,1185,0,0.0,0.0,0.0
+13075,Cook,0,,rural,2022,42,34,0,0,76,0,0.0,0.0,0.0
+13075,Cook,0,,rural,2023,32,18,0,0,50,0,0.0,0.0,0.0
+13075,Cook,0,,rural,2024,27,12,0,0,39,0,0.0,0.0,0.0
+13075,Cook,0,,rural,2025,25,22,0,0,47,0,0.0,0.0,0.0
+13077,Coweta,0,"Atlanta-Sandy Springs-Roswell, GA",metro,2022,1739,1044,2,0,2783,2,0.00115,0.0,0.000719
+13077,Coweta,0,"Atlanta-Sandy Springs-Roswell, GA",metro,2023,1176,235,2,0,1411,2,0.001701,0.0,0.001417
+13077,Coweta,0,"Atlanta-Sandy Springs-Roswell, GA",metro,2024,1263,274,1,0,1537,1,0.000792,0.0,0.000651
+13077,Coweta,0,"Atlanta-Sandy Springs-Roswell, GA",metro,2025,1139,385,0,0,1524,0,0.0,0.0,0.0
+13079,Crawford,0,"Macon-Bibb County--Warner Robins, GA",metro,2022,33,34,0,0,67,0,0.0,0.0,0.0
+13079,Crawford,0,"Macon-Bibb County--Warner Robins, GA",metro,2023,26,17,0,0,43,0,0.0,0.0,0.0
+13079,Crawford,0,"Macon-Bibb County--Warner Robins, GA",metro,2024,20,20,0,0,40,0,0.0,0.0,0.0
+13079,Crawford,0,"Macon-Bibb County--Warner Robins, GA",metro,2025,20,24,0,0,44,0,0.0,0.0,0.0
+13081,Crisp,0,"Cordele, GA",micro,2022,56,49,0,0,105,0,0.0,0.0,0.0
+13081,Crisp,0,"Cordele, GA",micro,2023,38,13,0,0,51,0,0.0,0.0,0.0
+13081,Crisp,0,"Cordele, GA",micro,2024,42,18,0,0,60,0,0.0,0.0,0.0
+13081,Crisp,0,"Cordele, GA",micro,2025,37,16,0,0,53,0,0.0,0.0,0.0
+13083,Dade,1,"Chattanooga-Cleveland-Dalton, TN-GA-AL",metro,2022,89,84,0,0,173,0,0.0,0.0,0.0
+13083,Dade,1,"Chattanooga-Cleveland-Dalton, TN-GA-AL",metro,2023,76,37,0,0,113,0,0.0,0.0,0.0
+13083,Dade,1,"Chattanooga-Cleveland-Dalton, TN-GA-AL",metro,2024,78,49,0,0,127,0,0.0,0.0,0.0
+13083,Dade,1,"Chattanooga-Cleveland-Dalton, TN-GA-AL",metro,2025,63,80,0,0,143,0,0.0,0.0,0.0
+13085,Dawson,0,"Atlanta-Sandy Springs-Roswell, GA",metro,2022,525,210,0,0,735,0,0.0,0.0,0.0
+13085,Dawson,0,"Atlanta-Sandy Springs-Roswell, GA",metro,2023,450,65,0,0,515,0,0.0,0.0,0.0
+13085,Dawson,0,"Atlanta-Sandy Springs-Roswell, GA",metro,2024,445,125,1,0,570,1,0.002247,0.0,0.001754
+13085,Dawson,0,"Atlanta-Sandy Springs-Roswell, GA",metro,2025,395,158,1,1,553,2,0.002532,0.006329,0.003617
+13087,Decatur,0,"Tallahassee-Bainbridge, FL-GA",micro,2022,56,72,0,0,128,0,0.0,0.0,0.0
+13087,Decatur,0,"Tallahassee-Bainbridge, FL-GA",micro,2023,37,25,0,0,62,0,0.0,0.0,0.0
+13087,Decatur,0,"Tallahassee-Bainbridge, FL-GA",micro,2024,55,45,0,0,100,0,0.0,0.0,0.0
+13087,Decatur,0,"Tallahassee-Bainbridge, FL-GA",micro,2025,34,45,0,0,79,0,0.0,0.0,0.0
+13089,DeKalb,0,"Atlanta-Sandy Springs-Roswell, GA",metro,2022,6768,3797,4,0,10565,4,0.000591,0.0,0.000379
+13089,DeKalb,0,"Atlanta-Sandy Springs-Roswell, GA",metro,2023,5002,843,3,1,5845,4,0.0006,0.001186,0.000684
+13089,DeKalb,0,"Atlanta-Sandy Springs-Roswell, GA",metro,2024,4893,1091,5,2,5984,7,0.001022,0.001833,0.00117
+13089,DeKalb,0,"Atlanta-Sandy Springs-Roswell, GA",metro,2025,4517,1400,6,2,5917,8,0.001328,0.001429,0.001352
+13091,Dodge,0,,rural,2022,31,40,0,0,71,0,0.0,0.0,0.0
+13091,Dodge,0,,rural,2023,35,20,0,0,55,0,0.0,0.0,0.0
+13091,Dodge,0,,rural,2024,19,31,0,0,50,0,0.0,0.0,0.0
+13091,Dodge,0,,rural,2025,23,37,0,0,60,0,0.0,0.0,0.0
+13093,Dooly,0,,rural,2022,17,12,0,0,29,0,0.0,0.0,0.0
+13093,Dooly,0,,rural,2023,13,11,0,0,24,0,0.0,0.0,0.0
+13093,Dooly,0,,rural,2024,13,18,0,0,31,0,0.0,0.0,0.0
+13093,Dooly,0,,rural,2025,10,11,0,0,21,0,0.0,0.0,0.0
+13095,Dougherty,0,"Albany, GA",metro,2022,174,139,0,0,313,0,0.0,0.0,0.0
+13095,Dougherty,0,"Albany, GA",metro,2023,142,41,0,0,183,0,0.0,0.0,0.0
+13095,Dougherty,0,"Albany, GA",metro,2024,137,59,0,0,196,0,0.0,0.0,0.0
+13095,Dougherty,0,"Albany, GA",metro,2025,119,69,0,0,188,0,0.0,0.0,0.0
+13097,Douglas,1,"Atlanta-Sandy Springs-Roswell, GA",metro,2022,926,904,1,3,1830,4,0.00108,0.003319,0.002186
+13097,Douglas,1,"Atlanta-Sandy Springs-Roswell, GA",metro,2023,665,210,1,1,875,2,0.001504,0.004762,0.002286
+13097,Douglas,1,"Atlanta-Sandy Springs-Roswell, GA",metro,2024,658,238,4,0,896,4,0.006079,0.0,0.004464
+13097,Douglas,1,"Atlanta-Sandy Springs-Roswell, GA",metro,2025,607,218,0,1,825,1,0.0,0.004587,0.001212
+13099,Early,0,,rural,2022,15,39,0,0,54,0,0.0,0.0,0.0
+13099,Early,0,,rural,2023,16,16,0,0,32,0,0.0,0.0,0.0
+13099,Early,0,,rural,2024,13,26,0,0,39,0,0.0,0.0,0.0
+13099,Early,0,,rural,2025,4,30,0,0,34,0,0.0,0.0,0.0
+13101,Echols,0,"Valdosta, GA",metro,2022,7,8,0,0,15,0,0.0,0.0,0.0
+13101,Echols,0,"Valdosta, GA",metro,2023,2,3,0,0,5,0,0.0,0.0,0.0
+13101,Echols,0,"Valdosta, GA",metro,2024,6,5,0,0,11,0,0.0,0.0,0.0
+13101,Echols,0,"Valdosta, GA",metro,2025,2,3,0,0,5,0,0.0,0.0,0.0
+13103,Effingham,0,"Savannah-Hinesville-Statesboro, GA",metro,2022,579,321,0,0,900,0,0.0,0.0,0.0
+13103,Effingham,0,"Savannah-Hinesville-Statesboro, GA",metro,2023,409,91,0,0,500,0,0.0,0.0,0.0
+13103,Effingham,0,"Savannah-Hinesville-Statesboro, GA",metro,2024,356,86,0,0,442,0,0.0,0.0,0.0
+13103,Effingham,0,"Savannah-Hinesville-Statesboro, GA",metro,2025,314,149,1,0,463,1,0.003185,0.0,0.00216
+13105,Elbert,0,,rural,2022,58,41,0,0,99,0,0.0,0.0,0.0
+13105,Elbert,0,,rural,2023,50,19,0,0,69,0,0.0,0.0,0.0
+13105,Elbert,0,,rural,2024,38,28,0,0,66,0,0.0,0.0,0.0
+13105,Elbert,0,,rural,2025,51,27,0,0,78,0,0.0,0.0,0.0
+13107,Emanuel,0,,rural,2022,39,25,0,0,64,0,0.0,0.0,0.0
+13107,Emanuel,0,,rural,2023,23,13,0,0,36,0,0.0,0.0,0.0
+13107,Emanuel,0,,rural,2024,24,13,0,0,37,0,0.0,0.0,0.0
+13107,Emanuel,0,,rural,2025,20,17,0,0,37,0,0.0,0.0,0.0
+13109,Evans,0,"Savannah-Hinesville-Statesboro, GA",micro,2022,10,16,0,0,26,0,0.0,0.0,0.0
+13109,Evans,0,"Savannah-Hinesville-Statesboro, GA",micro,2023,12,7,0,0,19,0,0.0,0.0,0.0
+13109,Evans,0,"Savannah-Hinesville-Statesboro, GA",micro,2024,14,16,0,0,30,0,0.0,0.0,0.0
+13109,Evans,0,"Savannah-Hinesville-Statesboro, GA",micro,2025,15,14,0,0,29,0,0.0,0.0,0.0
+13111,Fannin,0,,rural,2022,163,146,0,0,309,0,0.0,0.0,0.0
+13111,Fannin,0,,rural,2023,133,66,0,0,199,0,0.0,0.0,0.0
+13111,Fannin,0,,rural,2024,117,81,0,0,198,0,0.0,0.0,0.0
+13111,Fannin,0,,rural,2025,138,88,0,0,226,0,0.0,0.0,0.0
+13113,Fayette,0,"Atlanta-Sandy Springs-Roswell, GA",metro,2022,1414,792,0,0,2206,0,0.0,0.0,0.0
+13113,Fayette,0,"Atlanta-Sandy Springs-Roswell, GA",metro,2023,944,171,0,0,1115,0,0.0,0.0,0.0
+13113,Fayette,0,"Atlanta-Sandy Springs-Roswell, GA",metro,2024,864,238,1,0,1102,1,0.001157,0.0,0.000907
+13113,Fayette,0,"Atlanta-Sandy Springs-Roswell, GA",metro,2025,858,295,3,0,1153,3,0.003497,0.0,0.002602
+13115,Floyd,1,"Rome, GA",metro,2022,589,342,0,0,931,0,0.0,0.0,0.0
+13115,Floyd,1,"Rome, GA",metro,2023,476,111,0,0,587,0,0.0,0.0,0.0
+13115,Floyd,1,"Rome, GA",metro,2024,452,140,6,8,592,14,0.013274,0.057143,0.023649
+13115,Floyd,1,"Rome, GA",metro,2025,433,169,13,7,602,20,0.030023,0.04142,0.033223
+13117,Forsyth,0,"Atlanta-Sandy Springs-Roswell, GA",metro,2022,4243,2011,0,2,6254,2,0.0,0.000995,0.00032
+13117,Forsyth,0,"Atlanta-Sandy Springs-Roswell, GA",metro,2023,2946,380,4,2,3326,6,0.001358,0.005263,0.001804
+13117,Forsyth,0,"Atlanta-Sandy Springs-Roswell, GA",metro,2024,3054,774,17,8,3828,25,0.005566,0.010336,0.006531
+13117,Forsyth,0,"Atlanta-Sandy Springs-Roswell, GA",metro,2025,2870,1466,8,6,4336,14,0.002787,0.004093,0.003229
+13119,Franklin,0,,rural,2022,130,90,0,0,220,0,0.0,0.0,0.0
+13119,Franklin,0,,rural,2023,99,37,0,0,136,0,0.0,0.0,0.0
+13119,Franklin,0,,rural,2024,98,38,0,0,136,0,0.0,0.0,0.0
+13119,Franklin,0,,rural,2025,87,53,0,0,140,0,0.0,0.0,0.0
+13121,Fulton,1,"Atlanta-Sandy Springs-Roswell, GA",metro,2022,11451,5465,3,8,16916,11,0.000262,0.001464,0.00065
+13121,Fulton,1,"Atlanta-Sandy Springs-Roswell, GA",metro,2023,8226,1143,6,0,9369,6,0.000729,0.0,0.00064
+13121,Fulton,1,"Atlanta-Sandy Springs-Roswell, GA",metro,2024,7863,1490,12,6,9353,18,0.001526,0.004027,0.001925
+13121,Fulton,1,"Atlanta-Sandy Springs-Roswell, GA",metro,2025,7284,2230,9,13,9514,22,0.001236,0.00583,0.002312
+13123,Gilmer,0,,rural,2022,311,170,0,0,481,0,0.0,0.0,0.0
+13123,Gilmer,0,,rural,2023,191,76,0,0,267,0,0.0,0.0,0.0
+13123,Gilmer,0,,rural,2024,216,84,1,0,300,1,0.00463,0.0,0.003333
+13123,Gilmer,0,,rural,2025,197,113,1,1,310,2,0.005076,0.00885,0.006452
+13125,Glascock,0,,rural,2022,2,7,0,0,9,0,0.0,0.0,0.0
+13125,Glascock,0,,rural,2023,3,4,0,0,7,0,0.0,0.0,0.0
+13125,Glascock,0,,rural,2024,2,6,0,0,8,0,0.0,0.0,0.0
+13125,Glascock,0,,rural,2025,5,4,0,0,9,0,0.0,0.0,0.0
+13127,Glynn,0,"Brunswick-St. Simons, GA",metro,2022,631,369,0,0,1000,0,0.0,0.0,0.0
+13127,Glynn,0,"Brunswick-St. Simons, GA",metro,2023,485,131,0,0,616,0,0.0,0.0,0.0
+13127,Glynn,0,"Brunswick-St. Simons, GA",metro,2024,455,144,0,0,599,0,0.0,0.0,0.0
+13127,Glynn,0,"Brunswick-St. Simons, GA",metro,2025,484,192,0,0,676,0,0.0,0.0,0.0
+13129,Gordon,1,"Calhoun, GA",micro,2022,370,302,2,1,672,3,0.005405,0.003311,0.004464
+13129,Gordon,1,"Calhoun, GA",micro,2023,277,91,0,0,368,0,0.0,0.0,0.0
+13129,Gordon,1,"Calhoun, GA",micro,2024,239,140,1,3,379,4,0.004184,0.021429,0.010554
+13129,Gordon,1,"Calhoun, GA",micro,2025,250,161,4,3,411,7,0.016,0.018634,0.017032
+13131,Grady,0,"Thomasville, GA",micro,2022,75,49,0,0,124,0,0.0,0.0,0.0
+13131,Grady,0,"Thomasville, GA",micro,2023,45,19,0,0,64,0,0.0,0.0,0.0
+13131,Grady,0,"Thomasville, GA",micro,2024,53,26,0,0,79,0,0.0,0.0,0.0
+13131,Grady,0,"Thomasville, GA",micro,2025,48,37,0,0,85,0,0.0,0.0,0.0
+13133,Greene,0,,rural,2022,247,103,0,1,350,1,0.0,0.009709,0.002857
+13133,Greene,0,,rural,2023,242,50,0,0,292,0,0.0,0.0,0.0
+13133,Greene,0,,rural,2024,221,58,0,0,279,0,0.0,0.0,0.0
+13133,Greene,0,,rural,2025,172,78,0,0,250,0,0.0,0.0,0.0
+13135,Gwinnett,0,"Atlanta-Sandy Springs-Roswell, GA",metro,2022,8681,5560,1,5,14241,6,0.000115,0.000899,0.000421
+13135,Gwinnett,0,"Atlanta-Sandy Springs-Roswell, GA",metro,2023,6814,1171,1,0,7985,1,0.000147,0.0,0.000125
+13135,Gwinnett,0,"Atlanta-Sandy Springs-Roswell, GA",metro,2024,6780,1434,2,3,8214,5,0.000295,0.002092,0.000609
+13135,Gwinnett,0,"Atlanta-Sandy Springs-Roswell, GA",metro,2025,6167,2023,4,12,8190,16,0.000649,0.005932,0.001954
+13137,Habersham,0,"Cornelia, GA",micro,2022,314,198,0,0,512,0,0.0,0.0,0.0
+13137,Habersham,0,"Cornelia, GA",micro,2023,232,66,0,0,298,0,0.0,0.0,0.0
+13137,Habersham,0,"Cornelia, GA",micro,2024,251,81,2,0,332,2,0.007968,0.0,0.006024
+13137,Habersham,0,"Cornelia, GA",micro,2025,263,99,0,0,362,0,0.0,0.0,0.0
+13139,Hall,0,"Gainesville, GA",metro,2022,2038,1136,0,0,3174,0,0.0,0.0,0.0
+13139,Hall,0,"Gainesville, GA",metro,2023,1484,276,0,0,1760,0,0.0,0.0,0.0
+13139,Hall,0,"Gainesville, GA",metro,2024,1343,335,2,0,1678,2,0.001489,0.0,0.001192
+13139,Hall,0,"Gainesville, GA",metro,2025,1444,495,0,1,1939,1,0.0,0.00202,0.000516
+13141,Hancock,0,,rural,2022,15,12,0,0,27,0,0.0,0.0,0.0
+13141,Hancock,0,,rural,2023,8,2,0,0,10,0,0.0,0.0,0.0
+13141,Hancock,0,,rural,2024,9,6,0,0,15,0,0.0,0.0,0.0
+13141,Hancock,0,,rural,2025,10,5,0,0,15,0,0.0,0.0,0.0
+13143,Haralson,0,"Atlanta-Sandy Springs-Roswell, GA",metro,2022,220,136,1,1,356,2,0.004545,0.007353,0.005618
+13143,Haralson,0,"Atlanta-Sandy Springs-Roswell, GA",metro,2023,136,49,0,0,185,0,0.0,0.0,0.0
+13143,Haralson,0,"Atlanta-Sandy Springs-Roswell, GA",metro,2024,145,54,2,0,199,2,0.013793,0.0,0.01005
+13143,Haralson,0,"Atlanta-Sandy Springs-Roswell, GA",metro,2025,151,75,1,1,226,2,0.006623,0.013333,0.00885
+13145,Harris,0,"Columbus-Auburn-Opelika, GA-AL",metro,2022,293,186,0,0,479,0,0.0,0.0,0.0
+13145,Harris,0,"Columbus-Auburn-Opelika, GA-AL",metro,2023,164,51,0,0,215,0,0.0,0.0,0.0
+13145,Harris,0,"Columbus-Auburn-Opelika, GA-AL",metro,2024,164,52,0,0,216,0,0.0,0.0,0.0
+13145,Harris,0,"Columbus-Auburn-Opelika, GA-AL",metro,2025,187,84,0,0,271,0,0.0,0.0,0.0
+13147,Hart,0,,rural,2022,167,97,0,0,264,0,0.0,0.0,0.0
+13147,Hart,0,,rural,2023,132,50,0,0,182,0,0.0,0.0,0.0
+13147,Hart,0,,rural,2024,123,62,0,0,185,0,0.0,0.0,0.0
+13147,Hart,0,,rural,2025,120,58,0,0,178,0,0.0,0.0,0.0
+13149,Heard,0,"Atlanta-Sandy Springs-Roswell, GA",metro,2022,68,56,0,0,124,0,0.0,0.0,0.0
+13149,Heard,0,"Atlanta-Sandy Springs-Roswell, GA",metro,2023,35,18,0,0,53,0,0.0,0.0,0.0
+13149,Heard,0,"Atlanta-Sandy Springs-Roswell, GA",metro,2024,28,20,0,0,48,0,0.0,0.0,0.0
+13149,Heard,0,"Atlanta-Sandy Springs-Roswell, GA",metro,2025,48,32,0,0,80,0,0.0,0.0,0.0
+13151,Henry,0,"Atlanta-Sandy Springs-Roswell, GA",metro,2022,1798,1707,0,1,3505,1,0.0,0.000586,0.000285
+13151,Henry,0,"Atlanta-Sandy Springs-Roswell, GA",metro,2023,1227,335,0,0,1562,0,0.0,0.0,0.0
+13151,Henry,0,"Atlanta-Sandy Springs-Roswell, GA",metro,2024,1118,366,0,0,1484,0,0.0,0.0,0.0
+13151,Henry,0,"Atlanta-Sandy Springs-Roswell, GA",metro,2025,1027,406,0,0,1433,0,0.0,0.0,0.0
+13153,Houston,0,"Macon-Bibb County--Warner Robins, GA",metro,2022,1182,529,1,0,1711,1,0.000846,0.0,0.000584
+13153,Houston,0,"Macon-Bibb County--Warner Robins, GA",metro,2023,798,149,0,0,947,0,0.0,0.0,0.0
+13153,Houston,0,"Macon-Bibb County--Warner Robins, GA",metro,2024,755,212,0,0,967,0,0.0,0.0,0.0
+13153,Houston,0,"Macon-Bibb County--Warner Robins, GA",metro,2025,719,236,1,0,955,1,0.001391,0.0,0.001047
+13155,Irwin,0,,rural,2022,13,16,0,0,29,0,0.0,0.0,0.0
+13155,Irwin,0,,rural,2023,11,10,0,0,21,0,0.0,0.0,0.0
+13155,Irwin,0,,rural,2024,14,8,0,0,22,0,0.0,0.0,0.0
+13155,Irwin,0,,rural,2025,9,12,0,0,21,0,0.0,0.0,0.0
+13157,Jackson,0,"Jefferson, GA",micro,2022,1214,579,1,0,1793,1,0.000824,0.0,0.000558
+13157,Jackson,0,"Jefferson, GA",micro,2023,1124,175,0,0,1299,0,0.0,0.0,0.0
+13157,Jackson,0,"Jefferson, GA",micro,2024,1038,205,1,0,1243,1,0.000963,0.0,0.000805
+13157,Jackson,0,"Jefferson, GA",micro,2025,930,276,0,0,1206,0,0.0,0.0,0.0
+13159,Jasper,0,"Atlanta-Sandy Springs-Roswell, GA",metro,2022,151,102,0,0,253,0,0.0,0.0,0.0
+13159,Jasper,0,"Atlanta-Sandy Springs-Roswell, GA",metro,2023,110,50,0,0,160,0,0.0,0.0,0.0
+13159,Jasper,0,"Atlanta-Sandy Springs-Roswell, GA",metro,2024,109,45,0,0,154,0,0.0,0.0,0.0
+13159,Jasper,0,"Atlanta-Sandy Springs-Roswell, GA",metro,2025,119,71,0,0,190,0,0.0,0.0,0.0
+13161,Jeff Davis,0,,rural,2022,24,15,0,0,39,0,0.0,0.0,0.0
+13161,Jeff Davis,0,,rural,2023,27,17,0,0,44,0,0.0,0.0,0.0
+13161,Jeff Davis,0,,rural,2024,17,10,0,0,27,0,0.0,0.0,0.0
+13161,Jeff Davis,0,,rural,2025,14,20,0,0,34,0,0.0,0.0,0.0
+13163,Jefferson,0,,rural,2022,31,39,0,0,70,0,0.0,0.0,0.0
+13163,Jefferson,0,,rural,2023,27,11,0,0,38,0,0.0,0.0,0.0
+13163,Jefferson,0,,rural,2024,31,23,0,0,54,0,0.0,0.0,0.0
+13163,Jefferson,0,,rural,2025,27,30,0,0,57,0,0.0,0.0,0.0
+13165,Jenkins,0,,rural,2022,24,22,0,0,46,0,0.0,0.0,0.0
+13165,Jenkins,0,,rural,2023,16,3,0,0,19,0,0.0,0.0,0.0
+13165,Jenkins,0,,rural,2024,14,3,0,0,17,0,0.0,0.0,0.0
+13165,Jenkins,0,,rural,2025,7,8,0,0,15,0,0.0,0.0,0.0
+13167,Johnson,0,"Dublin, GA",micro,2022,9,18,0,0,27,0,0.0,0.0,0.0
+13167,Johnson,0,"Dublin, GA",micro,2023,6,5,0,0,11,0,0.0,0.0,0.0
+13167,Johnson,0,"Dublin, GA",micro,2024,7,7,0,0,14,0,0.0,0.0,0.0
+13167,Johnson,0,"Dublin, GA",micro,2025,10,17,0,0,27,0,0.0,0.0,0.0
+13169,Jones,0,"Macon-Bibb County--Warner Robins, GA",metro,2022,175,95,0,0,270,0,0.0,0.0,0.0
+13169,Jones,0,"Macon-Bibb County--Warner Robins, GA",metro,2023,106,34,0,0,140,0,0.0,0.0,0.0
+13169,Jones,0,"Macon-Bibb County--Warner Robins, GA",metro,2024,88,34,0,0,122,0,0.0,0.0,0.0
+13169,Jones,0,"Macon-Bibb County--Warner Robins, GA",metro,2025,96,49,0,0,145,0,0.0,0.0,0.0
+13171,Lamar,0,,rural,2022,139,98,0,0,237,0,0.0,0.0,0.0
+13171,Lamar,0,,rural,2023,116,27,0,0,143,0,0.0,0.0,0.0
+13171,Lamar,0,,rural,2024,88,35,0,0,123,0,0.0,0.0,0.0
+13171,Lamar,0,,rural,2025,85,52,0,0,137,0,0.0,0.0,0.0
+13173,Lanier,0,"Valdosta, GA",metro,2022,22,34,0,0,56,0,0.0,0.0,0.0
+13173,Lanier,0,"Valdosta, GA",metro,2023,15,22,0,0,37,0,0.0,0.0,0.0
+13173,Lanier,0,"Valdosta, GA",metro,2024,27,21,0,0,48,0,0.0,0.0,0.0
+13173,Lanier,0,"Valdosta, GA",metro,2025,21,25,0,0,46,0,0.0,0.0,0.0
+13175,Laurens,0,"Dublin, GA",micro,2022,151,118,0,0,269,0,0.0,0.0,0.0
+13175,Laurens,0,"Dublin, GA",micro,2023,101,34,0,0,135,0,0.0,0.0,0.0
+13175,Laurens,0,"Dublin, GA",micro,2024,83,66,0,0,149,0,0.0,0.0,0.0
+13175,Laurens,0,"Dublin, GA",micro,2025,99,64,0,0,163,0,0.0,0.0,0.0
+13177,Lee,0,"Albany, GA",metro,2022,204,165,0,0,369,0,0.0,0.0,0.0
+13177,Lee,0,"Albany, GA",metro,2023,147,46,0,0,193,0,0.0,0.0,0.0
+13177,Lee,0,"Albany, GA",metro,2024,131,48,0,0,179,0,0.0,0.0,0.0
+13177,Lee,0,"Albany, GA",metro,2025,126,85,0,0,211,0,0.0,0.0,0.0
+13179,Liberty,0,"Savannah-Hinesville-Statesboro, GA",metro,2022,161,98,0,0,259,0,0.0,0.0,0.0
+13179,Liberty,0,"Savannah-Hinesville-Statesboro, GA",metro,2023,109,34,0,0,143,0,0.0,0.0,0.0
+13179,Liberty,0,"Savannah-Hinesville-Statesboro, GA",metro,2024,130,51,0,0,181,0,0.0,0.0,0.0
+13179,Liberty,0,"Savannah-Hinesville-Statesboro, GA",metro,2025,94,52,0,0,146,0,0.0,0.0,0.0
+13181,Lincoln,0,"Augusta-Richmond County, GA-SC",metro,2022,44,52,0,0,96,0,0.0,0.0,0.0
+13181,Lincoln,0,"Augusta-Richmond County, GA-SC",metro,2023,47,20,0,0,67,0,0.0,0.0,0.0
+13181,Lincoln,0,"Augusta-Richmond County, GA-SC",metro,2024,36,27,0,0,63,0,0.0,0.0,0.0
+13181,Lincoln,0,"Augusta-Richmond County, GA-SC",metro,2025,44,35,0,0,79,0,0.0,0.0,0.0
+13183,Long,0,"Savannah-Hinesville-Statesboro, GA",metro,2022,45,39,0,0,84,0,0.0,0.0,0.0
+13183,Long,0,"Savannah-Hinesville-Statesboro, GA",metro,2023,36,12,0,0,48,0,0.0,0.0,0.0
+13183,Long,0,"Savannah-Hinesville-Statesboro, GA",metro,2024,35,19,0,0,54,0,0.0,0.0,0.0
+13183,Long,0,"Savannah-Hinesville-Statesboro, GA",metro,2025,25,19,0,0,44,0,0.0,0.0,0.0
+13185,Lowndes,0,"Valdosta, GA",metro,2022,664,394,1,0,1058,1,0.001506,0.0,0.000945
+13185,Lowndes,0,"Valdosta, GA",metro,2023,420,131,0,0,551,0,0.0,0.0,0.0
+13185,Lowndes,0,"Valdosta, GA",metro,2024,421,146,0,0,567,0,0.0,0.0,0.0
+13185,Lowndes,0,"Valdosta, GA",metro,2025,416,184,0,0,600,0,0.0,0.0,0.0
+13187,Lumpkin,0,"Atlanta-Sandy Springs-Roswell, GA",metro,2022,265,197,0,1,462,1,0.0,0.005076,0.002165
+13187,Lumpkin,0,"Atlanta-Sandy Springs-Roswell, GA",metro,2023,178,52,0,0,230,0,0.0,0.0,0.0
+13187,Lumpkin,0,"Atlanta-Sandy Springs-Roswell, GA",metro,2024,199,62,0,0,261,0,0.0,0.0,0.0
+13187,Lumpkin,0,"Atlanta-Sandy Springs-Roswell, GA",metro,2025,212,114,0,1,326,1,0.0,0.008772,0.003067
+13189,McDuffie,0,"Augusta-Richmond County, GA-SC",metro,2022,72,73,0,0,145,0,0.0,0.0,0.0
+13189,McDuffie,0,"Augusta-Richmond County, GA-SC",metro,2023,57,16,0,0,73,0,0.0,0.0,0.0
+13189,McDuffie,0,"Augusta-Richmond County, GA-SC",metro,2024,66,16,0,0,82,0,0.0,0.0,0.0
+13189,McDuffie,0,"Augusta-Richmond County, GA-SC",metro,2025,47,30,0,0,77,0,0.0,0.0,0.0
+13191,McIntosh,0,"Brunswick-St. Simons, GA",metro,2022,80,45,0,0,125,0,0.0,0.0,0.0
+13191,McIntosh,0,"Brunswick-St. Simons, GA",metro,2023,84,26,0,0,110,0,0.0,0.0,0.0
+13191,McIntosh,0,"Brunswick-St. Simons, GA",metro,2024,66,19,0,0,85,0,0.0,0.0,0.0
+13191,McIntosh,0,"Brunswick-St. Simons, GA",metro,2025,78,45,0,0,123,0,0.0,0.0,0.0
+13193,Macon,0,,rural,2022,10,10,0,0,20,0,0.0,0.0,0.0
+13193,Macon,0,,rural,2023,13,6,0,0,19,0,0.0,0.0,0.0
+13193,Macon,0,,rural,2024,9,9,0,0,18,0,0.0,0.0,0.0
+13193,Macon,0,,rural,2025,10,11,0,0,21,0,0.0,0.0,0.0
+13195,Madison,0,"Athens-Clarke County, GA",metro,2022,188,119,0,0,307,0,0.0,0.0,0.0
+13195,Madison,0,"Athens-Clarke County, GA",metro,2023,164,40,1,0,204,1,0.006098,0.0,0.004902
+13195,Madison,0,"Athens-Clarke County, GA",metro,2024,132,62,0,0,194,0,0.0,0.0,0.0
+13195,Madison,0,"Athens-Clarke County, GA",metro,2025,119,76,0,0,195,0,0.0,0.0,0.0
+13197,Marion,0,"Columbus-Auburn-Opelika, GA-AL",metro,2022,16,16,0,0,32,0,0.0,0.0,0.0
+13197,Marion,0,"Columbus-Auburn-Opelika, GA-AL",metro,2023,9,12,0,0,21,0,0.0,0.0,0.0
+13197,Marion,0,"Columbus-Auburn-Opelika, GA-AL",metro,2024,9,9,0,0,18,0,0.0,0.0,0.0
+13197,Marion,0,"Columbus-Auburn-Opelika, GA-AL",metro,2025,10,18,0,0,28,0,0.0,0.0,0.0
+13199,Meriwether,0,"Atlanta-Sandy Springs-Roswell, GA",metro,2022,112,80,0,0,192,0,0.0,0.0,0.0
+13199,Meriwether,0,"Atlanta-Sandy Springs-Roswell, GA",metro,2023,100,30,0,0,130,0,0.0,0.0,0.0
+13199,Meriwether,0,"Atlanta-Sandy Springs-Roswell, GA",metro,2024,101,30,0,0,131,0,0.0,0.0,0.0
+13199,Meriwether,0,"Atlanta-Sandy Springs-Roswell, GA",metro,2025,76,38,0,0,114,0,0.0,0.0,0.0
+13201,Miller,0,,rural,2022,13,22,0,0,35,0,0.0,0.0,0.0
+13201,Miller,0,,rural,2023,4,16,0,0,20,0,0.0,0.0,0.0
+13201,Miller,0,,rural,2024,9,20,0,0,29,0,0.0,0.0,0.0
+13201,Miller,0,,rural,2025,7,25,0,0,32,0,0.0,0.0,0.0
+13205,Mitchell,0,,rural,2022,22,28,0,0,50,0,0.0,0.0,0.0
+13205,Mitchell,0,,rural,2023,17,14,0,0,31,0,0.0,0.0,0.0
+13205,Mitchell,0,,rural,2024,16,23,0,0,39,0,0.0,0.0,0.0
+13205,Mitchell,0,,rural,2025,8,23,0,0,31,0,0.0,0.0,0.0
+13207,Monroe,0,"Macon-Bibb County--Warner Robins, GA",metro,2022,282,163,0,0,445,0,0.0,0.0,0.0
+13207,Monroe,0,"Macon-Bibb County--Warner Robins, GA",metro,2023,171,61,0,0,232,0,0.0,0.0,0.0
+13207,Monroe,0,"Macon-Bibb County--Warner Robins, GA",metro,2024,172,82,0,0,254,0,0.0,0.0,0.0
+13207,Monroe,0,"Macon-Bibb County--Warner Robins, GA",metro,2025,170,98,0,0,268,0,0.0,0.0,0.0
+13209,Montgomery,0,"Vidalia, GA",micro,2022,13,22,0,0,35,0,0.0,0.0,0.0
+13209,Montgomery,0,"Vidalia, GA",micro,2023,13,7,0,0,20,0,0.0,0.0,0.0
+13209,Montgomery,0,"Vidalia, GA",micro,2024,8,7,0,0,15,0,0.0,0.0,0.0
+13209,Montgomery,0,"Vidalia, GA",micro,2025,7,16,0,0,23,0,0.0,0.0,0.0
+13211,Morgan,0,"Atlanta-Sandy Springs-Roswell, GA",metro,2022,207,152,0,0,359,0,0.0,0.0,0.0
+13211,Morgan,0,"Atlanta-Sandy Springs-Roswell, GA",metro,2023,127,64,1,0,191,1,0.007874,0.0,0.005236
+13211,Morgan,0,"Atlanta-Sandy Springs-Roswell, GA",metro,2024,117,61,0,0,178,0,0.0,0.0,0.0
+13211,Morgan,0,"Atlanta-Sandy Springs-Roswell, GA",metro,2025,142,77,0,0,219,0,0.0,0.0,0.0
+13213,Murray,1,"Chattanooga-Cleveland-Dalton, TN-GA-AL",metro,2022,149,160,0,0,309,0,0.0,0.0,0.0
+13213,Murray,1,"Chattanooga-Cleveland-Dalton, TN-GA-AL",metro,2023,96,46,0,0,142,0,0.0,0.0,0.0
+13213,Murray,1,"Chattanooga-Cleveland-Dalton, TN-GA-AL",metro,2024,103,65,0,0,168,0,0.0,0.0,0.0
+13213,Murray,1,"Chattanooga-Cleveland-Dalton, TN-GA-AL",metro,2025,111,72,0,0,183,0,0.0,0.0,0.0
+13215,Muscogee,0,"Columbus-Auburn-Opelika, GA-AL",metro,2022,774,348,0,0,1122,0,0.0,0.0,0.0
+13215,Muscogee,0,"Columbus-Auburn-Opelika, GA-AL",metro,2023,495,92,0,0,587,0,0.0,0.0,0.0
+13215,Muscogee,0,"Columbus-Auburn-Opelika, GA-AL",metro,2024,494,121,0,0,615,0,0.0,0.0,0.0
+13215,Muscogee,0,"Columbus-Auburn-Opelika, GA-AL",metro,2025,493,161,0,0,654,0,0.0,0.0,0.0
+13217,Newton,0,"Atlanta-Sandy Springs-Roswell, GA",metro,2022,750,805,1,1,1555,2,0.001333,0.001242,0.001286
+13217,Newton,0,"Atlanta-Sandy Springs-Roswell, GA",metro,2023,511,196,0,0,707,0,0.0,0.0,0.0
+13217,Newton,0,"Atlanta-Sandy Springs-Roswell, GA",metro,2024,475,209,2,0,684,2,0.004211,0.0,0.002924
+13217,Newton,0,"Atlanta-Sandy Springs-Roswell, GA",metro,2025,421,226,0,0,647,0,0.0,0.0,0.0
+13219,Oconee,0,"Athens-Clarke County, GA",metro,2022,432,305,0,1,737,1,0.0,0.003279,0.001357
+13219,Oconee,0,"Athens-Clarke County, GA",metro,2023,335,64,0,0,399,0,0.0,0.0,0.0
+13219,Oconee,0,"Athens-Clarke County, GA",metro,2024,361,87,0,0,448,0,0.0,0.0,0.0
+13219,Oconee,0,"Athens-Clarke County, GA",metro,2025,378,135,0,0,513,0,0.0,0.0,0.0
+13221,Oglethorpe,0,"Athens-Clarke County, GA",metro,2022,114,69,0,0,183,0,0.0,0.0,0.0
+13221,Oglethorpe,0,"Athens-Clarke County, GA",metro,2023,77,45,0,0,122,0,0.0,0.0,0.0
+13221,Oglethorpe,0,"Athens-Clarke County, GA",metro,2024,87,39,0,0,126,0,0.0,0.0,0.0
+13221,Oglethorpe,0,"Athens-Clarke County, GA",metro,2025,62,56,0,0,118,0,0.0,0.0,0.0
+13223,Paulding,1,"Atlanta-Sandy Springs-Roswell, GA",metro,2022,1914,1556,9,25,3470,34,0.004702,0.016067,0.009798
+13223,Paulding,1,"Atlanta-Sandy Springs-Roswell, GA",metro,2023,1377,378,10,4,1755,14,0.007262,0.010582,0.007977
+13223,Paulding,1,"Atlanta-Sandy Springs-Roswell, GA",metro,2024,1389,361,14,4,1750,18,0.010079,0.01108,0.010286
+13223,Paulding,1,"Atlanta-Sandy Springs-Roswell, GA",metro,2025,1226,465,23,17,1691,40,0.01876,0.036559,0.023655
+13225,Peach,0,"Macon-Bibb County--Warner Robins, GA",metro,2022,122,77,0,0,199,0,0.0,0.0,0.0
+13225,Peach,0,"Macon-Bibb County--Warner Robins, GA",metro,2023,107,31,0,0,138,0,0.0,0.0,0.0
+13225,Peach,0,"Macon-Bibb County--Warner Robins, GA",metro,2024,88,31,0,0,119,0,0.0,0.0,0.0
+13225,Peach,0,"Macon-Bibb County--Warner Robins, GA",metro,2025,75,41,0,0,116,0,0.0,0.0,0.0
+13227,Pickens,0,"Atlanta-Sandy Springs-Roswell, GA",metro,2022,429,257,1,0,686,1,0.002331,0.0,0.001458
+13227,Pickens,0,"Atlanta-Sandy Springs-Roswell, GA",metro,2023,289,82,2,0,371,2,0.00692,0.0,0.005391
+13227,Pickens,0,"Atlanta-Sandy Springs-Roswell, GA",metro,2024,276,104,3,1,380,4,0.01087,0.009615,0.010526
+13227,Pickens,0,"Atlanta-Sandy Springs-Roswell, GA",metro,2025,256,150,1,2,406,3,0.003906,0.013333,0.007389
+13229,Pierce,0,"Waycross, GA",micro,2022,82,82,0,0,164,0,0.0,0.0,0.0
+13229,Pierce,0,"Waycross, GA",micro,2023,64,32,0,0,96,0,0.0,0.0,0.0
+13229,Pierce,0,"Waycross, GA",micro,2024,46,41,0,0,87,0,0.0,0.0,0.0
+13229,Pierce,0,"Waycross, GA",micro,2025,65,59,0,0,124,0,0.0,0.0,0.0
+13231,Pike,0,"Atlanta-Sandy Springs-Roswell, GA",metro,2022,190,149,1,0,339,1,0.005263,0.0,0.00295
+13231,Pike,0,"Atlanta-Sandy Springs-Roswell, GA",metro,2023,107,54,0,0,161,0,0.0,0.0,0.0
+13231,Pike,0,"Atlanta-Sandy Springs-Roswell, GA",metro,2024,89,44,0,0,133,0,0.0,0.0,0.0
+13231,Pike,0,"Atlanta-Sandy Springs-Roswell, GA",metro,2025,113,66,0,0,179,0,0.0,0.0,0.0
+13233,Polk,1,"Cedartown, GA",micro,2022,211,178,2,0,389,2,0.009479,0.0,0.005141
+13233,Polk,1,"Cedartown, GA",micro,2023,155,63,1,0,218,1,0.006452,0.0,0.004587
+13233,Polk,1,"Cedartown, GA",micro,2024,152,78,1,0,230,1,0.006579,0.0,0.004348
+13233,Polk,1,"Cedartown, GA",micro,2025,116,105,1,2,221,3,0.008621,0.019048,0.013575
+13235,Pulaski,0,,rural,2022,38,30,0,0,68,0,0.0,0.0,0.0
+13235,Pulaski,0,,rural,2023,25,13,0,0,38,0,0.0,0.0,0.0
+13235,Pulaski,0,,rural,2024,33,16,1,0,49,1,0.030303,0.0,0.020408
+13235,Pulaski,0,,rural,2025,32,21,0,0,53,0,0.0,0.0,0.0
+13237,Putnam,0,,rural,2022,167,125,0,0,292,0,0.0,0.0,0.0
+13237,Putnam,0,,rural,2023,130,35,0,0,165,0,0.0,0.0,0.0
+13237,Putnam,0,,rural,2024,132,50,1,0,182,1,0.007576,0.0,0.005495
+13237,Putnam,0,,rural,2025,132,51,1,0,183,1,0.007576,0.0,0.005464
+13239,Quitman,0,"Eufaula, AL-GA",micro,2022,6,2,0,0,8,0,0.0,0.0,0.0
+13239,Quitman,0,"Eufaula, AL-GA",micro,2023,3,0,0,0,3,0,0.0,,0.0
+13239,Quitman,0,"Eufaula, AL-GA",micro,2024,3,2,0,0,5,0,0.0,0.0,0.0
+13239,Quitman,0,"Eufaula, AL-GA",micro,2025,4,4,0,0,8,0,0.0,0.0,0.0
+13241,Rabun,0,,rural,2022,131,88,0,0,219,0,0.0,0.0,0.0
+13241,Rabun,0,,rural,2023,75,39,0,0,114,0,0.0,0.0,0.0
+13241,Rabun,0,,rural,2024,104,35,0,0,139,0,0.0,0.0,0.0
+13241,Rabun,0,,rural,2025,72,56,0,0,128,0,0.0,0.0,0.0
+13243,Randolph,0,,rural,2022,1,9,0,0,10,0,0.0,0.0,0.0
+13243,Randolph,0,,rural,2023,7,5,0,0,12,0,0.0,0.0,0.0
+13243,Randolph,0,,rural,2024,7,8,0,0,15,0,0.0,0.0,0.0
+13243,Randolph,0,,rural,2025,4,7,0,0,11,0,0.0,0.0,0.0
+13245,Richmond,0,"Augusta-Richmond County, GA-SC",metro,2022,747,433,0,0,1180,0,0.0,0.0,0.0
+13245,Richmond,0,"Augusta-Richmond County, GA-SC",metro,2023,618,129,1,0,747,1,0.001618,0.0,0.001339
+13245,Richmond,0,"Augusta-Richmond County, GA-SC",metro,2024,530,145,0,0,675,0,0.0,0.0,0.0
+13245,Richmond,0,"Augusta-Richmond County, GA-SC",metro,2025,542,156,0,0,698,0,0.0,0.0,0.0
+13247,Rockdale,0,"Atlanta-Sandy Springs-Roswell, GA",metro,2022,512,616,0,0,1128,0,0.0,0.0,0.0
+13247,Rockdale,0,"Atlanta-Sandy Springs-Roswell, GA",metro,2023,371,145,0,0,516,0,0.0,0.0,0.0
+13247,Rockdale,0,"Atlanta-Sandy Springs-Roswell, GA",metro,2024,347,152,1,0,499,1,0.002882,0.0,0.002004
+13247,Rockdale,0,"Atlanta-Sandy Springs-Roswell, GA",metro,2025,341,166,0,0,507,0,0.0,0.0,0.0
+13249,Schley,0,"Americus, GA",micro,2022,13,24,0,0,37,0,0.0,0.0,0.0
+13249,Schley,0,"Americus, GA",micro,2023,14,8,0,0,22,0,0.0,0.0,0.0
+13249,Schley,0,"Americus, GA",micro,2024,13,9,0,0,22,0,0.0,0.0,0.0
+13249,Schley,0,"Americus, GA",micro,2025,13,11,0,0,24,0,0.0,0.0,0.0
+13251,Screven,0,,rural,2022,34,28,0,0,62,0,0.0,0.0,0.0
+13251,Screven,0,,rural,2023,20,6,0,0,26,0,0.0,0.0,0.0
+13251,Screven,0,,rural,2024,25,16,0,0,41,0,0.0,0.0,0.0
+13251,Screven,0,,rural,2025,23,25,0,0,48,0,0.0,0.0,0.0
+13253,Seminole,0,,rural,2022,18,34,0,0,52,0,0.0,0.0,0.0
+13253,Seminole,0,,rural,2023,18,20,0,0,38,0,0.0,0.0,0.0
+13253,Seminole,0,,rural,2024,16,29,0,0,45,0,0.0,0.0,0.0
+13253,Seminole,0,,rural,2025,13,29,0,0,42,0,0.0,0.0,0.0
+13255,Spalding,0,"Atlanta-Sandy Springs-Roswell, GA",metro,2022,479,287,0,1,766,1,0.0,0.003484,0.001305
+13255,Spalding,0,"Atlanta-Sandy Springs-Roswell, GA",metro,2023,347,81,0,0,428,0,0.0,0.0,0.0
+13255,Spalding,0,"Atlanta-Sandy Springs-Roswell, GA",metro,2024,375,91,0,0,466,0,0.0,0.0,0.0
+13255,Spalding,0,"Atlanta-Sandy Springs-Roswell, GA",metro,2025,328,117,0,0,445,0,0.0,0.0,0.0
+13257,Stephens,0,"Toccoa, GA",micro,2022,142,93,0,0,235,0,0.0,0.0,0.0
+13257,Stephens,0,"Toccoa, GA",micro,2023,108,25,0,0,133,0,0.0,0.0,0.0
+13257,Stephens,0,"Toccoa, GA",micro,2024,117,39,0,0,156,0,0.0,0.0,0.0
+13257,Stephens,0,"Toccoa, GA",micro,2025,103,48,0,0,151,0,0.0,0.0,0.0
+13259,Stewart,0,"Columbus-Auburn-Opelika, GA-AL",metro,2022,1,4,0,0,5,0,0.0,0.0,0.0
+13259,Stewart,0,"Columbus-Auburn-Opelika, GA-AL",metro,2023,5,3,0,0,8,0,0.0,0.0,0.0
+13259,Stewart,0,"Columbus-Auburn-Opelika, GA-AL",metro,2024,5,5,0,0,10,0,0.0,0.0,0.0
+13259,Stewart,0,"Columbus-Auburn-Opelika, GA-AL",metro,2025,3,7,0,0,10,0,0.0,0.0,0.0
+13261,Sumter,0,"Americus, GA",micro,2022,59,57,0,0,116,0,0.0,0.0,0.0
+13261,Sumter,0,"Americus, GA",micro,2023,53,20,0,0,73,0,0.0,0.0,0.0
+13261,Sumter,0,"Americus, GA",micro,2024,54,32,0,0,86,0,0.0,0.0,0.0
+13261,Sumter,0,"Americus, GA",micro,2025,62,31,0,0,93,0,0.0,0.0,0.0
+13263,Talbot,0,"Columbus-Auburn-Opelika, GA-AL",metro,2022,9,21,0,0,30,0,0.0,0.0,0.0
+13263,Talbot,0,"Columbus-Auburn-Opelika, GA-AL",metro,2023,16,14,0,0,30,0,0.0,0.0,0.0
+13263,Talbot,0,"Columbus-Auburn-Opelika, GA-AL",metro,2024,11,11,0,0,22,0,0.0,0.0,0.0
+13263,Talbot,0,"Columbus-Auburn-Opelika, GA-AL",metro,2025,11,12,0,0,23,0,0.0,0.0,0.0
+13265,Taliaferro,0,,rural,2022,1,2,0,0,3,0,0.0,0.0,0.0
+13265,Taliaferro,0,,rural,2023,3,1,0,0,4,0,0.0,0.0,0.0
+13265,Taliaferro,0,,rural,2024,4,1,0,0,5,0,0.0,0.0,0.0
+13265,Taliaferro,0,,rural,2025,5,3,0,0,8,0,0.0,0.0,0.0
+13267,Tattnall,0,,rural,2022,41,50,0,0,91,0,0.0,0.0,0.0
+13267,Tattnall,0,,rural,2023,32,39,0,0,71,0,0.0,0.0,0.0
+13267,Tattnall,0,,rural,2024,23,34,0,0,57,0,0.0,0.0,0.0
+13267,Tattnall,0,,rural,2025,41,37,0,0,78,0,0.0,0.0,0.0
+13269,Taylor,0,,rural,2022,17,16,0,0,33,0,0.0,0.0,0.0
+13269,Taylor,0,,rural,2023,19,17,0,0,36,0,0.0,0.0,0.0
+13269,Taylor,0,,rural,2024,11,9,0,0,20,0,0.0,0.0,0.0
+13269,Taylor,0,,rural,2025,9,13,0,0,22,0,0.0,0.0,0.0
+13271,Telfair,0,,rural,2022,16,18,0,0,34,0,0.0,0.0,0.0
+13271,Telfair,0,,rural,2023,12,8,0,0,20,0,0.0,0.0,0.0
+13271,Telfair,0,,rural,2024,3,7,0,0,10,0,0.0,0.0,0.0
+13271,Telfair,0,,rural,2025,4,8,0,0,12,0,0.0,0.0,0.0
+13273,Terrell,0,"Albany, GA",metro,2022,26,25,0,0,51,0,0.0,0.0,0.0
+13273,Terrell,0,"Albany, GA",metro,2023,14,28,0,0,42,0,0.0,0.0,0.0
+13273,Terrell,0,"Albany, GA",metro,2024,21,34,0,0,55,0,0.0,0.0,0.0
+13273,Terrell,0,"Albany, GA",metro,2025,12,30,0,0,42,0,0.0,0.0,0.0
+13275,Thomas,0,"Thomasville, GA",micro,2022,232,176,0,0,408,0,0.0,0.0,0.0
+13275,Thomas,0,"Thomasville, GA",micro,2023,165,58,0,0,223,0,0.0,0.0,0.0
+13275,Thomas,0,"Thomasville, GA",micro,2024,173,67,0,0,240,0,0.0,0.0,0.0
+13275,Thomas,0,"Thomasville, GA",micro,2025,182,80,0,0,262,0,0.0,0.0,0.0
+13277,Tift,0,"Tifton, GA",micro,2022,152,90,0,0,242,0,0.0,0.0,0.0
+13277,Tift,0,"Tifton, GA",micro,2023,89,40,0,0,129,0,0.0,0.0,0.0
+13277,Tift,0,"Tifton, GA",micro,2024,97,39,0,0,136,0,0.0,0.0,0.0
+13277,Tift,0,"Tifton, GA",micro,2025,96,61,0,0,157,0,0.0,0.0,0.0
+13279,Toombs,0,"Vidalia, GA",micro,2022,57,59,0,0,116,0,0.0,0.0,0.0
+13279,Toombs,0,"Vidalia, GA",micro,2023,31,11,0,0,42,0,0.0,0.0,0.0
+13279,Toombs,0,"Vidalia, GA",micro,2024,33,19,0,0,52,0,0.0,0.0,0.0
+13279,Toombs,0,"Vidalia, GA",micro,2025,35,18,0,0,53,0,0.0,0.0,0.0
+13281,Towns,0,,rural,2022,100,55,1,0,155,1,0.01,0.0,0.006452
+13281,Towns,0,,rural,2023,87,20,0,0,107,0,0.0,0.0,0.0
+13281,Towns,0,,rural,2024,67,30,0,0,97,0,0.0,0.0,0.0
+13281,Towns,0,,rural,2025,78,49,1,0,127,1,0.012821,0.0,0.007874
+13283,Treutlen,0,,rural,2022,10,10,0,0,20,0,0.0,0.0,0.0
+13283,Treutlen,0,,rural,2023,3,6,0,0,9,0,0.0,0.0,0.0
+13283,Treutlen,0,,rural,2024,2,5,0,0,7,0,0.0,0.0,0.0
+13283,Treutlen,0,,rural,2025,3,6,0,0,9,0,0.0,0.0,0.0
+13285,Troup,0,"LaGrange, GA-AL",micro,2022,369,200,0,0,569,0,0.0,0.0,0.0
+13285,Troup,0,"LaGrange, GA-AL",micro,2023,280,56,1,0,336,1,0.003571,0.0,0.002976
+13285,Troup,0,"LaGrange, GA-AL",micro,2024,300,65,0,0,365,0,0.0,0.0,0.0
+13285,Troup,0,"LaGrange, GA-AL",micro,2025,268,120,0,0,388,0,0.0,0.0,0.0
+13287,Turner,0,"Tifton, GA",micro,2022,14,16,0,0,30,0,0.0,0.0,0.0
+13287,Turner,0,"Tifton, GA",micro,2023,9,6,0,0,15,0,0.0,0.0,0.0
+13287,Turner,0,"Tifton, GA",micro,2024,12,15,0,0,27,0,0.0,0.0,0.0
+13287,Turner,0,"Tifton, GA",micro,2025,10,13,0,0,23,0,0.0,0.0,0.0
+13289,Twiggs,0,"Macon-Bibb County--Warner Robins, GA",metro,2022,15,12,0,0,27,0,0.0,0.0,0.0
+13289,Twiggs,0,"Macon-Bibb County--Warner Robins, GA",metro,2023,10,10,0,0,20,0,0.0,0.0,0.0
+13289,Twiggs,0,"Macon-Bibb County--Warner Robins, GA",metro,2024,5,10,0,0,15,0,0.0,0.0,0.0
+13289,Twiggs,0,"Macon-Bibb County--Warner Robins, GA",metro,2025,8,13,0,0,21,0,0.0,0.0,0.0
+13291,Union,0,,rural,2022,239,166,0,0,405,0,0.0,0.0,0.0
+13291,Union,0,,rural,2023,165,62,0,0,227,0,0.0,0.0,0.0
+13291,Union,0,,rural,2024,164,88,0,0,252,0,0.0,0.0,0.0
+13291,Union,0,,rural,2025,190,107,0,0,297,0,0.0,0.0,0.0
+13293,Upson,0,"Thomaston, GA",micro,2022,110,97,0,0,207,0,0.0,0.0,0.0
+13293,Upson,0,"Thomaston, GA",micro,2023,67,56,0,0,123,0,0.0,0.0,0.0
+13293,Upson,0,"Thomaston, GA",micro,2024,79,41,0,0,120,0,0.0,0.0,0.0
+13293,Upson,0,"Thomaston, GA",micro,2025,69,73,0,0,142,0,0.0,0.0,0.0
+13295,Walker,1,"Chattanooga-Cleveland-Dalton, TN-GA-AL",metro,2022,474,329,0,0,803,0,0.0,0.0,0.0
+13295,Walker,1,"Chattanooga-Cleveland-Dalton, TN-GA-AL",metro,2023,333,126,0,0,459,0,0.0,0.0,0.0
+13295,Walker,1,"Chattanooga-Cleveland-Dalton, TN-GA-AL",metro,2024,358,147,0,0,505,0,0.0,0.0,0.0
+13295,Walker,1,"Chattanooga-Cleveland-Dalton, TN-GA-AL",metro,2025,341,162,1,0,503,1,0.002933,0.0,0.001988
+13297,Walton,0,"Atlanta-Sandy Springs-Roswell, GA",metro,2022,1168,740,0,0,1908,0,0.0,0.0,0.0
+13297,Walton,0,"Atlanta-Sandy Springs-Roswell, GA",metro,2023,819,183,0,0,1002,0,0.0,0.0,0.0
+13297,Walton,0,"Atlanta-Sandy Springs-Roswell, GA",metro,2024,798,226,0,0,1024,0,0.0,0.0,0.0
+13297,Walton,0,"Atlanta-Sandy Springs-Roswell, GA",metro,2025,714,311,0,1,1025,1,0.0,0.003215,0.000976
+13299,Ware,0,"Waycross, GA",micro,2022,95,88,0,0,183,0,0.0,0.0,0.0
+13299,Ware,0,"Waycross, GA",micro,2023,51,32,0,0,83,0,0.0,0.0,0.0
+13299,Ware,0,"Waycross, GA",micro,2024,45,47,0,0,92,0,0.0,0.0,0.0
+13299,Ware,0,"Waycross, GA",micro,2025,62,49,0,0,111,0,0.0,0.0,0.0
+13301,Warren,0,,rural,2022,12,12,0,0,24,0,0.0,0.0,0.0
+13301,Warren,0,,rural,2023,5,7,0,0,12,0,0.0,0.0,0.0
+13301,Warren,0,,rural,2024,4,6,0,0,10,0,0.0,0.0,0.0
+13301,Warren,0,,rural,2025,5,10,0,0,15,0,0.0,0.0,0.0
+13303,Washington,0,,rural,2022,26,34,0,0,60,0,0.0,0.0,0.0
+13303,Washington,0,,rural,2023,32,4,0,0,36,0,0.0,0.0,0.0
+13303,Washington,0,,rural,2024,20,11,0,0,31,0,0.0,0.0,0.0
+13303,Washington,0,,rural,2025,24,12,0,0,36,0,0.0,0.0,0.0
+13305,Wayne,0,"Savannah-Hinesville-Statesboro, GA",micro,2022,97,93,0,0,190,0,0.0,0.0,0.0
+13305,Wayne,0,"Savannah-Hinesville-Statesboro, GA",micro,2023,55,46,0,0,101,0,0.0,0.0,0.0
+13305,Wayne,0,"Savannah-Hinesville-Statesboro, GA",micro,2024,58,48,0,0,106,0,0.0,0.0,0.0
+13305,Wayne,0,"Savannah-Hinesville-Statesboro, GA",micro,2025,61,65,0,0,126,0,0.0,0.0,0.0
+13307,Webster,0,,rural,2022,7,4,0,0,11,0,0.0,0.0,0.0
+13307,Webster,0,,rural,2023,5,3,0,0,8,0,0.0,0.0,0.0
+13307,Webster,0,,rural,2024,1,0,0,0,1,0,0.0,,0.0
+13307,Webster,0,,rural,2025,3,2,0,0,5,0,0.0,0.0,0.0
+13309,Wheeler,0,,rural,2022,4,6,0,0,10,0,0.0,0.0,0.0
+13309,Wheeler,0,,rural,2023,6,2,0,0,8,0,0.0,0.0,0.0
+13309,Wheeler,0,,rural,2024,5,8,0,0,13,0,0.0,0.0,0.0
+13309,Wheeler,0,,rural,2025,6,3,0,0,9,0,0.0,0.0,0.0
+13311,White,0,,rural,2022,205,165,0,0,370,0,0.0,0.0,0.0
+13311,White,0,,rural,2023,156,54,0,0,210,0,0.0,0.0,0.0
+13311,White,0,,rural,2024,143,60,0,0,203,0,0.0,0.0,0.0
+13311,White,0,,rural,2025,165,76,0,0,241,0,0.0,0.0,0.0
+13313,Whitfield,1,"Chattanooga-Cleveland-Dalton, TN-GA-AL",metro,2022,574,427,0,0,1001,0,0.0,0.0,0.0
+13313,Whitfield,1,"Chattanooga-Cleveland-Dalton, TN-GA-AL",metro,2023,370,135,0,0,505,0,0.0,0.0,0.0
+13313,Whitfield,1,"Chattanooga-Cleveland-Dalton, TN-GA-AL",metro,2024,360,152,1,0,512,1,0.002778,0.0,0.001953
+13313,Whitfield,1,"Chattanooga-Cleveland-Dalton, TN-GA-AL",metro,2025,350,153,0,0,503,0,0.0,0.0,0.0
+13315,Wilcox,0,,rural,2022,4,12,0,0,16,0,0.0,0.0,0.0
+13315,Wilcox,0,,rural,2023,4,3,0,0,7,0,0.0,0.0,0.0
+13315,Wilcox,0,,rural,2024,7,5,0,0,12,0,0.0,0.0,0.0
+13315,Wilcox,0,,rural,2025,2,8,0,0,10,0,0.0,0.0,0.0
+13317,Wilkes,0,,rural,2022,42,31,0,0,73,0,0.0,0.0,0.0
+13317,Wilkes,0,,rural,2023,11,17,0,0,28,0,0.0,0.0,0.0
+13317,Wilkes,0,,rural,2024,23,12,0,0,35,0,0.0,0.0,0.0
+13317,Wilkes,0,,rural,2025,27,19,0,0,46,0,0.0,0.0,0.0
+13319,Wilkinson,0,,rural,2022,15,18,0,0,33,0,0.0,0.0,0.0
+13319,Wilkinson,0,,rural,2023,10,4,0,0,14,0,0.0,0.0,0.0
+13319,Wilkinson,0,,rural,2024,11,10,0,0,21,0,0.0,0.0,0.0
+13319,Wilkinson,0,,rural,2025,13,14,0,0,27,0,0.0,0.0,0.0
+13321,Worth,0,"Albany, GA",metro,2022,41,50,0,0,91,0,0.0,0.0,0.0
+13321,Worth,0,"Albany, GA",metro,2023,29,9,0,0,38,0,0.0,0.0,0.0
+13321,Worth,0,"Albany, GA",metro,2024,28,13,0,0,41,0,0.0,0.0,0.0
+13321,Worth,0,"Albany, GA",metro,2025,29,27,0,0,56,0,0.0,0.0,0.0

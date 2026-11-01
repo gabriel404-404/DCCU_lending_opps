@@ -344,6 +344,7 @@ def main():
 
     # ---- DATA_QUALITY.md
     current = branches[branches["snapshot"] == "current"]
+    methods = pd.read_csv(L.branch_coordinates, dtype=str).set_index("site_id")["method"]
     excluded = current[~current["in_scope"]]
     no_services = current.loc[current["in_scope"] & current["ncua_no_member_services"], "site_name"]
     band_footprint = bands[bands["scope"] == "footprint"][["band", "tracts", "households", "market_all", "lender_all",
@@ -357,11 +358,11 @@ def main():
         "out-of-state):\n\n"
         + md_table(excluded[["site_id", "site_name", "state", "exclusion_reason"]])
         + "\n\nThe Census Geocoder matched every in-scope branch except those below, whose "
-        f"coordinates come from `{L.branch_coordinates.relative_to(s.ROOT).as_posix()}` "
-        "(interpolated between two "
-        "matched house numbers on the same street; error a few hundred meters).\n\n"
+        f"coordinates are hand-placed in `{L.branch_coordinates.relative_to(s.ROOT).as_posix()}`, "
+        "with the method for each (error a few hundred meters at most).\n\n"
         + md_table(current[current["coord_source"] == "manual (config)"]
-                   [["site_id", "site_name", "address", "lat", "lon"]])
+                   [["site_id", "site_name", "address", "lat", "lon"]]
+                   .assign(method=lambda x: x["site_id"].map(methods)))
         + "\n\nEvery geocoder-matched branch falls in the county NCUA lists. Hand-placed points "
         "outside NCUA's county (they sit on a county-line road; distances are unaffected): "
         + (", ".join(f"{r.site_name} (NCUA {r.ncua_county}, point in {r.geocoded_county})"
@@ -381,7 +382,7 @@ def main():
         "loans / sum of market loans):\n\n"
         + md_table(band_footprint.round(4))
         + f"\n\nCounty-adjusted (`vs_county_average` = {L.label} loans / loans expected at the county's "
-        "own share). Most of the raw gradient is between counties, not proximity:\n\n"
+        "own share). This removes differences between counties, so it isolates proximity:\n\n"
         + md_table(bands[bands["scope"] == "footprint_county_adjusted"][
             ["band", "tracts", "market_all", "lender_all", "expected_lender", "vs_county_average"]].round(2)),
         f"### 6. Population estimates (Vintage {s.PEP_YEAR})\nCounty totals sum to the state row "

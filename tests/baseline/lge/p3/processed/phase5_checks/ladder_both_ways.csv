@@ -1,0 +1,7 @@
+unit,used,rung,share,depth,reference,qualifying,top_quarter,top_quarter_on_one_loan,note
+county,True,base,0.010273,191.288228,all footprint counties,14,4,0,
+county,True,stretch,0.015683,297.203444,Bartow,14,4,0,
+county,True,ceiling,0.022175,435.661995,"Floyd, Paulding, Gordon, Bartow",14,4,0,
+tract,False,base,0.010273,191.288228,all footprint counties,567,142,74,
+tract,False,stretch,0.015625,296.015546,tract 13067031315 (Cobb),567,142,74,
+tract,False,ceiling,0.034318,720.850474,142 tracts,567,142,74,

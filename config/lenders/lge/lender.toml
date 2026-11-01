@@ -1,0 +1,28 @@
+# Subject lender: LGE Community Credit Union, the second Georgia credit union (productize P3).
+# Every value is a confirmed fact or a named assumption; the comment says which.
+# Associated Credit Union was the first choice, but its membership is statewide (anyone who lives
+# in Georgia, acuonline.org, checked 2026-11-01), so it has no county footprint to expand from.
+
+[lender]
+name = "LGE Community Credit Union"
+label = "LGE"
+lei = "549300BTTIQWNC2CFA21"     # HMDA /view/filers API, every year 2022-2025 ("LGE COMMUNITY" in 2022)
+charter = "credit_union"
+ncua_charter = "68581"           # NCUA call report (FOICU file): LGE COMMUNITY, Marietta, GA
+
+[market]
+# Product filter: HMDA loan_type codes this lender is measured on (1 = conventional).
+# Its GA originations in the market 2022-2025 are all loan type 1 (Phase 2 product check).
+loan_types = ["1"]
+
+[footprint]
+label = "FOM"
+name = "field of membership"
+counties = "footprint.csv"       # LGE membership page, checked 2026-11-01
+
+[branches]
+exclusions = "branch_exclusions.csv"     # sites left out of branch distance, with reasons
+coordinates = "branch_coordinates.csv"   # hand-placed points for addresses the geocoder can't match
+
+[expansion]
+target_share = 0.01              # planning assumption: 2025 FOM share of 1.03%, rounded to 0.1 point

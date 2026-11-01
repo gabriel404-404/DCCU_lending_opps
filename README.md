@@ -1,7 +1,7 @@
 # DCCU_lending_opps
 Mortgage Growth Map: an outside-in analysis of public HMDA data showing where a lender wins and loses mortgage share, and whether its growth should come from deeper share in its current footprint, expansion into new markets, or both. It is meant to become a product for any lender; **Delta Community Credit Union (DCCU) is the illustrative example** used to build v1. DCCU did not request this.
 
-Start with DCCU's findings: [outputs/dccu/FINDINGS.md](outputs/dccu/FINDINGS.md). Requirements: [docs/PRD.md](docs/PRD.md). Data checks: [DATA_QUALITY.md](DATA_QUALITY.md) (market) and [outputs/dccu/DATA_QUALITY.md](outputs/dccu/DATA_QUALITY.md) (DCCU).
+Start with DCCU's findings: [outputs/dccu/FINDINGS.md](outputs/dccu/FINDINGS.md). Requirements: [docs/PRD.md](docs/PRD.md). Data checks: [DATA_QUALITY.md](DATA_QUALITY.md) (market) and [outputs/dccu/DATA_QUALITY.md](outputs/dccu/DATA_QUALITY.md) (DCCU). A second lender, LGE Community Credit Union, runs from config alone ([outputs/lge/](outputs/lge/), no findings narrative).
 
 ## Setup (once)
 Needs Python 3.13. From the repo root:
@@ -30,7 +30,7 @@ Lender stages (run per lender; everything goes to `data/processed/<key>/` and `o
 - `05_context.py` adds households, density, penetration, distance to the nearest branch, county population growth, adjacency and growth clusters, and completes the expansion scorecard.
 - `06_benchmarks.py` builds the benchmark ladder (footprint average, stretch, ceiling) and the market-structure evidence.
 - `07_outputs.py` draws the maps and charts, writes the final tables and `key_numbers.csv`, and checks the lender's `FINDINGS.md` against the key numbers.
-- `check_baseline.py` (lenders with a saved baseline) compares every file with `tests/baseline/<key>/`; DCCU must reproduce v1 exactly.
+- `check_baseline.py` (lenders with a saved baseline) compares every file with `tests/baseline/<key>/`; DCCU must reproduce v1 exactly. `--save <version>` saves the current run as a new baseline.
 
 Each stage can also be run on its own, e.g. `.venv/Scripts/python src/03_market.py`. For a lender stage, set the lender first: `MGM_LENDER=dccu .venv/Scripts/python src/04_metrics.py` (the default is dccu).
 
@@ -43,6 +43,13 @@ Each lender is a folder under `config/lenders/<key>/`:
 | `footprint.csv` | the footprint's county FIPS codes and names, with the source and date checked |
 | `branch_exclusions.csv` | branch sites left out of distance, with reasons |
 | `branch_coordinates.csv` | hand-placed points for branch addresses the geocoder can't match |
+
+Steps, as done for LGE (`config/lenders/lge/`):
+1. Confirm the facts: the LEI in HMDA's filers list (`data/raw/hmda/filers_*.json`), the footprint counties on the lender's own membership page (a county list, not statewide), and the NCUA charter number in the call report's FOICU file.
+2. Write the four files. Review the lender's NCUA sites against its public branch list and exclude non-public ones, with reasons.
+3. Run `run_all.py --lender all`. If stage 05 stops on branches with no coordinates, place them in `branch_coordinates.csv` with the method, and run again.
+4. Set `expansion.target_share` (the footprint share, rounded to 0.1 point) and read the lender's `DATA_QUALITY.md`, including the product check (Phase 2).
+5. Once the numbers are approved, save a baseline: `MGM_LENDER=<key> .venv/Scripts/python src/check_baseline.py --save <version>`.
 
 Today the pipeline handles credit unions in Georgia; other charters and states are in the PRD's Future phases.
 

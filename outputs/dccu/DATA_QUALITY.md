@@ -237,12 +237,12 @@ NCUA snapshots: scoring year `2025-12` (share by distance) and current `2026-06`
 |     52473 | Office Location- Riverwood 100                | GA      | corporate office without member services |
 |     52474 | Office Location - Riverwood 200               | GA      | corporate office without member services |
 
-The Census Geocoder matched every in-scope branch except those below, whose coordinates come from `config/lenders/dccu/branch_coordinates.csv` (interpolated between two matched house numbers on the same street; error a few hundred meters).
+The Census Geocoder matched every in-scope branch except those below, whose coordinates are hand-placed in `config/lenders/dccu/branch_coordinates.csv`, with the method for each (error a few hundred meters at most).
 
-|   site_id | site_name                    | address                |     lat |      lon |
-|----------:|:-----------------------------|:-----------------------|--------:|---------:|
-|     22909 | Peachtree City (Wisdom Road) | 315 Highway 74 N       | 33.4135 | -84.6029 |
-|     52464 | Johns Creek                  | 6700 McGinnis Ferry Rd | 34.0775 | -84.1827 |
+|   site_id | site_name                    | address                |     lat |      lon | method                                                                                                                        |
+|----------:|:-----------------------------|:-----------------------|--------:|---------:|:------------------------------------------------------------------------------------------------------------------------------|
+|     22909 | Peachtree City (Wisdom Road) | 315 Highway 74 N       | 33.4135 | -84.6029 | Census Geocoder has no match for 315 Highway 74 N; interpolated between its matches for 300 and 320 Highway 74 N              |
+|     52464 | Johns Creek                  | 6700 McGinnis Ferry Rd | 34.0775 | -84.1827 | Census Geocoder has no match for 6700 McGinnis Ferry Rd; interpolated between its matches for 6550 and 6900 McGinnis Ferry Rd |
 
 Every geocoder-matched branch falls in the county NCUA lists. Hand-placed points outside NCUA's county (they sit on a county-line road; distances are unaffected): Johns Creek (NCUA Fulton, point in Forsyth). The farthest any branch's tract internal point is from its nearest branch is 1.73 mi. Branches flagged `ncua_no_member_services` but kept: Conyers.
 
@@ -280,7 +280,7 @@ DCCU share by band, FOM tracts (pooled: sum of DCCU loans / sum of market loans)
 | 5-10   |      497 |       763665 |        17461 |          308 |      0.0176 |           0.0182 |
 | 10+    |      104 |       180829 |         5899 |           70 |      0.0119 |           0.0122 |
 
-County-adjusted (`vs_county_average` = DCCU loans / loans expected at the county's own share). Most of the raw gradient is between counties, not proximity:
+County-adjusted (`vs_county_average` = DCCU loans / loans expected at the county's own share). This removes differences between counties, so it isolates proximity:
 
 | band   |   tracts |   market_all |   lender_all |   expected_lender |   vs_county_average |
 |:-------|---------:|-------------:|-------------:|------------------:|--------------------:|
@@ -394,7 +394,7 @@ Subject-lender totals vs. the HMDA API: **0** mismatches (tolerance: exact match
 ## Regression check against the saved baseline
 
 ### Result
-47 comparisons against `tests/baseline/dccu/`: **47 match**, **0 differ**; 1 file(s) superseded on purpose. Text must match exactly and numbers to 1e-9; the v1 files use pre-productize names and paths, which the check translates. Decided changes (`src/check_baseline.py`): superseded files, and columns added later (`data/processed/benchmark_ladder.csv`: ['unit'], `data/processed/depth_ladder_by_county.csv`: ['top_quarter_tracts'], `outputs/depth_by_county.csv`: ['top_quarter_tracts']), which are allowed while every v1 column still matches.
+47 comparisons against `tests/baseline/dccu/`: **47 match**, **0 differ**; 1 file(s) superseded on purpose. Text must match exactly and numbers to 1e-9. The v1 files use pre-productize names and paths, which the check translates. Decided changes (`src/check_baseline.py`): superseded files, and columns added later (`data/processed/benchmark_ladder.csv`: ['unit'], `data/processed/depth_ladder_by_county.csv`: ['top_quarter_tracts'], `outputs/depth_by_county.csv`: ['top_quarter_tracts']), which are allowed while every v1 column still matches.
 
 | baseline                                              | now   |   rows | result                                                                                                             |
 |:------------------------------------------------------|:------|-------:|:-------------------------------------------------------------------------------------------------------------------|

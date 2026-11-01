@@ -1,0 +1,8 @@
+check,count
+tracts,2796
+missing households (no ACS row),0
+zero households,15
+high MOE households (CV > 30%),7
+zero land area (density blank),5
+missing or zero owner-occupied units (penetration blank),41
+missing distance,0

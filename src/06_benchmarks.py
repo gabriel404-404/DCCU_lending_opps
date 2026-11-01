@@ -243,7 +243,10 @@ def main():
                               "top_quarter", "top_quarter_on_one_loan"]]),
         "### 2. Channel field (`submission_of_application`)\nShares of broker-submitted loans use codes "
         "1 and 2 only; exempt and other codes are left out.\n\n" + md_table(codes)
-        + f"\n\nSubject lender's codes: {subject_codes}.",
+        + f"\n\nSubject lender's codes: {subject_codes}."
+        + (f" {L.label} reports this field as exempt (HMDA's partial exemption for smaller filers), "
+           "so its own broker-submitted share is unknown, not zero."
+           if set(subject_codes) == {s.EXEMPT_CODE} else ""),
         f"### 3. Like-for-like comparison\nSmallest cell: **{min_cell:,}** market originations. "
         "Originations without a tract have no tract-competition band and are left out of that "
         f"dimension ({int(o['tract_lenders'].isna().sum())} loans)."

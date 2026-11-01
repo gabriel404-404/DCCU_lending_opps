@@ -89,6 +89,8 @@ Pricing/rate comparison, underserved-area analysis, fair-lending analysis, forec
 | P-R8 | General rules: market groups split the CSA that holds the footprint's main metro area (replacing the Atlanta special case); the benchmark ladder uses tracts instead of counties when a footprint has fewer than 8 qualifying counties | P2 |
 | P-R9 | A second Georgia credit union (Associated Credit Union) runs end to end from facts: LEI from HMDA's filers list, footprint counties from its website, charter from NCUA. It passes the Phase 3–5 checks | P3 |
 
+P3 note (2026-11-01): Associated's membership is statewide (anyone who lives in Georgia, per its website), so it has no county footprint to deepen or expand. P3 used the approved fallback, **LGE Community Credit Union** (15 counties from its membership page; config `config/lenders/lge/`).
+
 ---
 
 ## Appendix A: Technical spec

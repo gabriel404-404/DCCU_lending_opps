@@ -1,0 +1,61 @@
+key,value,display,source,description
+footprint_counties,15,15,county_year_metrics.csv,footprint counties
+footprint_market_loans,27645,"27,645",county_year_metrics.csv,"market originations in the footprint, 2025"
+footprint_lender_loans,284,284,county_year_metrics.csv,"subject-lender originations in the footprint, 2025"
+footprint_share,0.010273105444022428,1.03%,county_year_metrics.csv,footprint share
+purchase_share_2022,0.001932,0.19%,trend_summary.csv,"footprint purchase share, 2022"
+purchase_share_2025,0.007429,0.74%,trend_summary.csv,"footprint purchase share, 2025"
+refinance_share_2022,0.004907,0.49%,trend_summary.csv,"footprint refinance share, 2022"
+refinance_share_2025,0.018374,1.84%,trend_summary.csv,"footprint refinance share, 2025"
+lender_rank_footprint,18,#18,lender_trend_footprint.csv,"subject lender's rank among footprint lenders, 2025"
+top_quarter_counties,"Floyd, Paulding, Gordon, Bartow","Floyd, Paulding, Gordon, Bartow",benchmark_ladder.csv,top-quarter counties
+top_quarter_count,4,4,benchmark_ladder.csv,number of top-quarter counties
+ladder_base_share,0.010273,1.03%,benchmark_ladder.csv,base rung share
+ladder_base_depth,191.288228,191,benchmark_ladder.csv,"depth at the base rung, loans a year"
+ladder_stretch_share,0.015683,1.57%,benchmark_ladder.csv,stretch rung share
+ladder_stretch_depth,297.203444,297,benchmark_ladder.csv,"depth at the stretch rung, loans a year"
+ladder_ceiling_share,0.022175,2.22%,benchmark_ladder.csv,ceiling rung share
+ladder_ceiling_depth,435.661995,436,benchmark_ladder.csv,"depth at the ceiling rung, loans a year"
+ladder_stretch_county,Bartow,Bartow,benchmark_ladder.csv,county that sets the stretch rung
+top_share,0.022175,2.22%,market_structure.csv,"subject-lender share, top quarter"
+top_hhi,345.068145,345,market_structure.csv,"county HHI, top quarter"
+top_broker_share,0.233869,23%,market_structure.csv,"broker-submitted share of originations, top quarter"
+top_lenders_per_100,64.549731,65,market_structure.csv,"median lenders per 100 loans in a tract, top quarter"
+rest_share,0.008383,0.84%,market_structure.csv,"subject-lender share, rest of footprint"
+rest_hhi,300.520941,301,market_structure.csv,"county HHI, rest of footprint"
+rest_broker_share,0.26617,27%,market_structure.csv,"broker-submitted share of originations, rest of footprint"
+rest_lenders_per_100,68.292683,68,market_structure.csv,"median lenders per 100 loans in a tract, rest of footprint"
+lender_broker_share,,n/a (exempt),market_structure.csv,subject lender's broker-submitted share
+rest_broker_loans,6350.017690000001,"6,350",market_structure.csv,approx. broker-submitted originations outside the top quarter
+peer_top_min,0.016935,1.7%,peer_comparison.csv,"lowest band share, top quarter"
+peer_top_max,0.053571,5.4%,peer_comparison.csv,"highest band share, top quarter"
+peer_rest_min,0.005657,0.6%,peer_comparison.csv,"lowest band share, rest of footprint"
+peer_rest_max,0.011447,1.1%,peer_comparison.csv,"highest band share, rest of footprint"
+depth_top6_share,0.8647519582245429,86%,depth_by_county.csv,"share of base depth in the top 6 counties (Fulton, Cobb, Cherokee, Douglas, Bartow, Catoosa)"
+branchless_counties,8,8,depth_by_county.csv,"footprint counties with no public branch: Catoosa, Chattooga, Dade, Douglas, Murray, Polk, Walker, Whitfield"
+contestable_depth,192.8,193,depth_by_county.csv,base depth on the contestable (non-builder) market
+near_vs_county,0.959871,0.96x,share_by_distance.csv,tracts within 2 miles vs. their county's average
+near_share_raw,0.012112,1.21%,share_by_distance.csv,raw share within 2 miles
+near_band_miles,2,2,config/settings.py,"edge of the nearest distance band, miles"
+far_band_miles,10,10,config/settings.py,"start of the farthest distance band, miles"
+far_share_raw,0.004266,0.43%,share_by_distance.csv,raw share 10+ miles
+expansion_counties,144,144,expansion_scorecard.csv,non-footprint counties
+expansion_target,0.01,1%,config/lenders/lge/lender.toml,expansion target share
+expansion_total,468.37000000000006,468,expansion_scorecard.csv,"expansion gain, all non-footprint counties (upper bound)"
+expansion_top_county,Gwinnett,Gwinnett,expansion_scorecard.csv,non-footprint county with the largest gain
+expansion_top_gain,65.9,66,expansion_scorecard.csv,"its gain, loans a year"
+expansion_top_miles,15.768023,16,expansion_scorecard.csv,its household-weighted miles to the nearest branch
+cluster_C1_gain,126.05,126,growth_clusters.csv,"cluster C1 (Banks, Barrow, Dawson, Forsyth, Franklin, Greene, Habersham, Hall, Hart, Henry, Jackson, Jasper, Lamar, Madison, Monroe, Morgan, Newton, Oglethorpe, Pickens, Pike, Walton) gain; touches footprint: True"
+cluster_C1_counties,21,21,growth_clusters.csv,cluster C1 county count
+cluster_C1_growth,0.132965,13.3%,growth_clusters.csv,cluster C1 population growth
+cluster_C2_gain,21.8,22,growth_clusters.csv,"cluster C2 (Carroll, Coweta, Haralson) gain; touches footprint: True"
+cluster_C2_counties,3,3,growth_clusters.csv,cluster C2 county count
+cluster_C2_growth,0.095047,9.5%,growth_clusters.csv,cluster C2 population growth
+cluster_C3_gain,12.3,12,growth_clusters.csv,"cluster C3 (Bryan, Bulloch, Effingham) gain; touches footprint: False"
+cluster_C3_counties,3,3,growth_clusters.csv,cluster C3 county count
+cluster_C3_growth,0.122332,12.2%,growth_clusters.csv,cluster C3 population growth
+cluster_C4_gain,1.67,2,growth_clusters.csv,"cluster C4 (Long, McIntosh) gain; touches footprint: False"
+cluster_C4_counties,2,2,growth_clusters.csv,cluster C4 county count
+cluster_C4_growth,0.231633,23.2%,growth_clusters.csv,cluster C4 population growth
+reconciliation_mismatches,0,0,phase2_checks/api_reconciliation.csv,"subject-lender totals vs. HMDA API, mismatches"
+builder_lenders_included,7,7,config/builder_lenders.csv,builder-owned lenders in the contestable-market rule

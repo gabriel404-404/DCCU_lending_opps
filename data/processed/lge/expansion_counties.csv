@@ -1,0 +1,145 @@
+expansion_rank,county_fips,county_name,market_group,urban_rural_tier,market_all,market_purchase,market_refinance,lender_all,current_share,expansion_gain,market_purchase_2023,purchase_market_change
+1,13135,Gwinnett,"Atlanta-Sandy Springs-Roswell, GA",metro,8190,6167,2023,16,0.001954,65.9,6814,-0.094952
+2,13089,DeKalb,"Atlanta-Sandy Springs-Roswell, GA",metro,5917,4517,1400,8,0.001352,51.17,5002,-0.096961
+3,13117,Forsyth,"Atlanta-Sandy Springs-Roswell, GA",metro,4336,2870,1466,14,0.003229,29.36,2946,-0.025798
+4,13051,Chatham,"Savannah-Hinesville-Statesboro, GA",metro,2155,1663,492,0,0.0,21.55,1762,-0.056186
+5,13139,Hall,"Gainesville, GA",metro,1939,1444,495,1,0.000516,18.39,1484,-0.026954
+6,13077,Coweta,"Atlanta-Sandy Springs-Roswell, GA",metro,1524,1139,385,0,0.0,15.24,1176,-0.031463
+7,13151,Henry,"Atlanta-Sandy Springs-Roswell, GA",metro,1433,1027,406,0,0.0,14.33,1227,-0.162999
+8,13157,Jackson,"Jefferson, GA",micro,1206,930,276,0,0.0,12.06,1124,-0.172598
+9,13073,Columbia,"Augusta-Richmond County, GA-SC",metro,1185,927,258,0,0.0,11.85,1033,-0.102614
+10,13063,Clayton,"Atlanta-Sandy Springs-Roswell, GA",metro,1027,668,359,0,0.0,10.27,772,-0.134715
+11,13297,Walton,"Atlanta-Sandy Springs-Roswell, GA",metro,1025,714,311,1,0.000976,9.25,819,-0.128205
+12,13013,Barrow,"Atlanta-Sandy Springs-Roswell, GA",metro,965,718,247,1,0.001036,8.65,834,-0.139089
+13,13153,Houston,"Macon-Bibb County--Warner Robins, GA",metro,955,719,236,1,0.001047,8.55,798,-0.098997
+14,13113,Fayette,"Atlanta-Sandy Springs-Roswell, GA",metro,1153,858,295,3,0.002602,8.53,944,-0.091102
+15,13245,Richmond,"Augusta-Richmond County, GA-SC",metro,698,542,156,0,0.0,6.98,618,-0.122977
+16,13021,Bibb,"Macon-Bibb County--Warner Robins, GA",metro,694,523,171,0,0.0,6.94,528,-0.00947
+17,13059,Clarke,"Athens-Clarke County, GA",metro,685,518,167,0,0.0,6.85,546,-0.051282
+18,13127,Glynn,"Brunswick-St. Simons, GA",metro,676,484,192,0,0.0,6.76,485,-0.002062
+19,13215,Muscogee,"Columbus-Auburn-Opelika, GA-AL",metro,654,493,161,0,0.0,6.54,495,-0.00404
+20,13217,Newton,"Atlanta-Sandy Springs-Roswell, GA",metro,647,421,226,0,0.0,6.47,511,-0.176125
+21,13045,Carroll,"Atlanta-Sandy Springs-Roswell, GA",metro,830,601,229,2,0.00241,6.3,600,0.001667
+22,13185,Lowndes,"Valdosta, GA",metro,600,416,184,0,0.0,6.0,420,-0.009524
+23,13219,Oconee,"Athens-Clarke County, GA",metro,513,378,135,0,0.0,5.13,335,0.128358
+24,13247,Rockdale,"Atlanta-Sandy Springs-Roswell, GA",metro,507,341,166,0,0.0,5.07,371,-0.080863
+25,13029,Bryan,"Savannah-Hinesville-Statesboro, GA",metro,497,400,97,0,0.0,4.97,381,0.049869
+26,13255,Spalding,"Atlanta-Sandy Springs-Roswell, GA",metro,445,328,117,0,0.0,4.45,347,-0.054755
+27,13285,Troup,"LaGrange, GA-AL",micro,388,268,120,0,0.0,3.88,280,-0.042857
+28,13031,Bulloch,"Savannah-Hinesville-Statesboro, GA",micro,370,247,123,0,0.0,3.7,272,-0.091912
+29,13103,Effingham,"Savannah-Hinesville-Statesboro, GA",metro,463,314,149,1,0.00216,3.63,409,-0.232274
+30,13137,Habersham,"Cornelia, GA",micro,362,263,99,0,0.0,3.62,232,0.133621
+31,13085,Dawson,"Atlanta-Sandy Springs-Roswell, GA",metro,553,395,158,2,0.003617,3.53,450,-0.122222
+32,13291,Union,,rural,297,190,107,0,0.0,2.97,165,0.151515
+33,13145,Harris,"Columbus-Auburn-Opelika, GA-AL",metro,271,187,84,0,0.0,2.71,164,0.140244
+34,13207,Monroe,"Macon-Bibb County--Warner Robins, GA",metro,268,170,98,0,0.0,2.68,171,-0.005848
+35,13039,Camden,"Jacksonville-Kingsland-Palatka, FL-GA",micro,364,267,97,1,0.002747,2.64,276,-0.032609
+36,13275,Thomas,"Thomasville, GA",micro,262,182,80,0,0.0,2.62,165,0.10303
+37,13133,Greene,,rural,250,172,78,0,0.0,2.5,242,-0.289256
+38,13311,White,,rural,241,165,76,0,0.0,2.41,156,0.057692
+39,13187,Lumpkin,"Atlanta-Sandy Springs-Roswell, GA",metro,326,212,114,1,0.003067,2.26,178,0.191011
+40,13111,Fannin,,rural,226,138,88,0,0.0,2.26,133,0.037594
+41,13211,Morgan,"Atlanta-Sandy Springs-Roswell, GA",metro,219,142,77,0,0.0,2.19,127,0.11811
+42,13177,Lee,"Albany, GA",metro,211,126,85,0,0.0,2.11,147,-0.142857
+43,13195,Madison,"Athens-Clarke County, GA",metro,195,119,76,0,0.0,1.95,164,-0.27439
+44,13159,Jasper,"Atlanta-Sandy Springs-Roswell, GA",metro,190,119,71,0,0.0,1.9,110,0.081818
+45,13095,Dougherty,"Albany, GA",metro,188,119,69,0,0.0,1.88,142,-0.161972
+46,13231,Pike,"Atlanta-Sandy Springs-Roswell, GA",metro,179,113,66,0,0.0,1.79,107,0.056075
+47,13147,Hart,,rural,178,120,58,0,0.0,1.78,132,-0.090909
+48,13175,Laurens,"Dublin, GA",micro,163,99,64,0,0.0,1.63,101,-0.019802
+49,13277,Tift,"Tifton, GA",micro,157,96,61,0,0.0,1.57,89,0.078652
+50,13257,Stephens,"Toccoa, GA",micro,151,103,48,0,0.0,1.51,108,-0.046296
+51,13071,Colquitt,"Moultrie, GA",micro,150,92,58,0,0.0,1.5,75,0.226667
+52,13179,Liberty,"Savannah-Hinesville-Statesboro, GA",metro,146,94,52,0,0.0,1.46,109,-0.137615
+53,13169,Jones,"Macon-Bibb County--Warner Robins, GA",metro,145,96,49,0,0.0,1.45,106,-0.09434
+54,13035,Butts,"Atlanta-Sandy Springs-Roswell, GA",metro,144,86,58,0,0.0,1.44,94,-0.085106
+55,13293,Upson,"Thomaston, GA",micro,142,69,73,0,0.0,1.42,67,0.029851
+56,13009,Baldwin,"Milledgeville, GA",micro,140,84,56,0,0.0,1.4,113,-0.256637
+57,13119,Franklin,,rural,140,87,53,0,0.0,1.4,99,-0.121212
+58,13171,Lamar,,rural,137,85,52,0,0.0,1.37,116,-0.267241
+59,13241,Rabun,,rural,128,72,56,0,0.0,1.28,75,-0.04
+60,13305,Wayne,"Savannah-Hinesville-Statesboro, GA",micro,126,61,65,0,0.0,1.26,55,0.109091
+61,13229,Pierce,"Waycross, GA",micro,124,65,59,0,0.0,1.24,64,0.015625
+62,13191,McIntosh,"Brunswick-St. Simons, GA",metro,123,78,45,0,0.0,1.23,84,-0.071429
+63,13221,Oglethorpe,"Athens-Clarke County, GA",metro,118,62,56,0,0.0,1.18,77,-0.194805
+64,13225,Peach,"Macon-Bibb County--Warner Robins, GA",metro,116,75,41,0,0.0,1.16,107,-0.299065
+65,13199,Meriwether,"Atlanta-Sandy Springs-Roswell, GA",metro,114,76,38,0,0.0,1.14,100,-0.24
+66,13299,Ware,"Waycross, GA",micro,111,62,49,0,0.0,1.11,51,0.215686
+67,13123,Gilmer,,rural,310,197,113,2,0.006452,1.1,191,0.031414
+68,13227,Pickens,"Atlanta-Sandy Springs-Roswell, GA",metro,406,256,150,3,0.007389,1.06,289,-0.114187
+69,13033,Burke,"Augusta-Richmond County, GA-SC",metro,99,67,32,0,0.0,0.99,66,0.015152
+70,13261,Sumter,"Americus, GA",micro,93,62,31,0,0.0,0.93,53,0.169811
+71,13131,Grady,"Thomasville, GA",micro,85,48,37,0,0.0,0.85,45,0.066667
+72,13237,Putnam,,rural,183,132,51,1,0.005464,0.83,130,0.015385
+73,13149,Heard,"Atlanta-Sandy Springs-Roswell, GA",metro,80,48,32,0,0.0,0.8,35,0.371429
+74,13087,Decatur,"Tallahassee-Bainbridge, FL-GA",micro,79,34,45,0,0.0,0.79,37,-0.081081
+75,13181,Lincoln,"Augusta-Richmond County, GA-SC",metro,79,44,35,0,0.0,0.79,47,-0.06383
+76,13105,Elbert,,rural,78,51,27,0,0.0,0.78,50,0.02
+77,13267,Tattnall,,rural,78,41,37,0,0.0,0.78,32,0.28125
+78,13189,McDuffie,"Augusta-Richmond County, GA-SC",metro,77,47,30,0,0.0,0.77,57,-0.175439
+79,13023,Bleckley,,rural,62,35,27,0,0.0,0.62,25,0.4
+80,13027,Brooks,"Valdosta, GA",metro,62,32,30,0,0.0,0.62,24,0.333333
+81,13069,Coffee,"Douglas, GA",micro,61,26,35,0,0.0,0.61,38,-0.315789
+82,13091,Dodge,,rural,60,23,37,0,0.0,0.6,35,-0.342857
+83,13011,Banks,,rural,159,112,47,1,0.006289,0.59,104,0.076923
+84,13163,Jefferson,,rural,57,27,30,0,0.0,0.57,27,0.0
+85,13321,Worth,"Albany, GA",metro,56,29,27,0,0.0,0.56,29,0.0
+86,13019,Berrien,,rural,53,26,27,0,0.0,0.53,27,-0.037037
+87,13081,Crisp,"Cordele, GA",micro,53,37,16,0,0.0,0.53,38,-0.026316
+88,13235,Pulaski,,rural,53,32,21,0,0.0,0.53,25,0.28
+89,13279,Toombs,"Vidalia, GA",micro,53,35,18,0,0.0,0.53,31,0.129032
+90,13001,Appling,,rural,48,20,28,0,0.0,0.48,23,-0.130435
+91,13251,Screven,,rural,48,23,25,0,0.0,0.48,20,0.15
+92,13075,Cook,,rural,47,25,22,0,0.0,0.47,32,-0.21875
+93,13173,Lanier,"Valdosta, GA",metro,46,21,25,0,0.0,0.46,15,0.4
+94,13317,Wilkes,,rural,46,27,19,0,0.0,0.46,11,1.454545
+95,13079,Crawford,"Macon-Bibb County--Warner Robins, GA",metro,44,20,24,0,0.0,0.44,26,-0.230769
+96,13183,Long,"Savannah-Hinesville-Statesboro, GA",metro,44,25,19,0,0.0,0.44,36,-0.305556
+97,13253,Seminole,,rural,42,13,29,0,0.0,0.42,18,-0.277778
+98,13273,Terrell,"Albany, GA",metro,42,12,30,0,0.0,0.42,14,-0.142857
+99,13025,Brantley,"Brunswick-St. Simons, GA",metro,39,16,23,0,0.0,0.39,35,-0.542857
+100,13017,Ben Hill,"Fitzgerald, GA",micro,38,15,23,0,0.0,0.38,15,0.0
+101,13107,Emanuel,,rural,37,20,17,0,0.0,0.37,23,-0.130435
+102,13303,Washington,,rural,36,24,12,0,0.0,0.36,32,-0.25
+103,13099,Early,,rural,34,4,30,0,0.0,0.34,16,-0.75
+104,13161,Jeff Davis,,rural,34,14,20,0,0.0,0.34,27,-0.481481
+105,13043,Candler,,rural,32,25,7,0,0.0,0.32,18,0.388889
+106,13201,Miller,,rural,32,7,25,0,0.0,0.32,4,0.75
+107,13205,Mitchell,,rural,31,8,23,0,0.0,0.31,17,-0.529412
+108,13109,Evans,"Savannah-Hinesville-Statesboro, GA",micro,29,15,14,0,0.0,0.29,12,0.25
+109,13197,Marion,"Columbus-Auburn-Opelika, GA-AL",metro,28,10,18,0,0.0,0.28,9,0.111111
+110,13281,Towns,,rural,127,78,49,1,0.007874,0.27,87,-0.103448
+111,13167,Johnson,"Dublin, GA",micro,27,10,17,0,0.0,0.27,6,0.666667
+112,13319,Wilkinson,,rural,27,13,14,0,0.0,0.27,10,0.3
+113,13143,Haralson,"Atlanta-Sandy Springs-Roswell, GA",metro,226,151,75,2,0.00885,0.26,136,0.110294
+114,13049,Charlton,,rural,26,11,15,0,0.0,0.26,14,-0.214286
+115,13249,Schley,"Americus, GA",micro,24,13,11,0,0.0,0.24,14,-0.071429
+116,13209,Montgomery,"Vidalia, GA",micro,23,7,16,0,0.0,0.23,13,-0.461538
+117,13263,Talbot,"Columbus-Auburn-Opelika, GA-AL",metro,23,11,12,0,0.0,0.23,16,-0.3125
+118,13287,Turner,"Tifton, GA",micro,23,10,13,0,0.0,0.23,9,0.111111
+119,13269,Taylor,,rural,22,9,13,0,0.0,0.22,19,-0.526316
+120,13093,Dooly,,rural,21,10,11,0,0.0,0.21,13,-0.230769
+121,13155,Irwin,,rural,21,9,12,0,0.0,0.21,11,-0.181818
+122,13193,Macon,,rural,21,10,11,0,0.0,0.21,13,-0.230769
+123,13289,Twiggs,"Macon-Bibb County--Warner Robins, GA",metro,21,8,13,0,0.0,0.21,10,-0.2
+124,13005,Bacon,,rural,20,10,10,0,0.0,0.2,15,-0.333333
+125,13065,Clinch,,rural,20,7,13,0,0.0,0.2,8,-0.125
+126,13141,Hancock,,rural,15,10,5,0,0.0,0.15,8,0.25
+127,13165,Jenkins,,rural,15,7,8,0,0.0,0.15,16,-0.5625
+128,13301,Warren,,rural,15,5,10,0,0.0,0.15,5,0.0
+129,13037,Calhoun,,rural,14,5,9,0,0.0,0.14,3,0.666667
+130,13061,Clay,,rural,12,3,9,0,0.0,0.12,7,-0.571429
+131,13271,Telfair,,rural,12,4,8,0,0.0,0.12,12,-0.666667
+132,13243,Randolph,,rural,11,4,7,0,0.0,0.11,7,-0.428571
+133,13259,Stewart,"Columbus-Auburn-Opelika, GA-AL",metro,10,3,7,0,0.0,0.1,5,-0.4
+134,13315,Wilcox,,rural,10,2,8,0,0.0,0.1,4,-0.5
+135,13003,Atkinson,"Douglas, GA",micro,9,1,8,0,0.0,0.09,3,-0.666667
+136,13125,Glascock,,rural,9,5,4,0,0.0,0.09,3,0.666667
+137,13283,Treutlen,,rural,9,3,6,0,0.0,0.09,3,0.0
+138,13309,Wheeler,,rural,9,6,3,0,0.0,0.09,6,0.0
+139,13239,Quitman,"Eufaula, AL-GA",micro,8,4,4,0,0.0,0.08,3,0.333333
+140,13265,Taliaferro,,rural,8,5,3,0,0.0,0.08,3,0.666667
+141,13101,Echols,"Valdosta, GA",metro,5,2,3,0,0.0,0.05,2,0.0
+142,13307,Webster,,rural,5,3,2,0,0.0,0.05,5,-0.4
+143,13053,Chattahoochee,"Columbus-Auburn-Opelika, GA-AL",metro,3,1,2,0,0.0,0.03,3,-0.666667
+144,13007,Baker,,rural,1,0,1,0,0.0,0.01,1,-1.0
