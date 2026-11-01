@@ -4,6 +4,63 @@ Read this at the start of each session. Newest entry first.
 
 ---
 
+## 2026-11-01: productize P1 (lender config, neutral names, per-lender layout)
+
+### Where we are
+**Productize phase: P1 of 3 is done and on GitHub.** DCCU is now one lender configuration. A full rebuild reproduces v1 exactly: 50 of 50 baseline comparisons match, in about 70 seconds. Next are **P2**, then **P3** (PRD §7). Both were approved on 2026-11-01 as part of the productize plan. Per CLAUDE.md, Claude restates the P2 plan (inputs, files, checks) and waits for a go-ahead before coding.
+
+To start next time, say: *"Read docs/SESSION_NOTES.md and start productize P2."*
+
+### What changed in P1
+| Piece | Where |
+|---|---|
+| Lender config (facts, with sources) | `config/lenders/dccu/`: `lender.toml`, `footprint.csv`, `branch_exclusions.csv`, `branch_coordinates.csv` |
+| Config loader | `config/lender.py` (picks the lender from the `MGM_LENDER` variable; the default is dccu) |
+| One command | `.venv/Scripts/python src/run_all.py --lender dccu` (or `all`) |
+| Market vs. lender stages | 01–03 are shared and loop over every configured lender for its raw files and presence checks; 04–07 run per lender |
+| Per-lender folders | `data/raw/lenders/<key>/`, `data/processed/<key>/`, `outputs/<key>/` (with `FINDINGS.md` and `DATA_QUALITY.md`) |
+| Regression baseline | `tests/baseline/dccu/v1/` (48 v1 CSVs) and `src/check_baseline.py`, which runs automatically and translates v1 names |
+| Names | `dccu_*` → `lender_*`, `fom_*` → `footprint_*`; scope values `footprint` / `non_footprint`; no lender hard-coded in `src/` |
+
+Also in P1:
+- NCUA branches are found by charter number (pulled forward from P2).
+- Generated HTML maps are git-ignored.
+- `BASEMAP` is a setting.
+- The interactive map opens on the lender's footprint.
+
+### Next: P2 (approved)
+1. **Product filter per lender (P-R7).**
+   - Stage 03 stops filtering on `loan_type`, so the market files keep all loan types.
+   - `lender.toml` gets `[market] loan_types = ["1"]`, and the lender stages apply it.
+   - The lender's Phase 2 waterfall and its API reconciliation (`API_CHECK_FILTERS["loan_types"]`) must use the lender's loan types.
+   - Expect market files about 1.5× bigger; log the sizes.
+   - **Baseline:** DCCU's lender files must still match. The root market tables (statewide market size and waterfall) change by design, because they now count all loan types. Decide in the P2 plan how `check_baseline.map_v1` handles them, and say so at check-in.
+2. **Market groups (P-R8).** Replace the Atlanta special case (`s.ATLANTA_CBSA` in `01_download.county_tags`) with a general rule: split the CSA that holds the footprint's main metro area. `market_group` then depends on the lender, so compute it in the lender stages, not in `ga_counties.csv`. DCCU's groups must come out identical.
+3. **Ladder fallback (P-R8).** In `06_benchmarks.build_ladder`, if the footprint has fewer than 8 qualifying counties, use the top quarter of qualifying tracts instead. DCCU (20 counties) is unchanged.
+
+### Then: P3 (approved)
+Associated Credit Union, built from facts:
+- **LEI:** from HMDA's `/view/filers` list.
+- **Footprint counties:** from its own website. Fall back to LGE Community Credit Union if Associated's membership isn't county-based.
+- **NCUA charter:** from the FOICU file.
+
+Add `config/lenders/<key>/`, run `--lender all`, then check in with its key numbers. No FINDINGS narrative unless asked.
+
+### Open items (yours)
+1. Builder-lender list review (`config/builder_lenders.csv`); rebuild afterwards.
+2. Merger review: 15 flagged lenders in `outputs/dccu/DATA_QUALITY.md`, Phase 3 check 8.
+
+### Working notes for Claude
+- `src/02_validate.py` has Windows (CRLF) line endings; keep them, or git shows every line as changed.
+- For multi-line scripted edits, write a small script file in the scratchpad and run it. Long inline shell heredocs broke on quoting.
+- The stages rewrite the `DATA_QUALITY.md` files: change the code, not the logs.
+- Every DCCU run must pass the baseline check. If a change is intended (like P2's all-loan-types market), update `check_baseline.py`'s mapping on purpose and say so at check-in.
+
+### Git, as practiced
+Same as before: one commit per sub-phase after its check-in, with the session notes in their own commit.
+
+---
+
 ## 2026-10-27 to 2026-10-30: Phases 3, 4 and 5 (v1 complete)
 
 ### Where we are
