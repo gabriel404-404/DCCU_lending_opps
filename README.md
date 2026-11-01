@@ -23,10 +23,10 @@ python -m venv .venv
 Market stages (shared by every lender):
 - `01_download.py` fetches all raw data into `data/raw/` (about 820 MB, git-ignored), plus each configured lender's own files into `data/raw/lenders/<key>/`. Files already on disk are never downloaded again; the first run takes roughly an hour.
 - `02_validate.py` runs the Phase 1 checks: market checks to `data/processed/phase1_checks/` and `DATA_QUALITY.md`, each lender's presence and branch checks to its own folder and log.
-- `03_market.py` applies the PRD's market definition to every lender and writes `data/processed/market_{year}.parquet` (git-ignored), `lenders.csv`, and the checks in `phase2_checks/` (each lender's reconciliation with the HMDA API goes to its own folder).
+- `03_market.py` applies the PRD's market definition to every lender and writes `data/processed/market_{year}.parquet` (all loan types, git-ignored), `lenders.csv`, and the checks in `phase2_checks/`. Each lender's waterfall with its product filter, its loans by loan type and its reconciliation with the HMDA API go to its own folder.
 
 Lender stages (run per lender; everything goes to `data/processed/<key>/` and `outputs/<key>/`):
-- `04_metrics.py` computes share, trend, depth opportunity and expansion gain.
+- `04_metrics.py` limits the market to the lender's loan types, builds its market groups, and computes share, trend, depth opportunity and expansion gain.
 - `05_context.py` adds households, density, penetration, distance to the nearest branch, county population growth, adjacency and growth clusters, and completes the expansion scorecard.
 - `06_benchmarks.py` builds the benchmark ladder (footprint average, stretch, ceiling) and the market-structure evidence.
 - `07_outputs.py` draws the maps and charts, writes the final tables and `key_numbers.csv`, and checks the lender's `FINDINGS.md` against the key numbers.
@@ -39,7 +39,7 @@ Each lender is a folder under `config/lenders/<key>/`:
 
 | File | Contents |
 |---|---|
-| `lender.toml` | name, label, LEI, charter, NCUA charter number, footprint label, expansion target (TOML is a plain-text config format) |
+| `lender.toml` | name, label, LEI, charter, NCUA charter number, product filter (`[market] loan_types`, HMDA codes), footprint label, expansion target (TOML is a plain-text config format) |
 | `footprint.csv` | the footprint's county FIPS codes and names, with the source and date checked |
 | `branch_exclusions.csv` | branch sites left out of distance, with reasons |
 | `branch_coordinates.csv` | hand-placed points for branch addresses the geocoder can't match |
@@ -61,6 +61,7 @@ Parquet files and the interactive HTML maps are git-ignored and rebuilt by `run_
 ## Lender files (`data/processed/<key>/`)
 | File | Contents |
 |---|---|
+| `counties.csv` | every Georgia county: footprint flag, OMB CBSA/CSA and tier, and the lender's market group |
 | `tract_metrics.csv` | every Georgia tract, scoring year: market and lender loans, share, `low_volume`, opportunity score and rank (footprint tracts), `stable_top25`, contestable score, top 3 competitors |
 | `depth_by_county.csv` | depth opportunity per footprint county (full and contestable market), with top 3 competitors |
 | `trend_summary.csv` | lender share by year for the footprint, outside it and statewide: purchase, refinance, combined, and refi mix |
@@ -75,9 +76,9 @@ Parquet files and the interactive HTML maps are git-ignored and rebuilt by `run_
 | `expansion_scorecard.csv` | R3a: the non-footprint counties with expansion gain plus the county context |
 | `growth_clusters.csv` | R3b: groups of neighboring fast-growing non-footprint counties |
 | `opportunity_top25.csv` | R2: top 25 footprint tracts (stage 07 adds context for `outputs/`) |
-| `benchmark_ladder.csv` | base / stretch / ceiling: rule, share and depth |
-| `depth_ladder_by_county.csv` | depth at each benchmark rung, per footprint county |
-| `market_structure.csv` | top-quarter footprint counties vs. the rest: concentration, lenders per loan, broker-submitted share |
+| `benchmark_ladder.csv` | base / stretch / ceiling: unit (county, or tract for a small footprint), rule, share and depth |
+| `depth_ladder_by_county.csv` | depth at each benchmark rung, per footprint county, with its top-quarter tracts |
+| `market_structure.csv` | the top quarter vs. the rest of the footprint: concentration, lenders per loan, broker-submitted share |
 | `peer_comparison.csv` | subject-lender share by loan size and by tract competition, top quarter vs. the rest |
 
 ## Lender outputs (`outputs/<key>/`)
@@ -100,7 +101,7 @@ Parquet files and the interactive HTML maps are git-ignored and rebuilt by `run_
 | Source | Used for |
 |---|---|
 | HMDA Data Browser API (CFPB/FFIEC), 2022–2025, all Georgia counties | loan-level market data; each lender's own records and API check counts |
-| Census county list (2020) and OMB 2023 delineation | `config/ga_counties.csv` (metro/micro/rural tier, market group) |
+| Census county list (2020) and OMB 2023 delineation | `config/ga_counties.csv` (metro/micro/rural tier, CBSA and CSA codes); each lender's market groups are built from them |
 | Census TIGER/Line 2024, Georgia tracts (2020 boundaries) | tract shapes, land area, internal points |
 | Census ACS 2020–2024 5-year, table B11001 | households per tract |
 | NCUA quarterly call report (latest, and December of the scoring year) | credit-union branch addresses, by charter number |

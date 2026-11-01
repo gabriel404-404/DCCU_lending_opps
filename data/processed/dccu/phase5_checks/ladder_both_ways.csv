@@ -1,0 +1,7 @@
+unit,used,rung,share,depth,reference,qualifying,top_quarter,top_quarter_on_one_loan,note
+county,True,base,0.01956,532.917753,all footprint counties,20,5,0,
+county,True,stretch,0.040449,1374.312568,Spalding,20,5,0,
+county,True,ceiling,0.061715,2381.879373,"Fayette, Coweta, Butts, Henry, Spalding",20,5,0,
+tract,False,base,0.01956,532.917753,all footprint counties,1047,262,85,
+tract,False,stretch,0.033333,1065.985669,tract 13057090303 (Cherokee),1047,262,85,
+tract,False,ceiling,0.057872,2193.209379,262 tracts,1047,262,85,

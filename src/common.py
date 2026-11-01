@@ -51,6 +51,16 @@ def read_hmda(path, **kw):
     return pd.read_csv(path, dtype=str, keep_default_na=False, **kw)
 
 
+def lender_market(lender, year, columns):
+    """One year of the shared market file, limited to the lender's product (its loan types).
+
+    Every lender's loans of those types are kept, so competitors are measured the same way.
+    SQL: SELECT columns FROM market_{year} WHERE loan_type IN (lender's loan types).
+    """
+    m = pd.read_parquet(s.PROCESSED / f"market_{year}.parquet", columns=[*columns, "loan_type"])
+    return m[m["loan_type"].isin(lender.loan_types)].drop(columns="loan_type")
+
+
 def ncua_branches(zip_path, charter):
     """A credit union's NCUA record (FOICU) and branch rows from one call report zip."""
     with zipfile.ZipFile(zip_path) as z:

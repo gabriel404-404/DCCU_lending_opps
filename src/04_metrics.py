@@ -1,7 +1,9 @@
 """Stage 4: share, trend and opportunity metrics (PRD Appendix A, "Metrics").
 
-Runs for one lender (config/lender.py). Reads the shared Phase 2 market files and writes,
+Runs for one lender (config/lender.py). Reads the shared Phase 2 market files (limited to the
+lender's loan types) and config/ga_counties.csv, and writes,
 in data/processed/<key>/:
+  counties.csv                every Georgia county: footprint flag, OMB tags, market group
   opportunity_top25.csv       R2: top 25 footprint tracts (stage 07 adds context for outputs/)
   tract_metrics.csv           every Georgia tract, scoring year
   depth_by_county.csv         depth opportunity rolled up by footprint county
@@ -25,7 +27,7 @@ import pandas as pd
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 from config import settings as s  # noqa: E402
 from config.lender import LENDER as L  # noqa: E402
-from src.common import lender_log_heading, md_table, write_data_quality  # noqa: E402
+from src.common import lender_log_heading, lender_market, md_table, write_data_quality  # noqa: E402
 
 OUT = L.processed / "phase3_checks"
 PURPOSES = ["purchase", "refinance", "all"]
@@ -40,18 +42,43 @@ def load_builders():
 
 
 def load_originations(builders):
-    """Every year's originations (action_taken = 1), with 0/1 subject-lender, footprint and
-    builder-lender columns."""
+    """Every year's originations (action_taken = 1) of the lender's product, with 0/1
+    subject-lender, footprint and builder-lender columns."""
     cols = ["lei", "county_fips", "census_tract", "action_taken", "purpose_group", "has_tract"]
     frames = []
     for y in s.YEARS:
-        df = pd.read_parquet(s.PROCESSED / f"market_{y}.parquet", columns=cols)
+        df = lender_market(L, y, cols)
         frames.append(df[df["action_taken"] == "1"].drop(columns="action_taken").assign(year=y))
     orig = pd.concat(frames, ignore_index=True)
     orig["footprint_flag"] = orig["county_fips"].isin(L.footprint).astype("int8")
     orig["lender"] = (orig["lei"] == L.lei).astype(int)
     orig["builder"] = orig["lei"].isin(builders).astype(int)
     return orig
+
+
+def market_groups(counties, orig):
+    """market_group per county (PRD Appendix A): the county's CSA if it has one, else its CBSA.
+
+    The CSA that holds the footprint's main metro area (the CBSA with the most scoring-year
+    footprint originations) is split back into its CBSAs: as one group it would swallow the
+    nearby metros (for an Atlanta footprint: Athens, Gainesville, Rome) that are separate
+    expansion choices. Returns the counties with market_group, and the main metro (or None).
+    """
+    cur = orig[(orig["year"] == s.SCORING_YEAR) & (orig["footprint_flag"] == 1)]
+    loans = counties["county_fips"].map(cur.groupby("county_fips").size()).fillna(0)
+    fp = counties.assign(loans=loans)[(counties["footprint_flag"] == 1) & counties["cbsa_code"].notna()]
+    by_cbsa = fp.groupby("cbsa_code").agg(counties=("county_fips", "size"), loans=("loans", "sum"))
+    main = None
+    if len(by_cbsa):
+        code = by_cbsa["loans"].sort_values(ascending=False, kind="stable").index[0]
+        row = counties[counties["cbsa_code"] == code].iloc[0]
+        main = {"cbsa_code": code, "cbsa_title": row["cbsa_title"], "csa_code": row["csa_code"],
+                "csa_title": row["csa_title"], "counties": int(by_cbsa.loc[code, "counties"]),
+                "loan_share": by_cbsa.loc[code, "loans"] / len(cur)}
+    home_csa = main["csa_code"] if main else None
+    use_csa = counties["csa_code"].notna() & ~counties["csa_code"].isin([home_csa])
+    counties = counties.assign(market_group=counties["csa_title"].where(use_csa, counties["cbsa_title"]))
+    return counties, main
 
 
 def counts(orig, keys):
@@ -445,6 +472,8 @@ def main():
 
     print("Loading originations...")
     orig = load_originations(builders)
+    counties, main_metro = market_groups(counties, orig)
+    counties.to_csv(L.processed / "counties.csv", index=False)
     county_year = build_county_year(orig, counties)
     footprint_cur = county_year[(county_year["year"] == s.SCORING_YEAR) & (county_year["footprint_flag"] == 1)]
     footprint_share = footprint_cur["lender_all"].sum() / footprint_cur["market_all"].sum()
@@ -528,7 +557,15 @@ def main():
         "Full list: `phase3_checks/8_lender_merger_review.csv`.\n\n"
         + md_table(flagged.drop(columns=["lei", "flagged"])),
         "### 9. Market groups and tiers\nHybrid rule (PRD Appendix A): CSA where one exists, "
-        "except the Atlanta CSA, which is split into its CBSAs.\n\n" + md_table(group_check),
+        "else CBSA, except the CSA that holds the footprint's main metro area, which is split into "
+        "its CBSAs. " + (
+            f"Main metro area: **{main_metro['cbsa_title']}** (CBSA {main_metro['cbsa_code']}), "
+            f"{main_metro['counties']} of {len(L.footprint)} {L.footprint_label} counties and "
+            f"{main_metro['loan_share']:.1%} of {L.footprint_label} originations in {s.SCORING_YEAR}. "
+            + (f"Split CSA: {main_metro['csa_title']}." if pd.notna(main_metro["csa_code"])
+               else "It is in no CSA, so nothing is split.")
+            if main_metro else f"No {L.footprint_label} county is in a metro or micro area, so nothing "
+            "is split.") + " Each county's group is in `counties.csv`.\n\n" + md_table(group_check),
         f"### 10. Expansion edge cases\nNon-{L.footprint_label} counties where {L.label} is already at or above "
         f"{L.expansion_target_share:.0%} (expansion gain 0): "
         + (", ".join(f"{r.county_name} ({r.current_share:.1%})" for r in at_target.itertuples())

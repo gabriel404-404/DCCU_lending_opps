@@ -8,6 +8,11 @@ lei = "549300Y4BSP3BSFW7J29"     # HMDA /view/filers API, every year 2022-2025
 charter = "credit_union"
 ncua_charter = "66357"           # NCUA call report (FOICU file), Phase 1 check 8
 
+[market]
+# Product filter: HMDA loan_type codes this lender is measured on (1 = conventional).
+# DCCU offers no FHA/VA/USDA loans (PRD §1); its HMDA originations 2022-2025 are all loan type 1.
+loan_types = ["1"]
+
 [footprint]
 label = "FOM"
 name = "field of membership"

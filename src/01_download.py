@@ -31,7 +31,10 @@ def download_reference_files():
 
 
 def county_tags(omb):
-    """CBSA, CSA, urban/rural tier and market group for each county in an OMB area (PRD Appendix A)."""
+    """CBSA, CSA and urban/rural tier for each county in an OMB area (PRD Appendix A).
+
+    Market groups depend on the lender's footprint, so stage 04 builds them from these codes.
+    """
     t = omb.rename(columns={
         "CBSA Code": "cbsa_code", "CBSA Title": "cbsa_title", "CSA Code": "csa_code",
         "CSA Title": "csa_title", "Metropolitan/Micropolitan Statistical Area": "cbsa_type"})
@@ -39,16 +42,12 @@ def county_tags(omb):
                                                 "Micropolitan Statistical Area": "micro"})
     if t["urban_rural_tier"].isna().any():
         raise ValueError(f"Unexpected CBSA types: {t['cbsa_type'].unique()}")
-    # Hybrid market groups: use the CSA where there is one, so Macon + Warner Robins rank as one
-    # market. Not the Atlanta CSA, though: it would swallow Athens, Gainesville, Rome and LaGrange.
-    atl_csa = t.loc[t["cbsa_code"] == s.ATLANTA_CBSA, "csa_code"].iloc[0]
-    use_csa = t["csa_code"].notna() & (t["csa_code"] != atl_csa)
-    t["market_group"] = t["csa_title"].where(use_csa, t["cbsa_title"])
-    return t[["county_fips", "urban_rural_tier", "market_group", "cbsa_title", "csa_title"]]
+    return t[["county_fips", "urban_rural_tier", "cbsa_code", "cbsa_title", "csa_code", "csa_title"]]
 
 
 def build_county_config():
-    """Write config/ga_counties.csv: all Georgia counties with metro-area tags (no lender columns)."""
+    """Write config/ga_counties.csv: all Georgia counties with OMB metro-area codes and tiers
+    (no lender columns)."""
     counties = pd.read_csv(s.RAW / "census" / "st13_ga_cou2020.txt", sep="|", dtype=str)
     counties["county_fips"] = counties["STATEFP"] + counties["COUNTYFP"]
     counties["county_name"] = counties["COUNTYNAME"].str.replace(" County", "", regex=False)
@@ -58,7 +57,7 @@ def build_county_config():
     omb["county_fips"] = omb["FIPS State Code"] + omb["FIPS County Code"]
 
     out = counties[["county_fips", "county_name"]].copy()
-    # Counties in no metro or micro area are rural and have no market group.
+    # Counties in no metro or micro area are rural and have no CBSA (so no market group).
     out = out.merge(county_tags(omb), on="county_fips", how="left")
     out["urban_rural_tier"] = out["urban_rural_tier"].fillna("rural")
     out.to_csv(s.CONFIG / "ga_counties.csv", index=False)
@@ -115,7 +114,7 @@ def download_lender(lender):
               params={"years": y, "leis": lender.lei})
         fetch(f"{s.HMDA_API}/aggregations", lender.raw / "api_checks" / f"{y}_none.json",
               params={"years": y, "states": s.STATE_ABBR, "leis": lender.lei, "actions_taken": "1"})
-        for param, (_, values) in s.API_CHECK_FILTERS.items():
+        for param, (_, values) in lender.api_check_filters.items():
             fetch(f"{s.HMDA_API}/aggregations", lender.raw / "api_checks" / f"{y}_{param}.json",
                   params={"years": y, "states": s.STATE_ABBR, "leis": lender.lei,
                           "actions_taken": "1", param: ",".join(values)})

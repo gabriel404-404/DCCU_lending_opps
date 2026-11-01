@@ -25,22 +25,32 @@ Charter 66357 (`DELTA COMMUNITY` in NCUA). Branch records: 36. **No lat/long col
 <!-- phase2_lender:start -->
 ## Phase 2: lender within the market definition
 
-### DCCU through the market filters (2025; all years in `phase2_checks/filter_waterfall.csv`)
-The same filters apply to every lender; each row is DCCU's count after every filter above it.
+### Product filter: conventional (`loan_types` ['1'])
+DCCU's market is every lender's conventional loans, so the filter applies to competitors too. Below: DCCU's own GA originations by loan type, after the other market filters (`phase2_checks/product_filter.csv`). A large share left out would mean the config misses part of DCCU's lending.
 
-| step                             |   rows_lender |   originations_lender |   originations_removed |
-|:---------------------------------|--------------:|----------------------:|-----------------------:|
-| start: all GA rows with a county |          5508 |                  2867 |                      0 |
-| exclude_purchased                |          5508 |                  2867 |                      0 |
-| conventional                     |          5508 |                  2867 |                      0 |
-| first_lien                       |          2507 |                  1437 |                   1430 |
-| units_1_to_4                     |          2507 |                  1437 |                      0 |
-| site_built                       |          2507 |                  1437 |                      0 |
-| principal_residence              |          2366 |                  1379 |                     58 |
-| purchase_or_refi                 |          1991 |                  1219 |                    160 |
-| closed_end                       |          1868 |                  1154 |                     65 |
-| not_reverse                      |          1868 |                  1154 |                      0 |
-| not_business                     |          1868 |                  1154 |                      0 |
+|   year |   conventional |   FHA |   VA |   USDA |   lender_originations |   kept |   kept_share |
+|-------:|---------------:|------:|-----:|-------:|----------------------:|-------:|-------------:|
+|   2022 |           1305 |     0 |    0 |      0 |                  1305 |   1305 |            1 |
+|   2023 |            537 |     0 |    0 |      0 |                   537 |    537 |            1 |
+|   2024 |            930 |     0 |    0 |      0 |                   930 |    930 |            1 |
+|   2025 |           1154 |     0 |    0 |      0 |                  1154 |   1154 |            1 |
+
+### DCCU through the market filters (2025; all years in `phase2_checks/filter_waterfall.csv`)
+The same filters apply to every lender. `conventional` is DCCU's product filter; `_all` columns count the market as DCCU defines it, `_lender` columns DCCU's own rows. Each row is the count after every filter above it.
+
+| step                             |   rows_all |   originations_all |   rows_lender |   originations_lender |   originations_removed |
+|:---------------------------------|-----------:|-------------------:|--------------:|----------------------:|-----------------------:|
+| start: all GA rows with a county |     511121 |             241969 |          5508 |                  2867 |                      0 |
+| exclude_purchased                |     447297 |             241969 |          5508 |                  2867 |                      0 |
+| conventional                     |     305450 |             166984 |          5508 |                  2867 |                      0 |
+| first_lien                       |     204657 |             117839 |          2507 |                  1437 |                   1430 |
+| units_1_to_4                     |     203451 |             116888 |          2507 |                  1437 |                      0 |
+| site_built                       |     183778 |             112444 |          2507 |                  1437 |                      0 |
+| principal_residence              |     146107 |              89940 |          2366 |                  1379 |                     58 |
+| purchase_or_refi                 |     128938 |              82934 |          1991 |                  1219 |                    160 |
+| closed_end                       |     124968 |              80858 |          1868 |                  1154 |                     65 |
+| not_reverse                      |     124790 |              80758 |          1868 |                  1154 |                      0 |
+| not_business                     |     124660 |              80682 |          1868 |                  1154 |                      0 |
 
 ### DCCU reconciliation with the HMDA API
 DCCU's GA originations with one market filter at a time, our data vs. the API's own count (the API allows at most two filters, so the full definition can't be checked in one query). Occupancy can't be checked: the API ignores that filter.
@@ -56,7 +66,7 @@ Mismatches: **0** of 24.
 | construction_methods | True                 |         2867 |          2867 | True    |
 | loan_purposes        | True                 |         1667 |          1667 | True    |
 
-### Market size and DCCU (originations, after all filters)
+### Market size and DCCU (conventional originations, after all filters)
 |   year | scope     |   market_originations |   market_purchase |   market_refinance |   market_no_tract |   lenders |   lender_originations |   lender_purchase |   lender_refinance |   lender_no_tract |
 |-------:|:----------|----------------------:|------------------:|-------------------:|------------------:|----------:|----------------------:|------------------:|-------------------:|------------------:|
 |   2022 | statewide |                138169 |             85616 |              52553 |                61 |       875 |                  1305 |               512 |                793 |                 0 |
@@ -125,7 +135,7 @@ Ties on loan count are broken by the lender's FOM-wide 2025 volume. A tie decide
 | HOME POINT FINANCIAL CORPORATION          |         1058 |            0 |            0 |            0 | 2022                   | 2023, 2024, 2025      |                                                   |
 
 ### 9. Market groups and tiers
-Hybrid rule (PRD Appendix A): CSA where one exists, except the Atlanta CSA, which is split into its CBSAs.
+Hybrid rule (PRD Appendix A): CSA where one exists, else CBSA, except the CSA that holds the footprint's main metro area, which is split into its CBSAs. Main metro area: **Atlanta-Sandy Springs-Roswell, GA** (CBSA 12060), 18 of 20 FOM counties and 94.2% of FOM originations in 2025. Split CSA: Atlanta--Athens-Clarke County--Sandy Springs, GA-AL. Each county's group is in `counties.csv`.
 
 | market_group                           | urban_rural_tier   |   counties |   footprint_counties | county_names                                                                                                                                                                                                                                                                                                                                                                                                                                                        |
 |:---------------------------------------|:-------------------|-----------:|---------------------:|:--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
@@ -307,13 +317,24 @@ County totals sum to the state row in every year used. Georgia grew **5.31%** fr
 ## Phase 5: benchmark ladder and market structure
 
 ### 1. Benchmark ladder (2025)
-Rules in `config/settings.py`: counties need 100+ market originations to qualify (20 of 20 do; excluded: none); the top quarter is the top 5 by share. The base rung reproduces Phase 3's depth opportunity exactly, and the county breakdown sums to each rung's total.
+Rules in `config/settings.py`. 20 of 20 footprint counties have 100+ market originations (excluded: none). With at least 8 qualifying counties the ladder uses counties; otherwise it uses footprint tracts with 20+ market originations. **Unit used: county**; 20 qualifying counties, the top quarter is the top 5 by share. Top-quarter counties resting on a single DCCU loan: **0** of 5. The base rung reproduces Phase 3's depth opportunity exactly, and the county breakdown sums to each rung's total.
 
-| rung    | rule                              |   share_pct | reference                               |   depth |   depth_outside_top_quarter |   depth_vs_current_loans |
-|:--------|:----------------------------------|------------:|:----------------------------------------|--------:|----------------------------:|-------------------------:|
-| base    | footprint average                 |        1.96 | all footprint counties                  |  532.92 |                      519.02 |                     0.51 |
-| stretch | weakest county in the top quarter |        4.04 | Spalding                                | 1374.31 |                     1335.69 |                     1.31 |
-| ceiling | top quarter, pooled               |        6.17 | Fayette, Coweta, Butts, Henry, Spalding | 2381.88 |                     2301.81 |                     2.26 |
+| rung    | unit   | rule                              |   share_pct | reference                               |   depth |   depth_outside_top_quarter |   depth_vs_current_loans |
+|:--------|:-------|:----------------------------------|------------:|:----------------------------------------|--------:|----------------------------:|-------------------------:|
+| base    | county | footprint average                 |        1.96 | all footprint counties                  |  532.92 |                      519.02 |                     0.51 |
+| stretch | county | weakest county in the top quarter |        4.04 | Spalding                                | 1374.31 |                     1335.69 |                     1.31 |
+| ceiling | county | top quarter, pooled               |        6.17 | Fayette, Coweta, Butts, Henry, Spalding | 2381.88 |                     2301.81 |                     2.26 |
+
+The ladder both ways, by county and by tract (`phase5_checks/ladder_both_ways.csv`), so the tract rule runs on every lender's data. Tract shares are noisier: a top-quarter tract can rest on one loan.
+
+| unit   | used   | rung    |   share_pct |   depth |   qualifying |   top_quarter |   top_quarter_on_one_loan |
+|:-------|:-------|:--------|------------:|--------:|-------------:|--------------:|--------------------------:|
+| county | True   | base    |        1.96 |   532.9 |           20 |             5 |                         0 |
+| county | True   | stretch |        4.04 |  1374.3 |           20 |             5 |                         0 |
+| county | True   | ceiling |        6.17 |  2381.9 |           20 |             5 |                         0 |
+| tract  | False  | base    |        1.96 |   532.9 |         1047 |           262 |                        85 |
+| tract  | False  | stretch |        3.33 |  1066   |         1047 |           262 |                        85 |
+| tract  | False  | ceiling |        5.79 |  2193.2 |         1047 |           262 |                        85 |
 
 ### 2. Channel field (`submission_of_application`)
 Shares of broker-submitted loans use codes 1 and 2 only; exempt and other codes are left out.
@@ -373,9 +394,11 @@ Subject-lender totals vs. the HMDA API: **0** mismatches (tolerance: exact match
 ## Regression check against the saved baseline
 
 ### Result
-50 comparisons against `tests/baseline/dccu/`: **50 match**, **0 differ**. Text must match exactly and numbers to 1e-9; the v1 files use pre-productize names and paths, which the check translates.
+47 comparisons against `tests/baseline/dccu/`: **47 match**, **0 differ**; 1 file(s) superseded on purpose. Text must match exactly and numbers to 1e-9; the v1 files use pre-productize names and paths, which the check translates. Decided changes (`src/check_baseline.py`): superseded files, and columns added later (`data/processed/benchmark_ladder.csv`: ['unit'], `data/processed/depth_ladder_by_county.csv`: ['top_quarter_tracts'], `outputs/depth_by_county.csv`: ['top_quarter_tracts']), which are allowed while every v1 column still matches.
 
-_none_
+| baseline                                              | now   |   rows | result                                                                                                             |
+|:------------------------------------------------------|:------|-------:|:-------------------------------------------------------------------------------------------------------------------|
+| v1/data/processed/phase2_checks/exempt_flags_kept.csv |       |      0 | superseded: P2: the market files keep all loan types, so this market-wide count now includes FHA, VA and USDA rows |
 
-Every file matches.
+Every compared file matches.
 <!-- baseline:end -->

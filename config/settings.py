@@ -28,10 +28,13 @@ PURCHASE_CHANGE_BASE_YEAR = 2023
 # A county needs LADDER_MIN_MARKET market originations to qualify, so a tiny county can't set the bar.
 LADDER_TOP_FRACTION = 0.25
 LADDER_MIN_MARKET = 100
+# Small footprints (P-R8): with fewer than LADDER_MIN_COUNTIES qualifying counties, the ladder
+# uses footprint tracts instead; a tract needs the low-volume threshold's market originations.
+LADDER_MIN_COUNTIES = 8
+LADDER_MIN_TRACT_MARKET = LOW_VOLUME_THRESHOLD
 
 STATE_FIPS = "13"  # Georgia
 STATE_ABBR = "GA"
-ATLANTA_CBSA = "12060"  # Atlanta-Sandy Springs-Roswell, GA (OMB Bulletin 23-01, July 2023)
 
 HMDA_API = "https://ffiec.cfpb.gov/v2/data-browser-api/view"
 # Global LEI registry: names for market LEIs missing from the HMDA filers lists.
@@ -51,10 +54,11 @@ ACS_B11001_URL = (
 )
 
 # Market definition (PRD Appendix A). Each filter is applied to every lender, in this order.
-# Values are HMDA codes; see docs/PRD.md for the reasoning.
+# Values are HMDA codes; see docs/PRD.md for the reasoning. Loan type is not here: it is each
+# subject lender's product filter (`[market] loan_types` in its lender.toml), applied in its
+# own stages to every lender's loans, so the shared market files keep all loan types.
 MARKET_FILTERS = [
     ("exclude_purchased", "action_taken", "!=", ["6"]),
-    ("conventional", "loan_type", "in", ["1"]),
     ("first_lien", "lien_status", "in", ["1"]),
     ("units_1_to_4", "total_units", "in", ["1", "2", "3", "4"]),
     ("site_built", "construction_method", "in", ["1"]),
@@ -66,11 +70,17 @@ MARKET_FILTERS = [
 ]
 EXEMPT_CODE = "1111"
 
+# HMDA loan_type codes, for a lender's product filter. 4 = RHS or FSA guaranteed (USDA).
+LOAN_TYPES = {"1": "conventional", "2": "FHA", "3": "VA", "4": "USDA"}
+# A lender's waterfall applies its product filter right after this market filter (where v1 had
+# its conventional step), so its counts read like v1's.
+PRODUCT_FILTER_AFTER = "exclude_purchased"
+
 # The HMDA API counts with at most two filters, so each lender is reconciled one filter at a
 # time (originations + that filter). API parameter name -> (HMDA field, values).
-# occupancy_type is left out: the API silently ignores that filter.
+# occupancy_type is left out: the API silently ignores that filter. Loan types come from each
+# lender's config (Lender.api_check_filters puts them first).
 API_CHECK_FILTERS = {
-    "loan_types": ("loan_type", ["1"]),
     "lien_statuses": ("lien_status", ["1"]),
     "total_units": ("total_units", ["1", "2", "3", "4"]),
     "construction_methods": ("construction_method", ["1"]),

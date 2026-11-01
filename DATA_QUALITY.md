@@ -69,38 +69,56 @@ ACS 2020–2024 5-year, table B11001. CV = (MOE / 1.645) / estimate; flag when C
 ## Phase 2: market definition
 
 ### Filter waterfall (2025; all years in `phase2_checks/filter_waterfall.csv`)
-Filters run in order, so each row's count is after every filter above it. Rows with no county code (Phase 1, check 1) never enter, so the start is slightly below the statewide total. Each lender's own waterfall and reconciliation with the HMDA API are in `outputs/<lender>/DATA_QUALITY.md`.
+Filters run in order, so each row's count is after every filter above it. Rows with no county code (Phase 1, check 1) never enter, so the start is slightly below the statewide total. Loan type is not a market filter: the market files keep all loan types, and each lender's product filter (`loan_types` in its `lender.toml`) is applied in its own stages. Each lender's waterfall (with its product filter), product check and reconciliation with the HMDA API are in `outputs/<lender>/DATA_QUALITY.md`.
 
 | step                             |   rows_all |   originations_all |   originations_removed |
 |:---------------------------------|-----------:|-------------------:|-----------------------:|
 | start: all GA rows with a county |     511121 |             241969 |                      0 |
 | exclude_purchased                |     447297 |             241969 |                      0 |
-| conventional                     |     305450 |             166984 |                  74985 |
-| first_lien                       |     204657 |             117839 |                  49145 |
-| units_1_to_4                     |     203451 |             116888 |                    951 |
-| site_built                       |     183778 |             112444 |                   4444 |
-| principal_residence              |     146107 |              89940 |                  22504 |
-| purchase_or_refi                 |     128938 |              82934 |                   7006 |
-| closed_end                       |     124968 |              80858 |                   2076 |
-| not_reverse                      |     124790 |              80758 |                    100 |
-| not_business                     |     124660 |              80682 |                     76 |
+| first_lien                       |     346393 |             192791 |                  49178 |
+| units_1_to_4                     |     345173 |             191828 |                    963 |
+| site_built                       |     319554 |             184116 |                   7712 |
+| principal_residence              |     281360 |             161342 |                  22774 |
+| purchase_or_refi                 |     262121 |             153768 |                   7574 |
+| closed_end                       |     257246 |             151194 |                   2574 |
+| not_reverse                      |     257056 |             151088 |                    106 |
+| not_business                     |     256851 |             150975 |                    113 |
+
+### Market by loan type (originations, after all filters, statewide)
+`phase2_checks/market_by_loan_type.csv` also splits purchase and refinance.
+
+|   year |   conventional |   FHA |    VA |   USDA |    all |
+|-------:|---------------:|------:|------:|-------:|-------:|
+|   2022 |         138169 | 38291 | 30228 |   1904 | 208592 |
+|   2023 |          76604 | 35903 | 20338 |   1086 | 133931 |
+|   2024 |          78334 | 38328 | 25830 |   1100 | 143592 |
+|   2025 |          80682 | 41118 | 28031 |   1144 | 150975 |
+
+Market files (all loan types, all actions):
+
+| file                |   rows |   mb |
+|:--------------------|-------:|-----:|
+| market_2022.parquet | 356030 | 14.8 |
+| market_2023.parquet | 228316 |  9.9 |
+| market_2024.parquet | 240155 | 10.3 |
+| market_2025.parquet | 256851 | 10.9 |
 
 ### Exempt flags kept
 Rows kept although the lender reported the field as exempt (`1111`), all years. Exempt lenders are small and rarely make these products.
 
 | filter       | field                          |   rows_kept_with_exempt |
 |:-------------|:-------------------------------|------------------------:|
-| closed_end   | open-end_line_of_credit        |                   12023 |
-| not_business | business_or_commercial_purpose |                   12008 |
-| not_reverse  | reverse_mortgage               |                   12024 |
+| closed_end   | open-end_line_of_credit        |                   12782 |
+| not_business | business_or_commercial_purpose |                   12758 |
+| not_reverse  | reverse_mortgage               |                   12784 |
 
-### Market size (originations, after all filters, statewide)
+### Market size (originations, after all filters, statewide, all loan types)
 |   year |   market_originations |   market_purchase |   market_refinance |   market_no_tract |   lenders |
 |-------:|----------------------:|------------------:|-------------------:|------------------:|----------:|
-|   2022 |                138169 |             85616 |              52553 |                61 |       875 |
-|   2023 |                 76604 |             63173 |              13431 |                32 |       828 |
-|   2024 |                 78334 |             61581 |              16753 |                20 |       781 |
-|   2025 |                 80682 |             58062 |              22620 |                46 |       807 |
+|   2022 |                208592 |            132586 |              76006 |                64 |       907 |
+|   2023 |                133931 |            105181 |              28750 |                40 |       869 |
+|   2024 |                143592 |            104712 |              38880 |                25 |       824 |
+|   2025 |                150975 |            103211 |              47764 |                55 |       848 |
 
 ### Rows without a census tract
 `market_no_tract` originations stay in the market data (`has_tract = 0`) and count toward county and statewide totals, but can't be placed on the map or in tract metrics.

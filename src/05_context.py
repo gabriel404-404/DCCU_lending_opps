@@ -264,8 +264,8 @@ def build_clusters(scorecard):
 
 def main():
     OUT.mkdir(parents=True, exist_ok=True)
-    counties = pd.read_csv(s.CONFIG / "ga_counties.csv", dtype=str)
-    counties["footprint_flag"] = counties["county_fips"].isin(L.footprint).astype(int)
+    counties = pd.read_csv(L.processed / "counties.csv", dtype=str)  # stage 04: footprint, groups
+    counties["footprint_flag"] = counties["footprint_flag"].astype(int)
     tiger = gpd.read_file(s.RAW / "tiger" / "tl_2024_13_tract.zip").rename(columns={"GEOID": "census_tract"})
 
     branches, snapshots = load_branches()
@@ -328,7 +328,8 @@ def main():
                 "branch_miles_hh_weighted"]
     blanks = int(scorecard[key_cols].isna().any(axis=1).sum())
     gain_phase3 = pd.read_csv(L.processed / "expansion_counties.csv")["expansion_gain"].sum()
-    if len(scorecard) != 139 or blanks or not np.isclose(scorecard["expansion_gain"].sum(), gain_phase3):
+    expected = int((counties["footprint_flag"] == 0).sum())
+    if len(scorecard) != expected or blanks or not np.isclose(scorecard["expansion_gain"].sum(), gain_phase3):
         raise ValueError("Expansion scorecard is incomplete or doesn't match Phase 3")
 
     # ---- write

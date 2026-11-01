@@ -183,8 +183,7 @@ def load():
     d["top25"] = proc("opportunity_top25", dtype={"census_tract": str})
     b = proc("branches", dtype={"site_id": str})
     d["branches"] = b[(b["snapshot"] == "current") & b["in_scope"]]
-    d["counties"] = pd.read_csv(s.CONFIG / "ga_counties.csv", dtype={"county_fips": str})
-    d["counties"]["footprint_flag"] = d["counties"]["county_fips"].isin(L.footprint).astype(int)
+    d["counties"] = proc("counties", dtype={"county_fips": str})
     d["market_size"] = pd.read_csv(L.processed / "phase2_checks" / "market_size.csv")
     d["recon"] = pd.read_csv(L.processed / "phase2_checks" / "api_reconciliation.csv")
     builders = pd.read_csv(s.CONFIG / "builder_lenders.csv", dtype=str)
@@ -266,8 +265,8 @@ def map_footprint_share(d):
                                              f"average ({d['base']:.2%})")
     header(fig, f"{L.label} share of {s.SCORING_YEAR} mortgage originations, by tract",
            f"{L.footprint_label} counties. Red: below {L.label}'s own average; blue: above it.",
-           "Source: HMDA (CFPB), conventional first-lien purchase and refinance originations, all "
-           "lenders; Census TIGER 2024 tracts; NCUA branch list.")
+           f"Source: HMDA (CFPB), {L.product_label} first-lien purchase and refinance originations, "
+           "all lenders; Census TIGER 2024 tracts; NCUA branch list.")
     fig.subplots_adjust(left=0.01, right=0.99, top=0.9, bottom=0.17)
     save(fig, "map_footprint_share.png")
     return len(t), int(t["low_volume"].sum())
@@ -543,7 +542,8 @@ def chart_depth_vs_expansion(d):
     rows = [(f"Base: {L.footprint_label} average ({lad.loc['base', 'share']:.2%})", lad.loc["base", "depth"], "depth"),
             (f"Stretch: {lad.loc['stretch', 'reference']} level ({lad.loc['stretch', 'share']:.2%})",
              lad.loc["stretch", "depth"], "depth"),
-            (f"Ceiling: top-quarter counties ({lad.loc['ceiling', 'share']:.2%})", lad.loc["ceiling", "depth"], "depth"),
+            (f"Ceiling: top-quarter {'counties' if lad.loc['ceiling', 'unit'] == 'county' else 'tracts'} "
+             f"({lad.loc['ceiling', 'share']:.2%})", lad.loc["ceiling", "depth"], "depth"),
             (f"All {len(d['scorecard'])} non-{L.footprint_label} counties at {L.expansion_target_share:.0%}",
              d["scorecard"]["expansion_gain"].sum(), "expansion")]
     for _, r in cl.iterrows():
@@ -595,7 +595,8 @@ def tables(d):
                               "branch_miles_scoring_year": "miles_to_branch"})
     top.to_csv(OUT / "opportunity_top25.csv", index=False)
 
-    lc = d["ladder_county"][["county_fips", "in_top_quarter", "depth_stretch", "depth_ceiling"]]
+    lc = d["ladder_county"][["county_fips", "in_top_quarter", "top_quarter_tracts", "depth_stretch",
+                             "depth_ceiling"]]
     branches = d["branches"].groupby("ncua_county").size()
     depth = d["depth"].merge(lc, on="county_fips", how="left")
     depth = depth.merge(d["county_ctx"][["county_fips", "branch_miles_hh_weighted"]], on="county_fips",
@@ -605,6 +606,7 @@ def tables(d):
         "depth_rank": depth["rank"], "county_name": depth["county_name"],
         "market_loans": depth["market_all"], "lender_loans": depth["lender_all"],
         "lender_share_pct": pct(depth["share_all"]), "in_top_quarter": depth["in_top_quarter"],
+        "top_quarter_tracts": depth["top_quarter_tracts"],
         "depth_base": depth["opportunity"].round(1), "depth_stretch": depth["depth_stretch"].round(1),
         "depth_ceiling": depth["depth_ceiling"].round(1),
         "depth_base_contestable": depth["opportunity_contestable"].round(1),
@@ -658,17 +660,23 @@ def key_numbers(d, depth_table):
         f"subject lender's rank among footprint lenders, {s.SCORING_YEAR}")
 
     lad = d["ladder"].set_index("rung")
-    top_names = lad.loc["ceiling", "reference"]
-    add("top_quarter_counties", top_names, top_names, "benchmark_ladder.csv", "top-quarter counties")
-    add("top_quarter_count", len(top_names.split(", ")), f"{len(top_names.split(', '))}",
-        "benchmark_ladder.csv", "number of top-quarter counties")
+    unit = lad.loc["ceiling", "unit"]
+    if unit == "county":
+        top_names = lad.loc["ceiling", "reference"]
+        add("top_quarter_counties", top_names, top_names, "benchmark_ladder.csv", "top-quarter counties")
+        add("top_quarter_count", len(top_names.split(", ")), f"{len(top_names.split(', '))}",
+            "benchmark_ladder.csv", "number of top-quarter counties")
+    else:
+        n = int(d["ladder_county"]["top_quarter_tracts"].sum())
+        add("top_quarter_tract_count", n, f"{n:,}", "depth_ladder_by_county.csv",
+            "number of top-quarter tracts (tract ladder: too few qualifying counties)")
     for rung in ["base", "stretch", "ceiling"]:
         add(f"ladder_{rung}_share", lad.loc[rung, "share"], f"{lad.loc[rung, 'share']:.2%}",
             "benchmark_ladder.csv", f"{rung} rung share")
         add(f"ladder_{rung}_depth", lad.loc[rung, "depth"], f"{lad.loc[rung, 'depth']:,.0f}",
             "benchmark_ladder.csv", f"depth at the {rung} rung, loans a year")
-    add("ladder_stretch_county", lad.loc["stretch", "reference"], lad.loc["stretch", "reference"],
-        "benchmark_ladder.csv", "county that sets the stretch rung")
+    add(f"ladder_stretch_{unit}", lad.loc["stretch", "reference"], lad.loc["stretch", "reference"],
+        "benchmark_ladder.csv", f"{unit} that sets the stretch rung")
 
     st = d["structure"].set_index("group")
     for g, tag in [("top quarter", "top"), ("rest of footprint", "rest")]:

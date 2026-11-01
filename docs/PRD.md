@@ -96,7 +96,7 @@ Pricing/rate comparison, underserved-area analysis, fair-lending analysis, forec
 ### Data sources
 - **HMDA loan-level data:** CFPB Data Browser API (`https://ffiec.cfpb.gov/v2/data-browser-api/view/csv`).
   - **Years:** every published year from 2022 onward. 2022+ uses 2020 census tract boundaries, so tracts are comparable across years. Do not pull 2018–2021 (2010 tracts).
-  - **Geography:** the market is all 159 Georgia counties (state FIPS 13), kept as a fixed county list in `config/ga_counties.csv`. The OMB 2023 delineation supplies each county's CBSA, CSA, `urban_rural_tier` and `market_group` (see Metrics). Lender columns are not stored there: each lender's footprint list is in `config/lenders/<key>/footprint.csv`, and stages flag footprint counties from it.
+  - **Geography:** the market is all 159 Georgia counties (state FIPS 13), kept as a fixed county list in `config/ga_counties.csv`. The OMB 2023 delineation supplies each county's CBSA, CSA and `urban_rural_tier`; each lender's `market_group` is built from them (see Metrics). Lender columns are not stored there: each lender's footprint list is in `config/lenders/<key>/footprint.csv`, and stages flag footprint counties from it.
   - Use `/view/filers` to map LEIs to lender names. Confirm DCCU's LEI there; do not hard-code a guess.
 - **Lender names not in the filers lists:** GLEIF LEI registry API (`https://api.gleif.org/api/v1/lei-records`), one cached call per missing LEI.
 - **Builder-owned lenders:** hand-maintained `config/builder_lenders.csv`, with the basis for each row; reviewed by the user.
@@ -108,7 +108,7 @@ Pricing/rate comparison, underserved-area analysis, fair-lending analysis, forec
 - **County adjacency:** Census county adjacency file, latest release.
 
 ### Market definition (apply to the whole market, not just DCCU)
-- Conventional loans only (DCCU offers no FHA/VA/USDA).
+- Product filter per subject lender (P-R7): the loan types in its config (`[market] loan_types`, HMDA `loan_type` codes), applied to every lender's loans in that lender's stages. The shared market files keep all loan types. DCCU: conventional only (it offers no FHA/VA/USDA).
 - First lien, 1–4 units, site-built, principal residence.
 - Purchase and refinance, reported combined and split. Refinance includes cash-out refinance (`loan_purpose` 31 and 32).
 - Closed-end loans only: exclude HELOCs (`open-end_line_of_credit = 1`), including first-lien HELOCs. Also exclude reverse mortgages and business-purpose loans.
@@ -129,7 +129,7 @@ Pricing/rate comparison, underserved-area analysis, fair-lending analysis, forec
 - `vs_county_average` (R4) = DCCU loans in a band ÷ loans expected if each tract matched its own county's share. Separates proximity from county-level differences.
 - County branch distance = household-weighted average of its tracts' distance to the nearest current branch.
 - `fom_flag` = tract's county is in DCCU's FOM config list.
-- `market_group` = the county's OMB 2023 combined statistical area (CSA) if it has one, else its CBSA. Exception: the Atlanta CSA is split back into its CBSAs, so Athens, Gainesville, Rome, LaGrange etc. stand alone, and the Atlanta MSA counties outside the FOM form one group. Counties in no CBSA have no market group; they rank in the rural tier.
+- `market_group` = the county's OMB 2023 combined statistical area (CSA) if it has one, else its CBSA. Exception (P-R8): the CSA that holds the footprint's main metro area, meaning the CBSA with the most scoring-year footprint originations, is split back into its CBSAs. For DCCU that is the Atlanta MSA (18 of 20 FOM counties, 94% of FOM loans), so the Atlanta CSA is split: Athens, Gainesville, Rome, LaGrange etc. stand alone, and the Atlanta MSA counties outside the FOM form one group. If the main metro is in no CSA, or no footprint county is in a CBSA, nothing is split. Counties in no CBSA have no market group; they rank in the rural tier. Market groups depend on the footprint, so they are built in the lender stages.
 - `urban_rural_tier` = metro, micro or rural: the county's OMB 2023 CBSA type, or rural if it is in no CBSA.
 - `pop_growth` = county population change, 2020 to the latest estimate year (%).
 - `purchase_market_change` = change in county purchase originations, 2023 → 2025. A cross-check on population growth; it mostly tracks interest rates.
@@ -143,6 +143,7 @@ Pricing/rate comparison, underserved-area analysis, fair-lending analysis, forec
   - Base = footprint average (`fom_share`). Stretch = share of the weakest top-quarter county. Ceiling = pooled share of the top-quarter counties.
   - Depth at each rung uses the same form as `opportunity_score`: tract market originations × max(0, rung − tract share), summed over footprint tracts. The base rung reproduces the depth opportunity exactly.
   - Label the ceiling as a ceiling: it reflects history and the membership base, which investment can't simply buy.
+  - Small footprints (P-R8): with fewer than 8 qualifying counties, the ladder uses footprint tracts with at least 20 market originations (the `low_volume` line) instead, with the same top-quarter rules. Tract shares are noisier (a top-quarter tract can rest on one loan), so every lender's data-quality log shows the ladder both ways and how many top-quarter units rest on one loan. DCCU uses counties; by tract it would be stretch 3.33% and ceiling 5.79%.
 - **Market-structure evidence** (top quarter vs. the rest of the footprint): county HHI (loan-weighted), median lenders per 100 loans in a tract, top 10 lenders' share, builder-lender share, loan size and income, and **broker-submitted share** from HMDA's `submission_of_application` (code 2 = not submitted directly to the lender; exempt codes left out). Like-for-like: subject-lender share within loan-size quintiles and tract-competition terciles.
 - Compare depth and expansion in loans per year, side by side, in `FINDINGS.md`. Every number in `FINDINGS.md` comes from `outputs/key_numbers.csv`, and the pipeline flags any that don't.
 
