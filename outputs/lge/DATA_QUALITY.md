@@ -114,24 +114,33 @@ No tract is dropped. Tracts under 20 market originations get `low_volume = True`
 Ties on loan count are broken by the lender's FOM-wide 2025 volume. A tie decided the 3rd competitor in **6 of 25** top tracts (472 of 789 FOM tracts).
 
 ### 8. Lender merger review (open item 3)
-35 non-LGE lenders were in the FOM top 25 in at least one year; **14** are flagged (a year with no loans, or FOM purchase share moving by more than 1.5x year over year). Review by hand for mergers. Full list: `phase3_checks/8_lender_merger_review.csv`.
+35 non-LGE lenders were in the FOM top 25 in at least one year; **15** are flagged (a year with no loans, or FOM purchase share moving by more than 1.5x year over year). Full list: `phase3_checks/8_lender_merger_review.csv`.
 
-| name                                  |   loans_2022 |   loans_2023 |   loans_2024 |   loans_2025 | top25_years            | years_with_no_loans   | purchase_share_jumps             |
-|:--------------------------------------|-------------:|-------------:|-------------:|-------------:|:-----------------------|:----------------------|:---------------------------------|
-| CROSSCOUNTRY MORTGAGE, INC.           |          221 |          260 |          361 |          502 | 2023, 2024, 2025       |                       | 2022->2023 x1.9                  |
-| MOVEMENT MORTGAGE, LLC                |          899 |          650 |          748 |          478 | 2022, 2023, 2024, 2025 |                       | 2024->2025 x0.6                  |
-| DELTA COMMUNITY CREDIT UNION          |          450 |          204 |          346 |          428 | 2022, 2024, 2025       |                       | 2022->2023 x1.5; 2023->2024 x1.6 |
-| KIND LENDING, LLC                     |          134 |           89 |          183 |          269 | 2025                   |                       | 2023->2024 x2.0                  |
-| ZILLOW HOME LOANS, LLC                |           77 |          167 |          254 |          263 | 2024, 2025             |                       | 2022->2023 x5.5; 2023->2024 x1.6 |
-| PROVIDENT FUNDING ASSOCIATES, L.P.    |          153 |          225 |          242 |          231 | 2024                   |                       | 2022->2023 x3.1                  |
-| GUARANTEED RATE, INC.                 |          306 |          446 |          368 |          227 | 2023, 2024             |                       | 2022->2023 x2.5; 2024->2025 x0.6 |
-| SouthState Bank, National Association |          616 |          231 |          209 |          204 | 2022, 2023             |                       | 2022->2023 x0.7                  |
-| DHI MORTGAGE COMPANY, LTD.            |          403 |          192 |          242 |          184 | 2024                   |                       | 2022->2023 x0.6                  |
-| Broker Solutions, Inc.                |          554 |          149 |          230 |          148 | 2022                   |                       | 2022->2023 x0.5; 2023->2024 x1.5 |
-| Synovus Bank                          |          414 |          295 |          127 |          131 | 2023                   |                       | 2023->2024 x0.4                  |
-| AmeriSave Mortgage Corporation        |          522 |          101 |           50 |           86 | 2022                   |                       | 2022->2023 x0.2; 2023->2024 x0.3 |
-| HOMESTAR FINANCIAL CORPORATION        |          962 |          309 |            0 |            0 | 2022, 2023             | 2024, 2025            | 2022->2023 x0.5                  |
-| HOME POINT FINANCIAL CORPORATION      |          583 |            0 |            0 |            0 | 2022                   | 2023, 2024, 2025      |                                  |
+| name                                  |   loans_2022 |   loans_2023 |   loans_2024 |   loans_2025 | top25_years            | years_with_no_loans   | purchase_share_jumps                              |
+|:--------------------------------------|-------------:|-------------:|-------------:|-------------:|:-----------------------|:----------------------|:--------------------------------------------------|
+| CROSSCOUNTRY MORTGAGE, INC.           |          221 |          260 |          361 |          502 | 2023, 2024, 2025       |                       | 2022->2023 x1.9                                   |
+| MOVEMENT MORTGAGE, LLC                |          899 |          650 |          748 |          478 | 2022, 2023, 2024, 2025 |                       | 2024->2025 x0.6                                   |
+| DELTA COMMUNITY CREDIT UNION          |          450 |          204 |          346 |          428 | 2022, 2024, 2025       |                       | 2022->2023 x1.5; 2023->2024 x1.6                  |
+| KIND LENDING, LLC                     |          134 |           89 |          183 |          269 | 2025                   |                       | 2023->2024 x2.0                                   |
+| ZILLOW HOME LOANS, LLC                |           77 |          167 |          254 |          263 | 2024, 2025             |                       | 2022->2023 x5.5; 2023->2024 x1.6                  |
+| NEWREZ LLC                            |          655 |          114 |          183 |          232 | 2022                   |                       | 2022->2023 x0.3; 2023->2024 x2.1                  |
+| PROVIDENT FUNDING ASSOCIATES, L.P.    |          153 |          225 |          242 |          231 | 2024                   |                       | 2022->2023 x3.1                                   |
+| GUARANTEED RATE, INC.                 |          306 |          446 |          368 |          227 | 2023, 2024             |                       | 2022->2023 x2.5; 2024->2025 x0.6                  |
+| SouthState Bank, National Association |          616 |          231 |          209 |          204 | 2022, 2023             |                       | 2022->2023 x0.7                                   |
+| DHI MORTGAGE COMPANY, LTD.            |          403 |          192 |          242 |          184 | 2024                   |                       | 2022->2023 x0.6                                   |
+| Broker Solutions, Inc.                |          554 |          149 |          230 |          148 | 2022                   |                       | 2022->2023 x0.5; 2023->2024 x1.5                  |
+| Synovus Bank                          |          414 |          295 |          127 |          131 | 2023                   |                       | 2023->2024 x0.4                                   |
+| THE LOAN STORE, INC.                  |          583 |           45 |           94 |          130 | 2022                   |                       | 2022->2023 x0.2; 2023->2024 x1.9; 2024->2025 x1.5 |
+| AmeriSave Mortgage Corporation        |          522 |          101 |           50 |           86 | 2022                   |                       | 2022->2023 x0.2; 2023->2024 x0.3                  |
+| HOMESTAR FINANCIAL CORPORATION        |          962 |          309 |            0 |            0 | 2022, 2023             | 2024, 2025            | 2022->2023 x0.5                                   |
+
+Reviewed 2026-11-01. A lender whose lending business was sold to a lender still in the data counts as that successor in every year (`config/lender_successors.csv`, applied before every metric). Remaining flags are business swings or exits with no successor here (e.g. HomeStar and Crescent closed; Angel Oak's and Wyndham's buyers are unconfirmed or report under an unknown entity).
+
+| old_name                         | successor_name         | basis                                                                                                                          |
+|:---------------------------------|:-----------------------|:-------------------------------------------------------------------------------------------------------------------------------|
+| ACADEMY MORTGAGE CORPORATION     | GUILD MORTGAGE COMPANY | Guild bought Academy's retail lending assets, closed 2024-02-26                                                                |
+| CALIBER HOME LOANS, INC.         | NEWREZ LLC             | New Residential bought Caliber (closed 2021-08) to combine it with Newrez                                                      |
+| HOME POINT FINANCIAL CORPORATION | THE LOAN STORE, INC.   | Home Point sold its wholesale origination business to The Loan Store, closed 2023-05-01 (Mr. Cooper bought the servicing book) |
 
 ### 9. Market groups and tiers
 Hybrid rule (PRD Appendix A): CSA where one exists, else CBSA, except the CSA that holds the footprint's main metro area, which is split into its CBSAs. Main metro area: **Atlanta-Sandy Springs-Roswell, GA** (CBSA 12060), 6 of 15 FOM counties and 88.3% of FOM originations in 2025. Split CSA: Atlanta--Athens-Clarke County--Sandy Springs, GA-AL. Each county's group is in `counties.csv`.
@@ -200,34 +209,35 @@ LEIs with market originations that are missing from every cached HMDA `/view/fil
 |   2025 |              1 |                        0 | MARLIN MORTGAGE CAPITAL, LLC         | gleif         |
 
 ### 12. Builder-owned lenders (contestable market)
-`config/builder_lenders.csv`, **pending your review**. Rows with `include = 1` are left out of the contestable market (`opportunity_score_contestable`); `include = 0` rows are candidates that show the builder pattern (almost no refinance, purchases packed into a few tracts) but are not confirmed. Included lenders made 630 of 27,645 FOM originations in 2025. Contestable `footprint_share` = **1.05%**. Depth opportunity: 191 loans on the full market, 193 on the contestable market.
+`config/builder_lenders.csv`, reviewed by the user 2026-11-01. Rows with `include = 1` are left out of the contestable market (`opportunity_score_contestable`); `include = 0` rows would be candidates showing the builder pattern (almost no refinance, purchases packed into a few tracts) that are not confirmed. Included lenders made 863 of 27,645 FOM originations in 2025. Contestable `footprint_share` = **1.06%**. Depth opportunity: 191 loans on the full market, 193 on the contestable market.
 
-| lender_name                        | builder                          |   include | basis                                                                               |   footprint_loans |   footprint_purchase_share_pct |
-|:-----------------------------------|:---------------------------------|----------:|:------------------------------------------------------------------------------------|------------------:|-------------------------------:|
-| DHI MORTGAGE COMPANY, LTD.         | D.R. Horton                      |         1 | builder-owned lender (DHI = D.R. Horton)                                            |               184 |                           0.9  |
-| PULTE MORTGAGE LLC                 | PulteGroup                       |         1 | builder name in lender name                                                         |                71 |                           0.35 |
-| LENNAR MORTGAGE, LLC               | Lennar                           |         1 | builder name in lender name                                                         |                99 |                           0.48 |
-| TOLL BROTHERS MORTGAGE COMPANY     | Toll Brothers                    |         1 | builder name in lender name                                                         |               189 |                           0.92 |
-| Taylor Morrison Home Funding, Inc. | Taylor Morrison                  |         1 | builder name in lender name                                                         |                47 |                           0.23 |
-| NVR Mortgage Finance, Inc.         | NVR (Ryan Homes)                 |         1 | builder name in lender name                                                         |                32 |                           0.16 |
-| INSPIRE HOME LOANS INC.            | Century Communities (to confirm) |         1 | believed builder-owned; data signature: 0% refi and 54% of GA purchases in 3 tracts |                 8 |                           0.04 |
-| PRC MORTGAGE, LLC                  | unknown                          |         0 | data signature only: 2% refi and 80% of GA purchases in 3 tracts                    |                39 |                           0.19 |
-| VICTORY MORTGAGE, L.L.C.           | unknown                          |         0 | data signature only: 1% refi and 60% of GA purchases in 3 tracts                    |                40 |                           0.2  |
-| TRAILBLAZER MORTGAGE L.L.C.        | unknown                          |         0 | data signature only: 0% refi and 49% of GA purchases in 3 tracts                    |                42 |                           0.21 |
-| Landmark 24 Mortgage, LLC          | unknown                          |         0 | data signature only: 0% refi and 45% of GA purchases in 3 tracts                    |                 0 |                           0    |
-| First Heritage Mortgage, LLC       | unknown                          |         0 | data signature only: 4% refi and 42% of GA purchases in 3 tracts                    |               102 |                           0.48 |
-| JET HOMELOANS, LP                  | unknown                          |         0 | data signature only: 0% refi and 27% of GA purchases in 3 tracts                    |                10 |                           0.05 |
+| lender_name                        | builder                        |   include | basis                                                                               |   footprint_loans |   footprint_purchase_share_pct |
+|:-----------------------------------|:-------------------------------|----------:|:------------------------------------------------------------------------------------|------------------:|-------------------------------:|
+| DHI MORTGAGE COMPANY, LTD.         | D.R. Horton                    |         1 | builder-owned lender (DHI = D.R. Horton)                                            |               184 |                           0.9  |
+| PULTE MORTGAGE LLC                 | PulteGroup                     |         1 | builder name in lender name                                                         |                71 |                           0.35 |
+| LENNAR MORTGAGE, LLC               | Lennar                         |         1 | builder name in lender name                                                         |                99 |                           0.48 |
+| TOLL BROTHERS MORTGAGE COMPANY     | Toll Brothers                  |         1 | builder name in lender name                                                         |               189 |                           0.92 |
+| Taylor Morrison Home Funding, Inc. | Taylor Morrison                |         1 | builder name in lender name                                                         |                47 |                           0.23 |
+| NVR Mortgage Finance, Inc.         | NVR (Ryan Homes)               |         1 | builder name in lender name                                                         |                32 |                           0.16 |
+| INSPIRE HOME LOANS INC.            | Century Communities            |         1 | believed builder-owned; data signature: 0% refi and 54% of GA purchases in 3 tracts |                 8 |                           0.04 |
+| PRC MORTGAGE, LLC                  | builder-owned (user confirmed) |         1 | data signature only: 2% refi and 80% of GA purchases in 3 tracts                    |                39 |                           0.19 |
+| VICTORY MORTGAGE, L.L.C.           | builder-owned (user confirmed) |         1 | data signature only: 1% refi and 60% of GA purchases in 3 tracts                    |                40 |                           0.2  |
+| TRAILBLAZER MORTGAGE L.L.C.        | builder-owned (user confirmed) |         1 | data signature only: 0% refi and 49% of GA purchases in 3 tracts                    |                42 |                           0.21 |
+| Landmark 24 Mortgage, LLC          | builder-owned (user confirmed) |         1 | data signature only: 0% refi and 45% of GA purchases in 3 tracts                    |                 0 |                           0    |
+| First Heritage Mortgage, LLC       | builder-owned (user confirmed) |         1 | data signature only: 4% refi and 42% of GA purchases in 3 tracts                    |               102 |                           0.48 |
+| JET HOMELOANS, LP                  | builder-owned (user confirmed) |         1 | data signature only: 0% refi and 27% of GA purchases in 3 tracts                    |                10 |                           0.05 |
 <!-- phase3:end -->
 
 <!-- phase4:start -->
 ## Phase 4: households, density, branch distance and growth
 
 ### 1. Branches and geocoding
-NCUA snapshots: scoring year `2025-12` (share by distance) and current `2026-06` (expansion scorecard). In-scope Georgia branches: **18** and **18**. Excluded sites (`config/lenders/lge/branch_exclusions.csv`, plus out-of-state):
+NCUA snapshots: scoring year `2025-12` (share by distance) and current `2026-06` (expansion scorecard). In-scope Georgia branches: **18** and **17**. Excluded sites (`config/lenders/lge/branch_exclusions.csv`, plus out-of-state):
 
-|   site_id | site_name   | state   | exclusion_reason                                                                                              |
-|----------:|:------------|:--------|:--------------------------------------------------------------------------------------------------------------|
-|     27758 | Home Office | GA      | corporate office without member services (NCUA: Corporate Office, MemberServices 0); not on LGE's branch list |
+|   site_id | site_name         | state   | exclusion_reason                                                                                                                                                              |
+|----------:|:------------------|:--------|:------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+|     27757 | Alpharetta Branch | GA      | closed: not on LGE's branch list or sitemap, its page is gone (checked 2026-11-01); NCUA still lists it in June 2026. Kept for the 2025 scoring year, when NCUA shows it open |
+|     27758 | Home Office       | GA      | corporate office without member services (NCUA: Corporate Office, MemberServices 0); not on LGE's branch list                                                                 |
 
 The Census Geocoder matched every in-scope branch except those below, whose coordinates are hand-placed in `config/lenders/lge/branch_coordinates.csv`, with the method for each (error a few hundred meters at most).
 
@@ -241,7 +251,7 @@ The Census Geocoder matched every in-scope branch except those below, whose coor
 Every geocoder-matched branch falls in the county NCUA lists. Hand-placed points outside NCUA's county (they sit on a county-line road; distances are unaffected): none. The farthest any branch's tract internal point is from its nearest branch is 7.18 mi. Branches flagged `ncua_no_member_services` but kept: none.
 
 ### 2. Branch changes between snapshots
-Opened: none. Closed: none.
+Opened: none. Closed: 27757.
 
 ### 3-5. Tract coverage, penetration and distance
 No tract is dropped; gaps are flags or blanks.
@@ -387,7 +397,7 @@ Subject-lender totals vs. the HMDA API: **0** mismatches (tolerance: exact match
 ## Regression check against the saved baseline
 
 ### Result
-43 comparisons against `tests/baseline/lge/`: **43 match**, **0 differ**; 0 file(s) superseded on purpose. Text must match exactly and numbers to 1e-9.
+43 comparisons against `tests/baseline/lge/` (p3-reviews): **43 match**, **0 differ**; 0 file(s) superseded on purpose. Text must match exactly and numbers to 1e-9.
 
 _none_
 

@@ -29,7 +29,6 @@ current,27753,Canton,Cherokee,Cherokee,True,census_geocoder,Exact,13057090603,1.
 current,27754,West Cobb Branch,Cobb,Cobb,True,census_geocoder,Non_Exact,13067030253,1.4725
 current,27755,Smyrna,Cobb,Cobb,True,census_geocoder,Exact,13067031111,0.7982
 current,27756,Dallas,Paulding,Paulding,True,census_geocoder,Exact,13223120305,0.9981
-current,27757,Alpharetta Branch,Fulton,Fulton,True,census_geocoder,Exact,13121011639,0.4755
 current,27759,Towne Lake,Cherokee,Cherokee,True,manual (config),,13057091009,1.4838
 current,27760,Sandy Springs,Fulton,Fulton,True,census_geocoder,Exact,13121010121,0.5869
 current,27761,Calhoun,Gordon,Gordon,True,census_geocoder,Exact,13129970602,0.7649

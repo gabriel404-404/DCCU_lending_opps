@@ -33,7 +33,7 @@ peer_rest_min,0.005657,0.6%,peer_comparison.csv,"lowest band share, rest of foot
 peer_rest_max,0.011447,1.1%,peer_comparison.csv,"highest band share, rest of footprint"
 depth_top6_share,0.8647519582245429,86%,depth_by_county.csv,"share of base depth in the top 6 counties (Fulton, Cobb, Cherokee, Douglas, Bartow, Catoosa)"
 branchless_counties,8,8,depth_by_county.csv,"footprint counties with no public branch: Catoosa, Chattooga, Dade, Douglas, Murray, Polk, Walker, Whitfield"
-contestable_depth,192.8,193,depth_by_county.csv,base depth on the contestable (non-builder) market
+contestable_depth,192.90000000000003,193,depth_by_county.csv,base depth on the contestable (non-builder) market
 near_vs_county,0.959871,0.96x,share_by_distance.csv,tracts within 2 miles vs. their county's average
 near_share_raw,0.012112,1.21%,share_by_distance.csv,raw share within 2 miles
 near_band_miles,2,2,config/settings.py,"edge of the nearest distance band, miles"
@@ -44,7 +44,7 @@ expansion_target,0.01,1%,config/lenders/lge/lender.toml,expansion target share
 expansion_total,468.37000000000006,468,expansion_scorecard.csv,"expansion gain, all non-footprint counties (upper bound)"
 expansion_top_county,Gwinnett,Gwinnett,expansion_scorecard.csv,non-footprint county with the largest gain
 expansion_top_gain,65.9,66,expansion_scorecard.csv,"its gain, loans a year"
-expansion_top_miles,15.768023,16,expansion_scorecard.csv,its household-weighted miles to the nearest branch
+expansion_top_miles,17.717917,18,expansion_scorecard.csv,its household-weighted miles to the nearest branch
 cluster_C1_gain,126.05,126,growth_clusters.csv,"cluster C1 (Banks, Barrow, Dawson, Forsyth, Franklin, Greene, Habersham, Hall, Hart, Henry, Jackson, Jasper, Lamar, Madison, Monroe, Morgan, Newton, Oglethorpe, Pickens, Pike, Walton) gain; touches footprint: True"
 cluster_C1_counties,21,21,growth_clusters.csv,cluster C1 county count
 cluster_C1_growth,0.132965,13.3%,growth_clusters.csv,cluster C1 population growth
@@ -58,4 +58,4 @@ cluster_C4_gain,1.67,2,growth_clusters.csv,"cluster C4 (Long, McIntosh) gain; to
 cluster_C4_counties,2,2,growth_clusters.csv,cluster C4 county count
 cluster_C4_growth,0.231633,23.2%,growth_clusters.csv,cluster C4 population growth
 reconciliation_mismatches,0,0,phase2_checks/api_reconciliation.csv,"subject-lender totals vs. HMDA API, mismatches"
-builder_lenders_included,7,7,config/builder_lenders.csv,builder-owned lenders in the contestable-market rule
+builder_lenders_included,13,13,config/builder_lenders.csv,builder-owned lenders in the contestable-market rule

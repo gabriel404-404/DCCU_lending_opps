@@ -14,7 +14,7 @@
 | Stretch: Spalding, DCCU's weakest top-quarter county | 4.04% | 1,374 |
 | Ceiling: top-quarter counties pooled | 6.17% | 2,382 |
 
-Fulton, Gwinnett, Cobb, DeKalb, Cherokee and Forsyth hold 73% of the base opportunity. The ceiling reflects decades of history and probably DCCU's membership base; treat it as a ceiling, not a target. Leaving out builder-owned lenders barely changes the base (529). ([opportunity map](map_footprint_opportunity.png), [by county](depth_by_county.csv), [top tracts](opportunity_top25.csv))
+Fulton, Gwinnett, Cobb, DeKalb, Cherokee and Forsyth hold 73% of the base opportunity. The ceiling reflects decades of history and probably DCCU's membership base; treat it as a ceiling, not a target. Leaving out builder-owned lenders barely changes the base (527). ([opportunity map](map_footprint_opportunity.png), [by county](depth_by_county.csv), [top tracts](opportunity_top25.csv))
 
 **4. Branches help, but they don't explain the gap.** Raw share falls from 2.77% within 2 miles of a branch to 1.19% beyond 10, but most of that is a difference between counties. Within the same county, tracts within 2 miles run only 1.14x the county average. 8 FOM counties have no public branch. ([distance](chart_share_by_distance.png))
 

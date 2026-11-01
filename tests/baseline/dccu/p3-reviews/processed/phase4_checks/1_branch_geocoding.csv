@@ -1,0 +1,57 @@
+snapshot,site_id,site_name,ncua_county,geocoded_county,county_match,coord_source,match_type,census_tract,own_tract_miles
+scoring_year,21196,Virginia Avenue,Fulton,Fulton,True,census_geocoder,Exact,13121010801,0.5699
+scoring_year,21610,Buford (Kroger),Gwinnett,Gwinnett,True,census_geocoder,Exact,13135050635,0.6769
+scoring_year,21627,Canton (Kroger),Cherokee,Cherokee,True,census_geocoder,Exact,13057090808,1.5374
+scoring_year,21636,Duluth (Sugarloaf),Gwinnett,Gwinnett,True,census_geocoder,Exact,13135050231,1.5265
+scoring_year,21641,Fayetteville (Summit Point),Fayette,Fayette,True,census_geocoder,Non_Exact,13113140405,1.6215
+scoring_year,21647,Marietta (Dallas Highway),Cobb,Cobb,True,census_geocoder,Non_Exact,13067030262,0.9391
+scoring_year,21653,Marietta (Johnson Ferry Road),Cobb,Cobb,True,census_geocoder,Exact,13067030334,0.6491
+scoring_year,21752,Newnan (Highway 34 East),Coweta,Coweta,True,census_geocoder,Non_Exact,13077170310,0.287
+scoring_year,22882,Peachtree City (Braelinn Village),Fayette,Fayette,True,census_geocoder,Non_Exact,13113140303,0.6738
+scoring_year,22909,Peachtree City (Wisdom Road),Fayette,Fayette,True,manual (config),,13113140210,1.4905
+scoring_year,22927,Sandy Springs (Hammond Drive),Fulton,Fulton,True,census_geocoder,Non_Exact,13121010133,0.6569
+scoring_year,22934,Snellville,Gwinnett,Gwinnett,True,census_geocoder,Non_Exact,13135050759,0.9936
+scoring_year,22943,Stockbridge (Eagles Landing),Henry,Henry,True,census_geocoder,Non_Exact,13151070114,0.3525
+scoring_year,22954,Stockbridge (Mt. Zion Parkway),Henry,Henry,True,census_geocoder,Exact,13151070115,1.3024
+scoring_year,22968,Vinings (Cumberland Boulevard),Cobb,Cobb,True,census_geocoder,Non_Exact,13067031207,0.6946
+scoring_year,50828,Gainesville,Hall,Hall,True,census_geocoder,Exact,13139001008,0.6277
+scoring_year,51154,Decatur,DeKalb,DeKalb,True,census_geocoder,Exact,13089022501,0.5735
+scoring_year,52464,Johns Creek,Fulton,Forsyth,False,manual (config),,13117130606,0.4135
+scoring_year,52465,Buckhead-Midtown,Fulton,Fulton,True,census_geocoder,Non_Exact,13121000502,0.3868
+scoring_year,52471,Alpharetta,Fulton,Fulton,True,census_geocoder,Exact,13121011639,0.4402
+scoring_year,52476,Newnan (Coweta Crossroads),Coweta,Coweta,True,census_geocoder,Non_Exact,13077170404,0.9995
+scoring_year,52478,McDonough,Henry,Henry,True,census_geocoder,Exact,13151070310,1.7329
+scoring_year,52481,Cumming,Forsyth,Forsyth,True,census_geocoder,Exact,13117130605,1.2704
+scoring_year,52483,Douglasville,Douglas,Douglas,True,census_geocoder,Exact,13097080607,1.4816
+scoring_year,52491,Chamblee/Brookhaven,DeKalb,DeKalb,True,census_geocoder,Non_Exact,13089021208,1.2684
+scoring_year,52494,Woodstock Branch,Cherokee,Cherokee,True,census_geocoder,Exact,13057091013,1.4248
+scoring_year,52497,Locust Grove,Henry,Henry,True,census_geocoder,Non_Exact,13151070411,1.6609
+scoring_year,52499,Conyers,Rockdale,Rockdale,True,census_geocoder,Exact,13247060305,1.6789
+current,21196,Virginia Avenue,Fulton,Fulton,True,census_geocoder,Exact,13121010801,0.5699
+current,21610,Buford (Kroger),Gwinnett,Gwinnett,True,census_geocoder,Exact,13135050635,0.6769
+current,21627,Canton (Kroger),Cherokee,Cherokee,True,census_geocoder,Exact,13057090808,1.5374
+current,21636,Duluth (Sugarloaf),Gwinnett,Gwinnett,True,census_geocoder,Exact,13135050231,1.5265
+current,21641,Fayetteville (Summit Point),Fayette,Fayette,True,census_geocoder,Non_Exact,13113140405,1.6215
+current,21647,Marietta (Dallas Highway),Cobb,Cobb,True,census_geocoder,Non_Exact,13067030262,0.9391
+current,21653,Marietta (Johnson Ferry Road),Cobb,Cobb,True,census_geocoder,Exact,13067030334,0.6491
+current,21752,Newnan (Highway 34 East),Coweta,Coweta,True,census_geocoder,Non_Exact,13077170310,0.287
+current,22882,Peachtree City (Braelinn Village),Fayette,Fayette,True,census_geocoder,Non_Exact,13113140303,0.6738
+current,22909,Peachtree City (Wisdom Road),Fayette,Fayette,True,manual (config),,13113140210,1.4905
+current,22927,Sandy Springs (Hammond Drive),Fulton,Fulton,True,census_geocoder,Non_Exact,13121010133,0.6569
+current,22934,Snellville,Gwinnett,Gwinnett,True,census_geocoder,Non_Exact,13135050759,0.9936
+current,22943,Stockbridge (Eagles Landing),Henry,Henry,True,census_geocoder,Non_Exact,13151070114,0.3525
+current,22954,Stockbridge (Mt. Zion Parkway),Henry,Henry,True,census_geocoder,Exact,13151070115,1.3024
+current,22968,Vinings (Cumberland Boulevard),Cobb,Cobb,True,census_geocoder,Non_Exact,13067031207,0.6946
+current,50828,Gainesville,Hall,Hall,True,census_geocoder,Exact,13139001008,0.6277
+current,51154,Decatur,DeKalb,DeKalb,True,census_geocoder,Exact,13089022501,0.5735
+current,52464,Johns Creek,Fulton,Forsyth,False,manual (config),,13117130606,0.4135
+current,52465,Buckhead-Midtown,Fulton,Fulton,True,census_geocoder,Non_Exact,13121000502,0.3868
+current,52471,Alpharetta,Fulton,Fulton,True,census_geocoder,Exact,13121011639,0.4402
+current,52476,Newnan (Coweta Crossroads),Coweta,Coweta,True,census_geocoder,Non_Exact,13077170404,0.9995
+current,52478,McDonough,Henry,Henry,True,census_geocoder,Exact,13151070310,1.7329
+current,52481,Cumming,Forsyth,Forsyth,True,census_geocoder,Exact,13117130605,1.2704
+current,52483,Douglasville,Douglas,Douglas,True,census_geocoder,Exact,13097080607,1.4816
+current,52491,Chamblee/Brookhaven,DeKalb,DeKalb,True,census_geocoder,Non_Exact,13089021208,1.2684
+current,52494,Woodstock Branch,Cherokee,Cherokee,True,census_geocoder,Exact,13057091013,1.4248
+current,52497,Locust Grove,Henry,Henry,True,census_geocoder,Non_Exact,13151070411,1.6609
+current,52499,Conyers,Rockdale,Rockdale,True,census_geocoder,Exact,13247060305,1.6789

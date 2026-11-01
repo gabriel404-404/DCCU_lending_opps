@@ -51,14 +51,26 @@ def read_hmda(path, **kw):
     return pd.read_csv(path, dtype=str, keep_default_na=False, **kw)
 
 
+def lender_successors():
+    """Merged lenders: old LEI -> successor LEI (config/lender_successors.csv, with sources)."""
+    t = pd.read_csv(s.CONFIG / "lender_successors.csv", dtype=str)
+    return t, t.set_index("old_lei")["successor_lei"].to_dict()
+
+
 def lender_market(lender, year, columns):
     """One year of the shared market file, limited to the lender's product (its loan types).
 
     Every lender's loans of those types are kept, so competitors are measured the same way.
+    A lender whose lending business went to another lender counts as that successor
+    (config/lender_successors.csv), so a merger doesn't read as one rival vanishing and another
+    surging.
     SQL: SELECT columns FROM market_{year} WHERE loan_type IN (lender's loan types).
     """
     m = pd.read_parquet(s.PROCESSED / f"market_{year}.parquet", columns=[*columns, "loan_type"])
-    return m[m["loan_type"].isin(lender.loan_types)].drop(columns="loan_type")
+    m = m[m["loan_type"].isin(lender.loan_types)].drop(columns="loan_type")
+    if "lei" in m.columns:
+        m["lei"] = m["lei"].replace(lender_successors()[1])
+    return m
 
 
 def ncua_branches(zip_path, charter):

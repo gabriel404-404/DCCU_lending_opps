@@ -30,7 +30,7 @@ current,2026-06,27753,Canton,2018 Cumming Hwy,Canton,GA,Cherokee,True,,False,34.
 current,2026-06,27754,West Cobb Branch,3622 Dallas Hwy SW,Marietta,GA,Cobb,True,,False,33.953822707899,-84.656825675705,census_geocoder,Match,Non_Exact
 current,2026-06,27755,Smyrna,2905 Atlanta Rd SE Ste 100,Smyrna,GA,Cobb,True,,False,33.882431755189,-84.513709976198,census_geocoder,Match,Exact
 current,2026-06,27756,Dallas,18 Georgia Heritage Pl,Dallas,GA,Paulding,True,,False,33.908942502181,-84.819638661808,census_geocoder,Match,Exact
-current,2026-06,27757,Alpharetta Branch,2855 Old Milton Pkwy Ste 104,Alpharetta,GA,Fulton,True,,False,34.068577290656,-84.277417579612,census_geocoder,Match,Exact
+current,2026-06,27757,Alpharetta Branch,2855 Old Milton Pkwy Ste 104,Alpharetta,GA,Fulton,False,"closed: not on LGE's branch list or sitemap, its page is gone (checked 2026-11-01); NCUA still lists it in June 2026. Kept for the 2025 scoring year, when NCUA shows it open",False,34.068577290656,-84.277417579612,census_geocoder,Match,Exact
 current,2026-06,27758,Home Office,3100 Cumberland Blvd SE,Atlanta,GA,Cobb,False,"corporate office without member services (NCUA: Corporate Office, MemberServices 0); not on LGE's branch list",True,33.877590866294,-84.463758532901,census_geocoder,Match,Exact
 current,2026-06,27759,Towne Lake,936 Towne Lake Pkwy,Woodstock,GA,Cherokee,True,,False,34.10272,-84.53539,manual (config),No_Match,
 current,2026-06,27760,Sandy Springs,6637 Roswell Rd,Sandy Springs,GA,Fulton,True,,False,33.936534238079,-84.378565113705,census_geocoder,Match,Exact

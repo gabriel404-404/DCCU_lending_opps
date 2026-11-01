@@ -1,14 +1,14 @@
 opportunity_rank,census_tract,county_name,market_all,market_purchase,market_refinance,lender_all,lender_purchase,lender_refinance,lender_share_pct,gap_to_footprint_share_pct,opportunity_score,rank_using_2024_25_share,stable_top25,builder_lender_loans,contestable_score,contestable_rank,competitor_1,competitor_1_loans,competitor_2,competitor_2_loans,competitor_3,competitor_3_loans,lenders_in_tract,households,household_density,penetration,nearest_branch,miles_to_branch,distance_band
-1,13057090808,Cherokee,128,89,39,0,0,0,0.0,1.03,1.3,1,True,0,1.3,1,"UNITED SHORE FINANCIAL SERVICES, LLC",23,"Rocket Mortgage, LLC",12,"First Heritage Mortgage, LLC",8,56,2409,420.0,73.2,Canton,5.1,5-10
+1,13057090808,Cherokee,128,89,39,0,0,0,0.0,1.03,1.3,1,True,8,1.3,1,"UNITED SHORE FINANCIAL SERVICES, LLC",23,"Rocket Mortgage, LLC",12,"First Heritage Mortgage, LLC",8,56,2409,420.0,73.2,Canton,5.1,5-10
 2,13121011646,Fulton,114,93,21,0,0,0,0.0,1.03,1.2,60,False,2,1.2,3,Ameris Bank,12,"Rocket Mortgage, LLC",11,"BANKSOUTH MORTGAGE COMPANY, LLC",9,51,1991,862.0,144.1,Alpharetta Branch,1.4,0-2
 3,13057090910,Cherokee,113,62,51,0,0,0,0.0,1.03,1.2,32,False,0,1.2,2,"UNITED SHORE FINANCIAL SERVICES, LLC",37,Ameris Bank,7,"Rocket Mortgage, LLC",4,48,1695,566.0,92.7,Woodstock,1.7,0-2
 4,13067030602,Cobb,99,73,26,0,0,0,0.0,1.03,1.0,2,True,0,1.0,4,"UNITED SHORE FINANCIAL SERVICES, LLC",17,Ameris Bank,5,"Rocket Mortgage, LLC",4,55,2886,468.0,43.8,Marietta Branch,2.9,2-5
-5,13121008802,Fulton,99,78,21,0,0,0,0.0,1.03,1.0,3,True,8,1.0,7,"UNITED SHORE FINANCIAL SERVICES, LLC",8,PULTE MORTGAGE LLC,8,Ameris Bank,7,46,1389,545.0,120.4,Smyrna,6.4,5-10
+5,13121008802,Fulton,99,78,21,0,0,0,0.0,1.03,1.0,3,True,10,0.9,9,"UNITED SHORE FINANCIAL SERVICES, LLC",8,PULTE MORTGAGE LLC,8,Ameris Bank,7,46,1389,545.0,120.4,Smyrna,6.4,5-10
 6,13121011419,Fulton,96,66,30,0,0,0,0.0,1.03,1.0,4,True,0,1.0,5,"UNITED SHORE FINANCIAL SERVICES, LLC",11,Ameris Bank,8,"Rocket Mortgage, LLC",5,49,2780,1053.0,41.8,Roswell,2.0,0-2
 7,13121005300,Fulton,94,76,18,0,0,0,0.0,1.03,1.0,5,True,0,1.0,6,Ameris Bank,15,"BoxCar Mortgage, LLC",10,"Rocket Mortgage, LLC",7,48,1749,2045.0,62.4,Smyrna,13.2,10+
 8,13057090505,Cherokee,91,70,21,0,0,0,0.0,1.03,0.9,6,True,22,0.7,32,"LENNAR MORTGAGE, LLC",22,"UNITED SHORE FINANCIAL SERVICES, LLC",8,Ameris Bank,5,42,1793,191.0,60.2,Canton,4.8,2-5
-9,13121010204,Fulton,91,68,23,0,0,0,0.0,1.03,0.9,7,True,0,1.0,8,Truist Bank,11,"UNITED SHORE FINANCIAL SERVICES, LLC",8,Ameris Bank,8,43,1870,514.0,48.5,Sandy Springs,2.6,2-5
-10,13121011507,Fulton,90,66,24,0,0,0,0.0,1.03,0.9,8,True,0,0.9,9,"UNITED SHORE FINANCIAL SERVICES, LLC",10,Truist Bank,6,Fairway Independent Mortgage Corporation,6,46,1301,157.0,79.8,Alpharetta Branch,7.2,5-10
+9,13121010204,Fulton,91,68,23,0,0,0,0.0,1.03,0.9,7,True,0,1.0,7,Truist Bank,11,"UNITED SHORE FINANCIAL SERVICES, LLC",8,Ameris Bank,8,43,1870,514.0,48.5,Sandy Springs,2.6,2-5
+10,13121011507,Fulton,90,66,24,0,0,0,0.0,1.03,0.9,8,True,0,1.0,8,"UNITED SHORE FINANCIAL SERVICES, LLC",10,Truist Bank,6,Fairway Independent Mortgage Corporation,6,46,1301,157.0,79.8,Alpharetta Branch,7.2,5-10
 11,13121011416,Fulton,88,67,21,0,0,0,0.0,1.03,0.9,9,True,0,0.9,10,Ameris Bank,11,"UNITED SHORE FINANCIAL SERVICES, LLC",7,"Rocket Mortgage, LLC",6,50,2102,823.0,49.1,Roswell,2.2,2-5
 12,13121011510,Fulton,87,60,27,0,0,0,0.0,1.03,0.9,184,False,0,0.9,11,"UNITED SHORE FINANCIAL SERVICES, LLC",9,Truist Bank,5,"PENNYMAC LOAN SERVICES, LLC",5,53,2067,444.0,45.5,Alpharetta Branch,5.4,5-10
 13,13067031314,Cobb,84,70,14,0,0,0,0.0,1.03,0.9,10,True,0,0.9,12,"Loandepot.Com, LLC",16,Ameris Bank,8,"Rocket Mortgage, LLC",7,40,2612,820.0,45.8,Smyrna,4.8,2-5
@@ -20,7 +20,7 @@ opportunity_rank,census_tract,county_name,market_all,market_purchase,market_refi
 19,13057090301,Cherokee,77,51,26,0,0,0,0.0,1.03,0.8,14,True,0,0.8,17,"UNITED SHORE FINANCIAL SERVICES, LLC",10,"Rocket Mortgage, LLC",8,"CROSSCOUNTRY MORTGAGE, INC.",5,41,1996,489.0,50.7,Canton,5.9,5-10
 20,13067030335,Cobb,77,54,23,0,0,0,0.0,1.03,0.8,15,True,0,0.8,18,Ameris Bank,7,"Rocket Mortgage, LLC",6,"PROVIDENT FUNDING ASSOCIATES, L.P.",5,42,1678,839.0,49.8,East Cobb,2.3,2-5
 21,13121003100,Fulton,77,69,8,0,0,0,0.0,1.03,0.8,16,True,1,0.8,21,Ameris Bank,14,"BoxCar Mortgage, LLC",9,"UNITED SHORE FINANCIAL SERVICES, LLC",6,36,1574,5010.0,173.0,Sandy Springs,12.8,10+
-22,13121008905,Fulton,77,66,11,0,0,0,0.0,1.03,0.8,17,True,6,0.7,27,Ameris Bank,9,TOLL BROTHERS MORTGAGE COMPANY,6,"UNITED SHORE FINANCIAL SERVICES, LLC",5,40,3514,1769.0,84.2,Smyrna,8.0,5-10
+22,13121008905,Fulton,77,66,11,0,0,0,0.0,1.03,0.8,17,True,6,0.8,27,Ameris Bank,9,TOLL BROTHERS MORTGAGE COMPANY,6,"UNITED SHORE FINANCIAL SERVICES, LLC",5,40,3514,1769.0,84.2,Smyrna,8.0,5-10
 23,13121009900,Fulton,77,55,22,0,0,0,0.0,1.03,0.8,18,True,0,0.8,19,Truist Bank,7,"BoxCar Mortgage, LLC",7,"Bank of America, National Association",6,37,2160,721.0,54.0,Sandy Springs,5.3,5-10
 24,13121011424,Fulton,77,58,19,0,0,0,0.0,1.03,0.8,19,True,0,0.8,20,"Rocket Mortgage, LLC",6,Ameris Bank,6,Truist Bank,6,46,2301,1223.0,40.4,Alpharetta Branch,3.8,2-5
 25,13121009301,Fulton,76,65,11,0,0,0,0.0,1.03,0.8,20,True,0,0.8,22,"UNITED SHORE FINANCIAL SERVICES, LLC",5,Ameris Bank,5,Truist Bank,5,39,1635,3299.0,51.5,Sandy Springs,8.0,5-10

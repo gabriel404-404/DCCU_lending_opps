@@ -1,0 +1,17 @@
+year,loan_type,loan_type_name,originations,purchase,refinance,lenders,kept
+2022,1,conventional,1305,512,793,1,True
+2022,2,FHA,0,0,0,0,False
+2022,3,VA,0,0,0,0,False
+2022,4,USDA,0,0,0,0,False
+2023,1,conventional,537,461,76,1,True
+2023,2,FHA,0,0,0,0,False
+2023,3,VA,0,0,0,0,False
+2023,4,USDA,0,0,0,0,False
+2024,1,conventional,930,757,173,1,True
+2024,2,FHA,0,0,0,0,False
+2024,3,VA,0,0,0,0,False
+2024,4,USDA,0,0,0,0,False
+2025,1,conventional,1154,873,281,1,True
+2025,2,FHA,0,0,0,0,False
+2025,3,VA,0,0,0,0,False
+2025,4,USDA,0,0,0,0,False

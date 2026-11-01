@@ -1,0 +1,9 @@
+year,scope,market_originations,market_purchase,market_refinance,market_no_tract,lenders,lender_originations,lender_purchase,lender_refinance,lender_no_tract
+2022,statewide,138169,85616,52553,61,875,180,76,104,0
+2022,footprint,48466,30533,17933,20,637,147,59,88,0
+2023,statewide,76604,63173,13431,32,828,90,70,20,0
+2023,footprint,26667,22558,4109,8,575,66,50,16,0
+2024,statewide,78334,61581,16753,20,781,207,144,63,0
+2024,footprint,27338,22059,5279,4,551,145,99,46,0
+2025,statewide,80682,58062,22620,46,807,346,185,161,0
+2025,footprint,27645,20461,7184,11,586,284,152,132,0

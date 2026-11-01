@@ -1,2 +1,3 @@
-site_id,site_name,reason,date_checked
-27758,Home Office,"corporate office without member services (NCUA: Corporate Office, MemberServices 0); not on LGE's branch list",2026-11-01
+site_id,site_name,reason,date_checked,snapshot
+27758,Home Office,"corporate office without member services (NCUA: Corporate Office, MemberServices 0); not on LGE's branch list",2026-11-01,
+27757,Alpharetta Branch,"closed: not on LGE's branch list or sitemap, its page is gone (checked 2026-11-01); NCUA still lists it in June 2026. Kept for the 2025 scoring year, when NCUA shows it open",2026-11-01,current

@@ -27,7 +27,8 @@ import pandas as pd
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 from config import settings as s  # noqa: E402
 from config.lender import LENDER as L  # noqa: E402
-from src.common import lender_log_heading, lender_market, md_table, write_data_quality  # noqa: E402
+from src.common import (lender_log_heading, lender_market, lender_successors, md_table,  # noqa: E402
+                        write_data_quality)
 
 OUT = L.processed / "phase3_checks"
 PURPOSES = ["purchase", "refinance", "all"]
@@ -469,6 +470,7 @@ def main():
     lenders = lender_table.dropna(subset=["name"]).set_index("lei")["name"].to_dict()
 
     builder_list, builders = load_builders()
+    successors, _ = lender_successors()
 
     print("Loading originations...")
     orig = load_originations(builders)
@@ -552,10 +554,14 @@ def main():
         f"### 8. Lender merger review (open item 3)\n{len(lender_review)} non-{L.label} lenders were in "
         f"the {L.footprint_label} top {TOP_N} in at least one year; **{len(flagged)}** are flagged (a year with no "
         f"loans, or {L.footprint_label} purchase share moving by more than 1.5x year over year). "
-        "Review by hand for "
-        "mergers. "
         "Full list: `phase3_checks/8_lender_merger_review.csv`.\n\n"
-        + md_table(flagged.drop(columns=["lei", "flagged"])),
+        + md_table(flagged.drop(columns=["lei", "flagged"]))
+        + "\n\nReviewed 2026-11-01. A lender whose lending business was sold to a lender still in "
+        "the data counts as that successor in every year (`config/lender_successors.csv`, applied "
+        "before every metric). Remaining flags are business swings or exits with no successor "
+        "here (e.g. HomeStar and Crescent closed; Angel Oak's and Wyndham's buyers are unconfirmed "
+        "or report under an unknown entity).\n\n"
+        + md_table(successors[["old_name", "successor_name", "basis"]]),
         "### 9. Market groups and tiers\nHybrid rule (PRD Appendix A): CSA where one exists, "
         "else CBSA, except the CSA that holds the footprint's main metro area, which is split into "
         "its CBSAs. " + (
@@ -576,10 +582,10 @@ def main():
         "`LEI ... (no name in filers list)`. All originations are kept.\n\n"
         + md_table(unnamed.drop(columns="lei")),
         "### 12. Builder-owned lenders (contestable market)\n`config/builder_lenders.csv`, "
-        "**pending your review**. Rows with `include = 1` are left out of the contestable market "
-        "(`opportunity_score_contestable`); `include = 0` rows are candidates that show the "
-        "builder pattern (almost no refinance, purchases packed into a few tracts) but are not "
-        f"confirmed. Included lenders made {footprint_builder:,} of {footprint_cur['market_all'].sum():,} {L.footprint_label} "
+        "reviewed by the user 2026-11-01. Rows with `include = 1` are left out of the contestable "
+        "market (`opportunity_score_contestable`); `include = 0` rows would be candidates showing "
+        "the builder pattern (almost no refinance, purchases packed into a few tracts) that are "
+        f"not confirmed. Included lenders made {footprint_builder:,} of {footprint_cur['market_all'].sum():,} {L.footprint_label} "
         f"originations in {s.SCORING_YEAR}. Contestable `footprint_share` = "
         f"**{footprint_share_contestable:.2%}**. Depth opportunity: "
         f"{footprint_tracts['opportunity_score'].sum():,.0f} loans on the full market, "

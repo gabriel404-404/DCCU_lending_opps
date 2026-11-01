@@ -30,7 +30,7 @@ Lender stages (run per lender; everything goes to `data/processed/<key>/` and `o
 - `05_context.py` adds households, density, penetration, distance to the nearest branch, county population growth, adjacency and growth clusters, and completes the expansion scorecard.
 - `06_benchmarks.py` builds the benchmark ladder (footprint average, stretch, ceiling) and the market-structure evidence.
 - `07_outputs.py` draws the maps and charts, writes the final tables and `key_numbers.csv`, and checks the lender's `FINDINGS.md` against the key numbers.
-- `check_baseline.py` (lenders with a saved baseline) compares every file with `tests/baseline/<key>/`; DCCU must reproduce v1 exactly. `--save <version>` saves the current run as a new baseline.
+- `check_baseline.py` (lenders with a saved baseline) compares every file with `tests/baseline/<key>/`; DCCU must reproduce v1 exactly. `--save <version>` saves the current run as a new baseline and makes it the one checked (`tests/baseline/<key>/CURRENT`); earlier versions stay as history.
 
 Each stage can also be run on its own, e.g. `.venv/Scripts/python src/03_market.py`. For a lender stage, set the lender first: `MGM_LENDER=dccu .venv/Scripts/python src/04_metrics.py` (the default is dccu).
 
@@ -41,7 +41,7 @@ Each lender is a folder under `config/lenders/<key>/`:
 |---|---|
 | `lender.toml` | name, label, LEI, charter, NCUA charter number, product filter (`[market] loan_types`, HMDA codes), footprint label, expansion target (TOML is a plain-text config format) |
 | `footprint.csv` | the footprint's county FIPS codes and names, with the source and date checked |
-| `branch_exclusions.csv` | branch sites left out of distance, with reasons |
+| `branch_exclusions.csv` | branch sites left out of distance, with reasons; an optional `snapshot` column (e.g. `current`) limits an exclusion to one NCUA snapshot |
 | `branch_coordinates.csv` | hand-placed points for branch addresses the geocoder can't match |
 
 Steps, as done for LGE (`config/lenders/lge/`):
@@ -117,5 +117,6 @@ Parquet files and the interactive HTML maps are git-ignored and rebuilt by `run_
 | Census county adjacency file, 2025 | adjacency to the footprint, growth clusters |
 | Each lender's own website (e.g. DCCU's eligibility page) | `config/lenders/<key>/footprint.csv` |
 | GLEIF LEI registry | names for the few market LEIs missing from the HMDA filers lists |
-| Hand-maintained, with the basis per row | `config/builder_lenders.csv` (builder-owned lenders, for the contestable market) |
+| Hand-maintained, with the basis per row | `config/builder_lenders.csv` (builder-owned lenders, for the contestable market; reviewed 2026-11-01) |
+| Hand-maintained, with a source per row | `config/lender_successors.csv` (lenders whose lending business went to another lender; their loans count as the successor's) |
 | Esri World Light Gray Canvas (`BASEMAP` in `config/settings.py`) | basemap tiles in `mortgage_map.html`, loaded by the viewer's browser; license a basemap before any paid delivery |

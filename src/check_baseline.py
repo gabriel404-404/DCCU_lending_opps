@@ -11,7 +11,9 @@ purpose are listed below (SUPERSEDED, ADDED_COLUMNS), each with the productize s
 it. Everything else must match.
 
 Later baselines are saved with --save under current names: processed/ is a copy of the
-lender's data/processed/<key>/ CSVs and outputs/ of its outputs/<key>/ CSVs.
+lender's data/processed/<key>/ CSVs and outputs/ of its outputs/<key>/ CSVs. --save also writes
+tests/baseline/<key>/CURRENT, the one version the check compares against; older versions stay as
+history. Without a CURRENT file, every version is compared.
 
 Run from the repo root (MGM_LENDER picks the lender):
     python src/check_baseline.py               # compare every saved baseline
@@ -93,7 +95,16 @@ def save(version):
             target.parent.mkdir(parents=True, exist_ok=True)
             shutil.copy2(path, target)
             n += 1
-    print(f"Saved {n} CSVs to {dest.relative_to(s.ROOT).as_posix()}")
+    (BASELINES / "CURRENT").write_text(version + "\n", encoding="utf-8")
+    print(f"Saved {n} CSVs to {dest.relative_to(s.ROOT).as_posix()}; CURRENT = {version}")
+
+
+def versions():
+    """The baseline version(s) to compare: the one named in CURRENT, else all of them."""
+    current = BASELINES / "CURRENT"
+    if current.exists():
+        return [BASELINES / current.read_text(encoding="utf-8").strip()]
+    return sorted(p for p in BASELINES.iterdir() if p.is_dir())
 
 
 def read(path):
@@ -136,7 +147,7 @@ def main():
     if args.save:
         return save(args.save)
     rows = []
-    for version in sorted(p for p in BASELINES.iterdir() if p.is_dir()):
+    for version in versions():
         for path in sorted(version.rglob("*.csv")):
             rel = path.relative_to(version).as_posix()
             v1 = version.name == "v1"  # the only baseline saved under pre-productize names
@@ -170,7 +181,8 @@ def main():
         f"({', '.join(f'`{f}`: {sorted(c)}' for f, c in ADDED_COLUMNS.items())}), which are allowed "
         "while every v1 column still matches." if (BASELINES / "v1").exists() else "")
     sections = [
-        f"### Result\n{compared} comparisons against `tests/baseline/{L.key}/`: **{compared - len(failed)} "
+        f"### Result\n{compared} comparisons against `tests/baseline/{L.key}/` "
+        f"({', '.join(v.name for v in versions())}): **{compared - len(failed)} "
         f"match**, **{len(failed)} differ**; {len(superseded)} file(s) superseded on purpose. Text must "
         f"match exactly and numbers to 1e-9.{v1_note}\n\n"
         + md_table(pd.concat([failed, superseded])[["baseline", "now", "rows", "result"]])

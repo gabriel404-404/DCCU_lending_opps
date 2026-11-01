@@ -1,0 +1,39 @@
+snapshot,cycle,site_id,site_name,address,city,state,ncua_county,in_scope,exclusion_reason,ncua_no_member_services,lat,lon,coord_source,match,match_type
+scoring_year,2025-12,21782,Marietta Branch,590 Commerce Park Dr SE,Marietta,GA,Cobb,True,,False,33.941242266471,-84.532503336473,census_geocoder,Match,Exact
+scoring_year,2025-12,27720,Austell,2760 E West Connector,Austell,GA,Cobb,True,,False,33.8664,-84.62493,manual (config),No_Match,
+scoring_year,2025-12,27726,Acworth,3891 Cobb Pkwy NW,Acworth,GA,Cobb,True,,False,34.04975,-84.70074,manual (config),No_Match,
+scoring_year,2025-12,27739,Hiram,5875 Wendy Bagwell Pkwy,Hiram,GA,Paulding,True,,False,33.883937926733,-84.730925195586,census_geocoder,Match,Exact
+scoring_year,2025-12,27744,Kennesaw,2050 Cobb Pkwy NW,Kennesaw,GA,Cobb,True,,False,34.004303958176,-84.601684525542,census_geocoder,Match,Exact
+scoring_year,2025-12,27749,East Cobb,PROVIDENCE SQ SHPG CTR,Marietta,GA,Cobb,True,,False,33.97961,-84.43405,manual (config),No_Match,
+scoring_year,2025-12,27751,Woodstock,12900 Highway 92,Woodstock,GA,Cherokee,True,,False,34.087673017823,-84.471705449517,census_geocoder,Match,Exact
+scoring_year,2025-12,27752,Roswell,655 Holcomb Bridge Rd,Roswell,GA,Fulton,True,,False,34.033320780731,-84.341643004087,census_geocoder,Match,Exact
+scoring_year,2025-12,27753,Canton,2018 Cumming Hwy,Canton,GA,Cherokee,True,,False,34.237174575869,-84.456468003004,census_geocoder,Match,Exact
+scoring_year,2025-12,27754,West Cobb Branch,3622 Dallas Hwy SW,Marietta,GA,Cobb,True,,False,33.953822707899,-84.656825675705,census_geocoder,Match,Non_Exact
+scoring_year,2025-12,27755,Smyrna,2905 Atlanta Rd SE Ste 100,Smyrna,GA,Cobb,True,,False,33.882431755189,-84.513709976198,census_geocoder,Match,Exact
+scoring_year,2025-12,27756,Dallas,18 Georgia Heritage Pl,Dallas,GA,Paulding,True,,False,33.908942502181,-84.819638661808,census_geocoder,Match,Exact
+scoring_year,2025-12,27757,Alpharetta Branch,2855 Old Milton Pkwy Ste 104,Alpharetta,GA,Fulton,True,,False,34.068577290656,-84.277417579612,census_geocoder,Match,Exact
+scoring_year,2025-12,27758,Home Office,3100 Cumberland Blvd SE,Atlanta,GA,Cobb,False,"corporate office without member services (NCUA: Corporate Office, MemberServices 0); not on LGE's branch list",True,33.877590866294,-84.463758532901,census_geocoder,Match,Exact
+scoring_year,2025-12,27759,Towne Lake,936 Towne Lake Pkwy,Woodstock,GA,Cherokee,True,,False,34.10272,-84.53539,manual (config),No_Match,
+scoring_year,2025-12,27760,Sandy Springs,6637 Roswell Rd,Sandy Springs,GA,Fulton,True,,False,33.936534238079,-84.378565113705,census_geocoder,Match,Exact
+scoring_year,2025-12,27761,Calhoun,305 W Belmont Dr,Calhoun,GA,Gordon,True,,False,34.479905669309,-84.939620177602,census_geocoder,Match,Exact
+scoring_year,2025-12,27764,Rome-Main,1490 Martha Berry Blvd NE,Rome,GA,Floyd,True,,False,34.271523183291,-85.181362804303,census_geocoder,Match,Non_Exact
+scoring_year,2025-12,27765,Cartersville,105 W Main St,Cartersville,GA,Bartow,True,,False,34.163534219796,-84.801732042863,census_geocoder,Match,Exact
+current,2026-06,21782,Marietta Branch,590 Commerce Park Dr SE,Marietta,GA,Cobb,True,,False,33.941242266471,-84.532503336473,census_geocoder,Match,Exact
+current,2026-06,27720,Austell,2760 E West Connector,Austell,GA,Cobb,True,,False,33.8664,-84.62493,manual (config),No_Match,
+current,2026-06,27726,Acworth,3891 Cobb Pkwy NW,Acworth,GA,Cobb,True,,False,34.04975,-84.70074,manual (config),No_Match,
+current,2026-06,27739,Hiram,5875 Wendy Bagwell Pkwy,Hiram,GA,Paulding,True,,False,33.883937926733,-84.730925195586,census_geocoder,Match,Exact
+current,2026-06,27744,Kennesaw,2050 Cobb Pkwy NW,Kennesaw,GA,Cobb,True,,False,34.004303958176,-84.601684525542,census_geocoder,Match,Exact
+current,2026-06,27749,East Cobb,PROVIDENCE SQ SHPG CTR,Marietta,GA,Cobb,True,,False,33.97961,-84.43405,manual (config),No_Match,
+current,2026-06,27751,Woodstock,12900 Highway 92,Woodstock,GA,Cherokee,True,,False,34.087673017823,-84.471705449517,census_geocoder,Match,Exact
+current,2026-06,27752,Roswell,655 Holcomb Bridge Rd,Roswell,GA,Fulton,True,,False,34.033320780731,-84.341643004087,census_geocoder,Match,Exact
+current,2026-06,27753,Canton,2018 Cumming Hwy,Canton,GA,Cherokee,True,,False,34.237174575869,-84.456468003004,census_geocoder,Match,Exact
+current,2026-06,27754,West Cobb Branch,3622 Dallas Hwy SW,Marietta,GA,Cobb,True,,False,33.953822707899,-84.656825675705,census_geocoder,Match,Non_Exact
+current,2026-06,27755,Smyrna,2905 Atlanta Rd SE Ste 100,Smyrna,GA,Cobb,True,,False,33.882431755189,-84.513709976198,census_geocoder,Match,Exact
+current,2026-06,27756,Dallas,18 Georgia Heritage Pl,Dallas,GA,Paulding,True,,False,33.908942502181,-84.819638661808,census_geocoder,Match,Exact
+current,2026-06,27757,Alpharetta Branch,2855 Old Milton Pkwy Ste 104,Alpharetta,GA,Fulton,False,"closed: not on LGE's branch list or sitemap, its page is gone (checked 2026-11-01); NCUA still lists it in June 2026. Kept for the 2025 scoring year, when NCUA shows it open",False,34.068577290656,-84.277417579612,census_geocoder,Match,Exact
+current,2026-06,27758,Home Office,3100 Cumberland Blvd SE,Atlanta,GA,Cobb,False,"corporate office without member services (NCUA: Corporate Office, MemberServices 0); not on LGE's branch list",True,33.877590866294,-84.463758532901,census_geocoder,Match,Exact
+current,2026-06,27759,Towne Lake,936 Towne Lake Pkwy,Woodstock,GA,Cherokee,True,,False,34.10272,-84.53539,manual (config),No_Match,
+current,2026-06,27760,Sandy Springs,6637 Roswell Rd,Sandy Springs,GA,Fulton,True,,False,33.936534238079,-84.378565113705,census_geocoder,Match,Exact
+current,2026-06,27761,Calhoun,305 W Belmont Dr,Calhoun,GA,Gordon,True,,False,34.479905669309,-84.939620177602,census_geocoder,Match,Exact
+current,2026-06,27764,Rome-Main,1490 Martha Berry Blvd NE,Rome,GA,Floyd,True,,False,34.271523183291,-85.181362804303,census_geocoder,Match,Non_Exact
+current,2026-06,27765,Cartersville,105 W Main St,Cartersville,GA,Bartow,True,,False,34.163534219796,-84.801732042863,census_geocoder,Match,Exact

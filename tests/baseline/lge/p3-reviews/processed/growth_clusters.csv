@@ -1,0 +1,5 @@
+growth_cluster,counties,county_names,market_groups,touches_footprint,pop_2025,pop_2020,market_all,expansion_gain,pop_growth
+C1,21,"Banks, Barrow, Dawson, Forsyth, Franklin, Greene, Habersham, Hall, Hart, Henry, Jackson, Jasper, Lamar, Madison, Monroe, Morgan, Newton, Oglethorpe, Pickens, Pike, Walton","Athens-Clarke County, GA; Atlanta-Sandy Springs-Roswell, GA; Cornelia, GA; Gainesville, GA; Jefferson, GA; Macon-Bibb County--Warner Robins, GA",True,1594744,1407584,14905,126.05,0.132965
+C2,3,"Carroll, Coweta, Haralson","Atlanta-Sandy Springs-Roswell, GA",True,324342,296190,2580,21.8,0.095047
+C3,3,"Bryan, Bulloch, Effingham","Savannah-Hinesville-Statesboro, GA",False,213408,190147,1330,12.3,0.122332
+C4,2,"Long, McIntosh","Brunswick-St. Simons, GA; Savannah-Hinesville-Statesboro, GA",False,33546,27237,167,1.67,0.231633

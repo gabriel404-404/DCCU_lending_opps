@@ -41,7 +41,12 @@ def band_labels(edges):
 
 def load_branches():
     """The lender's sites in the scoring-year and latest NCUA snapshots, with coordinates and scope."""
-    exclusions = pd.read_csv(L.branch_exclusions, dtype=str).set_index("site_id")
+    # An exclusion applies to every snapshot unless its optional `snapshot` column names one
+    # (e.g. a branch open in the scoring year but closed by the current snapshot).
+    exclusions = pd.read_csv(L.branch_exclusions, dtype=str)
+    if "snapshot" not in exclusions.columns:
+        exclusions["snapshot"] = ""
+    exclusions["snapshot"] = exclusions["snapshot"].fillna("")
     manual = pd.read_csv(L.branch_coordinates, dtype=str).set_index("site_id")
     zips = sorted((s.RAW / "ncua").glob("call-report-data-*.zip"))
     y, m = s.NCUA_SCORING_CYCLE
@@ -66,7 +71,8 @@ def load_branches():
         b.loc[fix, "lon"] = b.loc[fix, "site_id"].map(manual["lon"]).astype(float)
         b.loc[fix, "coord_source"] = "manual (config)"
 
-        b["exclusion_reason"] = b["site_id"].map(exclusions["reason"]).fillna("")
+        ex = exclusions[exclusions["snapshot"].isin(["", snapshot])].set_index("site_id")
+        b["exclusion_reason"] = b["site_id"].map(ex["reason"]).fillna("")
         b.loc[b["state"] != s.STATE_ABBR, "exclusion_reason"] = "out of state"
         b["in_scope"] = b["exclusion_reason"] == ""
         b["ncua_no_member_services"] = b["MemberServices"] == "0"
