@@ -4,6 +4,23 @@ Read this at the start of each session. Newest entry first.
 
 ---
 
+## 2026-11-01 (later): builder, merger and branch reviews
+
+### Where we are
+**All open review items are closed and on GitHub.** Both lenders check against new current baselines (`tests/baseline/<key>/CURRENT` = `p3-reviews`, 43 of 43 each); v1 and p3 stay as history. Nothing new is approved; the PRD's Future phases need a plan.
+
+To start next time, say: *"Read docs/SESSION_NOTES.md and write the plan for the next productize step."*
+
+### Decisions
+- **Builder lenders (yours):** all 13 in `config/builder_lenders.csv` are builder-owned and included. DCCU contestable depth 529 → 527 (FINDINGS updated); LGE unchanged at 193.
+- **Mergers (yours to delegate, Claude decided):** only lenders whose lending business went to a lender still in the data are linked, in `config/lender_successors.csv` with sources: Academy → Guild (2024), Caliber → NewRez (2021), Home Point → The Loan Store (2023). Applied in `lender_market()`, so it only changes merger-review history; scoring-year results don't move (none of the three had 2025 loans). Not linked: Angel Oak (buyer unconfirmed), Wyndham (SoFi entity unclear), HomeStar and Crescent (closed), Certainty, Guaranty Home, Atlantic Home (no acquisition found).
+- **LGE Alpharetta (yours):** excluded from the current snapshot only (closed; NCUA shows it open in 2025). `branch_exclusions.csv` takes an optional `snapshot` column. Effect: expansion scorecard distances, e.g. Gwinnett 16 → 18 miles.
+
+### Note for later
+- DCCU's v1 baseline also covered shared market files (Phase 1 checks, `lenders.csv`); the new per-lender baselines cover only the lender's own files. A market-level baseline would restore that check.
+
+---
+
 ## 2026-11-01: productize P3 (a second lender: LGE Community Credit Union)
 
 ### Where we are
