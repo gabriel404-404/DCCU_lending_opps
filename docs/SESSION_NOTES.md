@@ -4,6 +4,42 @@ Read this at the start of each session. Newest entry first.
 
 ---
 
+## 2026-11-01: productize P2 (product filter, market groups, ladder fallback)
+
+### Where we are
+**Productize P2 of 3 is done and on GitHub.** DCCU still reproduces v1. A full rebuild (`--lender all`) takes about 75 seconds, and 47 of 47 baseline comparisons match; 1 file is superseded on purpose. Next is **P3** (approved 2026-11-01, see the P1 entry below): Associated Credit Union. Per CLAUDE.md, Claude restates the P3 plan and waits for a go-ahead.
+
+To start next time, say: *"Read docs/SESSION_NOTES.md and start productize P3."*
+
+### What changed in P2
+| Piece | Where |
+|---|---|
+| Product filter (P-R7) | `[market] loan_types` in `lender.toml`, applied by `lender_market()` in `src/common.py` (stages 04, 06) and in each lender's Phase 2 waterfall and API reconciliation (`Lender.api_check_filters`) |
+| Market files | all loan types: 150,975 originations in 2025 (80,682 conventional, 41,118 FHA, 28,031 VA, 1,144 USDA); 45.9 MB in total, up from 25.7 MB |
+| New Phase 2 checks | `phase2_checks/market_by_loan_type.csv` (market) and `<key>/phase2_checks/product_filter.csv` (the lender's own loans by loan type; DCCU keeps 100%) |
+| Market groups (P-R8) | split the CSA of the footprint's main metro (the CBSA with the most footprint loans); built in stage 04 into `data/processed/<key>/counties.csv`, read by 05–07. `ga_counties.csv` now has CBSA/CSA codes, not `market_group`. DCCU: Atlanta MSA, 18 of 20 counties and 94.2% of loans; groups identical for all 159 counties |
+| Ladder fallback (P-R8) | under 8 qualifying counties, use tracts with 20+ market loans (`LADDER_MIN_COUNTIES`, `LADDER_MIN_TRACT_MARKET`). New `unit` and `top_quarter_tracts` columns. `phase5_checks/ladder_both_ways.csv` runs both rules for every lender |
+| Fix | stage 05's scorecard check used a hard-coded 139; now 159 minus the footprint |
+
+### Baseline decisions (`src/check_baseline.py`)
+- `exempt_flags_kept` is **superseded**: it's a market-wide count that now includes FHA, VA and USDA rows.
+- v1's market waterfall and market size are checked against **DCCU's own** Phase 2 files, which hold the conventional market. The root market tables count all loan types and aren't compared.
+- `ADDED_COLUMNS`: `unit` and `top_quarter_tracts` are allowed new columns; every v1 column must still match.
+
+### Watch in P3
+- **Associated's `loan_types`:** after the first run, read its product check in `outputs/<key>/DATA_QUALITY.md`, Phase 2. If it makes FHA or VA loans, decide whether its market includes them.
+- **Tract ladder:** if Associated has fewer than 8 qualifying counties, the top-vs-rest share gap partly comes from how the tracts are picked (by share). Forced on DCCU, the gap is 5.79% vs. 0.98% by tract, against 6.17% vs. 1.55% by county. The market-structure fields (broker share, HHI) stay fair comparisons; the share gap isn't evidence of competition.
+- **Changing an existing lender's `loan_types`:** stage 03 stops and names the stale cached `api_checks/{year}_loan_types.json` to delete.
+
+### Open items (yours)
+Unchanged: the builder-lender list review (`config/builder_lenders.csv`), and the merger review (15 flagged lenders in `outputs/dccu/DATA_QUALITY.md`, Phase 3 check 8).
+
+### Working notes for Claude
+- Same as P1: `src/02_validate.py` keeps its CRLF line endings, the stages rewrite the `DATA_QUALITY.md` files, and every DCCU run must pass the baseline check.
+- To test a code path DCCU doesn't trigger, run the stages from a scratch script with one setting changed (e.g. `LADDER_MIN_COUNTIES = 21`), then rerun `run_all.py` to restore DCCU's outputs.
+
+---
+
 ## 2026-11-01: productize P1 (lender config, neutral names, per-lender layout)
 
 ### Where we are
