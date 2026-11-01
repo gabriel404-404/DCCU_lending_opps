@@ -4,6 +4,58 @@ Read this at the start of each session. Newest entry first.
 
 ---
 
+## 2026-11-01: productize P3 (a second lender: LGE Community Credit Union)
+
+### Where we are
+**The productize phase (PRD §7, P1–P3) is done and on GitHub.** Two lenders run from config with one command: `run_all.py --lender all` takes about 95 seconds. Each lender is checked against its own baseline: DCCU matches 47 of 47 (v1, 1 superseded), LGE 43 of 43 (`tests/baseline/lge/p3/`). Nothing further is approved yet. The PRD's Future phases (other charters, other states, a licensed basemap) need a plan first.
+
+To start next time, say: *"Read docs/SESSION_NOTES.md and write the plan for the next productize step"*, or pick up an open item below.
+
+### Why LGE and not Associated
+Associated Credit Union's membership is statewide ("If you live in Georgia, you can join ACU", acuonline.org; its business checklist says live or work in Georgia), so it has no county footprint. P3 used the approved fallback, LGE (PRD §7 note).
+
+### LGE's facts (config/lenders/lge/)
+| Fact | Value and source |
+|---|---|
+| LEI | `549300BTTIQWNC2CFA21`, HMDA filers list, 2022–2025 |
+| NCUA charter | 68581 ("LGE COMMUNITY", Marietta) |
+| FOM | 15 counties, lgeccu.org membership page, checked 2026-11-01 |
+| Loan types | conventional only; all in-market loans are type 1 |
+| Branches | 18 in scope. Home Office excluded (corporate, no member services). Austell, Acworth, East Cobb and Towne Lake hand-placed (two from OpenStreetMap, where the Census geocoder has no address range) |
+| Expansion target | 1.0%: 2025 FOM share of 1.03%, rounded to 0.1 point (approved) |
+
+### LGE key numbers (FOM, 2025)
+- **Share:** 284 of 27,645 = 1.03% (#18), up from 0.30% in 2022.
+- **Depth vs. expansion:** depth is 191 / 297 / 436 at base / stretch / ceiling; expansion is 468 at 1% (upper bound). That's the opposite of DCCU: expansion beats depth at every rung.
+- **Fulton:** 9,510 market loans, LGE has 22 (0.23%); it holds 89 of the 191 base-rung loans.
+- **Proximity:** no within-county effect (0.96× within 2 miles; DCCU 1.14×).
+- **Market groups:** the main metro is the Atlanta MSA (88% of FOM loans).
+- **Ladder:** by county (14 qualify); stretch is Bartow.
+
+### Data-quality notes (LGE)
+- 7 FOM counties (Catoosa, Chattooga, Dade, Murray, Polk, Walker, Whitfield) have 0–1 LGE loans and no branch; they were probably added recently. Today's list is applied to every year, so they lower the footprint share.
+- LGE reports `submission_of_application` as exempt (partial exemption), so its broker share is unknown, not zero.
+- Alpharetta: NCUA lists it in both snapshots, but it's gone from LGE's site. It's kept, per the NCUA source rule.
+- LGE's homepage announces a planned merger with Ascend Federal Credit Union.
+- The tract ladder would inflate LGE's ceiling (3.43% vs. 2.22% by county; 74 of 142 top tracts rest on one loan). LGE uses counties.
+
+### Code changes in P3 (lender-neutral)
+- Chart titles follow the numbers: depth vs. expansion (DCCU's is unchanged) and distance (DCCU's now states 1.14×).
+- Log text no longer states DCCU's conclusions; the branch-coordinates table shows each site's method.
+- Missing distance bands don't crash; an exempt channel field shows as "n/a (exempt)".
+- `check_baseline.py --save <version>` saves a baseline under current names. The README lists the add-a-lender steps.
+
+### Open items (yours)
+1. Builder-lender list review (`config/builder_lenders.csv`); rebuild afterwards.
+2. Merger review: DCCU's 15 flagged lenders (and LGE's 14) in each lender's `DATA_QUALITY.md`, Phase 3 check 8.
+3. Alpharetta: keep or exclude from LGE's current-branch snapshot (needs per-snapshot exclusions if excluded).
+
+### Working notes for Claude
+- A new lender's raw files and geocoding are downloaded once; hand-placed branches go in its `branch_coordinates.csv`, with the method for each.
+- An intended change to a lender's numbers means saving a new baseline version (`--save`), never editing a saved one.
+
+---
+
 ## 2026-11-01: productize P2 (product filter, market groups, ladder fallback)
 
 ### Where we are
